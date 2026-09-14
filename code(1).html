@@ -1,0 +1,1371 @@
+<!DOCTYPE html>
+
+<html class="h-full bg-slate-900" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<title>Homia - Mobile App Ecosystem</title>
+<!-- Tailwind CSS CDN with plugins -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Lucide Icons -->
+<script src="https://unpkg.com/lucide@latest"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Plus Jakarta Sans', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              50: '#F0FDF4',
+              500: '#10B981',
+              900: '#0F172A',
+              navy: '#0B132B',
+              dark: '#1C2541'
+            }
+          },
+          boxShadow: {
+            'card': '0 4px 20px -2px rgba(0, 0, 0, 0.05)',
+            'float': '0 10px 25px -5px rgba(0, 0, 0, 0.1)',
+            'nav': '0 -4px 20px rgba(0, 0, 0, 0.04)'
+          }
+        }
+      }
+    }
+  </script>
+<style data-purpose="custom-scrollbars">
+    /* Hide scrollbar for Chrome, Safari and Opera */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    /* Hide scrollbar for IE, Edge and Firefox */
+    .no-scrollbar {
+      -ms-overflow-style: none;  /* IE and Edge */
+      scrollbar-width: none;  /* Firefox */
+    }
+    .ios-blur {
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+    }
+  </style>
+</head>
+<body class="h-full bg-slate-950 flex justify-center items-center p-0 sm:p-4 text-slate-800 antialiased font-sans select-none">
+<!-- BEGIN: PhoneFrame -->
+<div class="relative w-full max-w-[420px] h-[100dvh] sm:h-[880px] bg-white sm:rounded-[50px] shadow-2xl overflow-hidden flex flex-col border-0 sm:border-[8px] sm:border-slate-800 ring-1 ring-white/10">
+<!-- BEGIN: iOSStatusBar -->
+<header class="w-full pt-3 px-7 pb-2 flex justify-between items-center text-xs font-semibold z-50 bg-white/90 ios-blur shrink-0">
+<span class="text-slate-900 font-bold tracking-tight text-[13px]">9:41</span>
+<!-- Dynamic Island / Speaker cutout simulation on desktop -->
+<div class="w-24 h-4 bg-slate-900 rounded-full hidden sm:block mx-auto -mt-1"></div>
+<div class="flex items-center space-x-1.5 text-slate-900">
+<i class="w-3.5 h-3.5" data-lucide="signal"></i>
+<i class="w-3.5 h-3.5" data-lucide="wifi"></i>
+<i class="w-4 h-4" data-lucide="battery"></i>
+</div>
+</header>
+<!-- END: iOSStatusBar -->
+<!-- BEGIN: ScreensViewport -->
+<main class="flex-1 relative w-full overflow-hidden bg-slate-50" id="screens-container">
+<!-- ============================================== -->
+<!-- SCREEN 01: PANTALLA DE INICIO (FEED)           -->
+<!-- ============================================== -->
+<section class="screen-view absolute inset-0 overflow-y-auto no-scrollbar pb-24 transition-opacity duration-200" id="screen-inicio">
+<!-- Top Nav Homia -->
+<div class="sticky top-0 bg-white/95 ios-blur z-30 px-4 py-2.5 flex items-center justify-between border-b border-slate-100">
+<div class="flex items-center gap-2">
+<button class="p-1.5 text-slate-700 hover:bg-slate-100 rounded-full" onclick="navigateTo('busqueda')">
+<i class="w-5 h-5" data-lucide="search"></i>
+</button>
+<div class="flex items-center gap-1 cursor-pointer" onclick="navigateTo('inicio')">
+<div class="w-6 h-6 rounded-md bg-slate-900 flex items-center justify-center text-white font-black text-xs tracking-tighter">H</div>
+<span class="text-xl font-extrabold tracking-tight text-slate-900">Homia</span>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<button class="text-[11px] font-bold bg-slate-900 text-white px-2.5 py-1 rounded-full flex items-center gap-1 shadow-sm" onclick="navigateTo('vender')">
+<i class="w-3 h-3" data-lucide="plus"></i> Vender
+            </button>
+<button class="relative p-1.5 text-slate-700 hover:bg-slate-100 rounded-full" onclick="navigateTo('networking')">
+<i class="w-5 h-5" data-lucide="globe"></i>
+<span class="absolute top-1 right-1 w-2 h-2 bg-emerald-500 rounded-full border border-white"></span>
+</button>
+</div>
+</div>
+<!-- Stories / Historias -->
+<div class="py-3 px-4 flex gap-3.5 overflow-x-auto no-scrollbar border-b border-slate-100 bg-white">
+<!-- User Story -->
+<div class="flex flex-col items-center gap-1.5 shrink-0 cursor-pointer" onclick="navigateTo('agente-perfil')">
+<div class="relative w-15 h-15 p-[2px] rounded-full ring-2 ring-emerald-500">
+<img alt="Tu Historia" class="w-14 h-14 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDOdqQlVrU27PhHGfdnVmkX73fWbgG7liYJOTyWHSd1TY4nCKE5BbSGW0L5drsmVQjPrd_jvu8JPn-8yB-kryW8OH7Nz6HkjXt867CT89OnJkMmGxM-gGw9ZOuMWoXHjIyW9NCdOzd1zxAqgYYyO0Myp0ynyRx1gD0v6F91Esv7O3mEKTT0Ckw5i2_pz8M1E_e_v_5ixUERCSaOIVPww-qIKhJSZi5Vr9dgDjAJYm8ctyg-7XDUrbvd5w"/>
+<div class="absolute bottom-0 right-0 bg-slate-900 text-white p-0.5 rounded-full ring-2 ring-white">
+<i class="w-3 h-3" data-lucide="plus"></i>
+</div>
+</div>
+<span class="text-[11px] font-medium text-slate-600">Tu historia</span>
+</div>
+<!-- Story 1 -->
+<div class="flex flex-col items-center gap-1.5 shrink-0 cursor-pointer" onclick="navigateTo('marketplace-detalle')">
+<div class="w-15 h-15 p-[2px] rounded-full ring-2 ring-gradient ring-pink-500 bg-gradient-to-tr from-amber-500 to-fuchsia-600">
+<img alt="Buenos Aires" class="w-14 h-14 rounded-full object-cover border border-white" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD7n-vYuC11rI_84QeLyI3E5DVUH9rLt6MlKBkwqseSCjlugdOHXWSvaUwJak43oco3FugKsvxtvWbPEgkpXZOvOm4lT2ZGy3vyRl7nu6VUmOhwdtzbMzx8jby3kcYWiHZ9fXdh4LwQhtkmbxfw14qECXPa0nbYa3Oy5eWqi0wqHp5u0XSjSkkuC9NHhYvuq8wjvnTvw4XSU_tc2cT8porzKJwOGQv0YLUKE_XtkO4CjZLqX8O5d6bciQ"/>
+</div>
+<span class="text-[11px] font-medium text-slate-700">Buenos Aires</span>
+</div>
+<!-- Story 2 -->
+<div class="flex flex-col items-center gap-1.5 shrink-0 cursor-pointer" onclick="navigateTo('marketplace-detalle')">
+<div class="w-15 h-15 p-[2px] rounded-full ring-2 ring-gradient ring-pink-500 bg-gradient-to-tr from-amber-500 to-fuchsia-600">
+<img alt="Madrid" class="w-14 h-14 rounded-full object-cover border border-white" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBx-e_BQze7UUVJLneGsyaA95WvUhfbLePtAjiZRpB3lsOZeJr5uT_P-mZylvGyoeP87-BvceSN-yMrCv9SWJ4gO5xLX7DejV1447HXbNTG96atmcucYARN2zFcWDmexanneVRGvObjKIdEH6DsMoiL87PmQ8j-f-sF3A4dRTFvAg8MTou4ZjAPYnKGBN92T-2tcebsXfM_xeCc-HArD1yIcy-ivUjYkIPtu2z_zb5KhBKugFsL_EO0ew"/>
+</div>
+<span class="text-[11px] font-medium text-slate-700">Madrid</span>
+</div>
+<!-- Story 3 -->
+<div class="flex flex-col items-center gap-1.5 shrink-0 cursor-pointer" onclick="navigateTo('marketplace-detalle')">
+<div class="w-15 h-15 p-[2px] rounded-full ring-2 ring-gradient ring-pink-500 bg-gradient-to-tr from-amber-500 to-fuchsia-600">
+<img alt="Miami" class="w-14 h-14 rounded-full object-cover border border-white" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDRf1kNsTRn5oIHXku0JxqoEEkfC2qwZwaqOi9_J_5C63IRHm9HG5u7zHL14Crbkl3-CdMEpEo06XDZZGaxsgC-wT2GEVjw3oMAM3v6FYMQ4WQwY0tVoRN50bMgLstqgHdPMAKiq8SiyaToIX8Jba-fsAieEjbIqEB-OSUhAAgzerAKQZCTGP7eqe5YnTkzNBT7GdOn36CUoFLCrA0KSBuYwnSyA7xANtDpqDjkNA8rfmyM65_7gNhFqw"/>
+</div>
+<span class="text-[11px] font-medium text-slate-700">Miami</span>
+</div>
+</div>
+<!-- Quick Pre-qualification Banner (Sell / Buy) -->
+<div class="px-4 pt-3 flex gap-2">
+<div class="flex-1 bg-gradient-to-br from-slate-900 to-slate-800 text-white p-3 rounded-2xl cursor-pointer shadow-sm flex items-center justify-between" onclick="navigateTo('vender')">
+<div>
+<span class="text-[10px] uppercase font-bold text-emerald-400 tracking-wider">Propietario</span>
+<p class="text-xs font-bold leading-tight mt-0.5">Quiero Vender</p>
+</div>
+<div class="w-7 h-7 bg-white/10 rounded-full flex items-center justify-center">
+<i class="w-3.5 h-3.5 text-emerald-400" data-lucide="tag"></i>
+</div>
+</div>
+<div class="flex-1 bg-white border border-slate-200 text-slate-800 p-3 rounded-2xl cursor-pointer shadow-sm flex items-center justify-between" onclick="navigateTo('comprador')">
+<div>
+<span class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Inversor / Cliente</span>
+<p class="text-xs font-bold leading-tight mt-0.5">Soy Comprador</p>
+</div>
+<div class="w-7 h-7 bg-slate-100 rounded-full flex items-center justify-center">
+<i class="w-3.5 h-3.5 text-slate-700" data-lucide="home"></i>
+</div>
+</div>
+</div>
+<!-- Property Post Card (Instagram Feed Style) -->
+<article class="bg-white mt-3 border-y border-slate-100 pb-3">
+<!-- Post Header -->
+<div class="p-3 flex items-center justify-between">
+<div class="flex items-center gap-2.5 cursor-pointer" onclick="navigateTo('agente-perfil')">
+<img alt="Agent" class="w-9 h-9 rounded-full object-cover ring-1 ring-slate-200" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD69PylVPnZbTXC2NHHIytAiqZhIa4RRVJNx1uY558EgdaKw7j4oO2oJkPfcmjU12s87KucAKnLDL0oQEC8t9EiTtlKLFVQkk3am3mCabHFxzfXuzY50vbdxlhxwtZWI7p_qMATrQLag4sSFEcVsSL1e0fo58f3t0ABTbmFzYGlTtd3a-moMhcvcsg4Su82Ad-PYCgabJM-ynborGak1CrKirINQKpPG5j18ODzpnIm0LEPx0Gz2DOcHw"/>
+<div>
+<div class="flex items-center gap-1">
+<h4 class="text-xs font-bold text-slate-900 leading-tight">RE/MAX Premium</h4>
+<span class="bg-blue-500 text-white rounded-full p-0.5"><i class="w-2 h-2 stroke-[3]" data-lucide="check"></i></span>
+</div>
+<p class="text-[10px] text-slate-500">Buenos Aires, Argentina</p>
+</div>
+</div>
+<button class="text-slate-400 hover:text-slate-600"><i class="w-4 h-4" data-lucide="more-horizontal"></i></button>
+</div>
+<!-- Post Media with badge -->
+<div class="relative cursor-pointer" onclick="navigateTo('marketplace-detalle')">
+<img alt="Departamento Palermo" class="w-full aspect-[4/3] object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCFfHVsJF08Gafz3P9MEHKiPa_IzKHI9jZI0l6A8a9zxsunye8vffOa40ldIs65gQiA0EvVfw2elk0VyJ5cU2jmcLVZEwxyqmyRct5FcGEzvIQBcAFZRjeZgawRnNBchp_ZWb806a8qtOKAZGnWh6-TWH31tcgFNc31D2E5XAobJegiysf38-l-u-9cs1JlXccnsOtjWG8r-OLUJNuFSZHm1rsjd0RNJvlrYX0qiKBLNCsfCFDYTan58w"/>
+<div class="absolute top-3 right-3 bg-slate-900/80 ios-blur text-white text-[10px] font-semibold px-2 py-0.5 rounded-full">
+              1/10
+            </div>
+<div class="absolute bottom-3 left-3 bg-slate-900/90 ios-blur text-white px-3 py-1.5 rounded-xl shadow-lg flex items-center gap-2">
+<span class="text-xs text-slate-300">USD</span>
+<span class="text-sm font-extrabold tracking-tight">245.000</span>
+</div>
+</div>
+<!-- Post Action Bar -->
+<div class="px-3 pt-2.5 flex justify-between items-center">
+<div class="flex items-center gap-4 text-slate-700">
+<button class="flex items-center gap-1 hover:text-rose-500 transition-colors">
+<i class="w-5 h-5" data-lucide="heart"></i>
+<span class="text-xs font-bold">1.2k</span>
+</button>
+<button class="flex items-center gap-1 hover:text-slate-900">
+<i class="w-5 h-5" data-lucide="message-circle"></i>
+<span class="text-xs font-bold">48</span>
+</button>
+<button class="hover:text-slate-900">
+<i class="w-5 h-5" data-lucide="send"></i>
+</button>
+</div>
+<button class="text-slate-700 hover:text-slate-900">
+<i class="w-5 h-5" data-lucide="bookmark"></i>
+</button>
+</div>
+<!-- Property Details Description -->
+<div class="px-3 pt-2">
+<h5 class="text-xs font-bold text-slate-900 cursor-pointer" onclick="navigateTo('marketplace-detalle')">Departamento exclusivo en Palermo Soho</h5>
+<p class="text-[11px] text-slate-600 mt-0.5">3 ambientes, balcón terraza aterrazado con parrilla propia y amenities premium...</p>
+<!-- Metrics pill preview -->
+<div class="mt-2.5 bg-slate-50 border border-slate-150 rounded-lg p-2 flex items-center justify-between text-[10px] font-medium text-slate-500">
+<span>Vistas <strong class="text-slate-800">4.8k</strong></span>
+<span class="text-slate-300">|</span>
+<span>Consultas <strong class="text-slate-800">320</strong></span>
+<span class="text-slate-300">|</span>
+<span>Visitas <strong class="text-slate-800">45</strong></span>
+<span class="text-slate-300">|</span>
+<span>Ofertas <strong class="text-emerald-600 font-bold">3</strong></span>
+</div>
+<span class="text-[9px] uppercase tracking-wider text-slate-400 font-semibold block mt-1.5">Hace 3 días</span>
+</div>
+</article>
+<!-- Second post preview -->
+<article class="bg-white mt-2 border-y border-slate-100 pb-3">
+<div class="p-3 flex items-center justify-between cursor-pointer" onclick="navigateTo('agente-perfil')">
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 rounded-full bg-amber-500 text-white font-bold flex items-center justify-center text-xs">C21</div>
+<div>
+<p class="text-xs font-bold text-slate-900">Century 21 Premium</p>
+<p class="text-[10px] text-slate-500">Córdoba, Argentina</p>
+</div>
+</div>
+<i class="w-4 h-4 text-slate-400" data-lucide="more-horizontal"></i>
+</div>
+</article>
+</section>
+<!-- END: SCREEN 01 -->
+<!-- ============================================== -->
+<!-- SCREEN 02: REELS DE PROPIEDADES                 -->
+<!-- ============================================== -->
+<section class="screen-view hidden absolute inset-0 bg-slate-950 text-white overflow-hidden pb-20" id="screen-reels">
+<!-- Reel Background Video/Photo -->
+<div class="relative w-full h-full">
+<img alt="Casa Reel" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAk1nyuLlLTFXFCnEjHeH94HJChwDmNZiVzBOCi9Yr-Ua0eu1fVr2W6TqO5u0PX7vEJB2Mszwn7HM1WnFkdOc73Q4LwzmAPYUQ9kFSCL8olcEovSxYcvcZuFhGA-27YCJSiU4y6m3uytg6a7WiDpe1B6t62UoXh4tuyOkVLzXljTwRW51w8rnH2Z3AOV8V4pfwNRnYLbEFd1wMY3Qa400yYsq8PLA-Iomdm3BivjAqg-R55KGKrzmTT-Q"/>
+<div class="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/90"></div>
+<!-- Top Header Reels -->
+<div class="absolute top-2 left-0 right-0 px-4 flex justify-between items-center z-10">
+<div class="flex items-center gap-2">
+<span class="text-sm font-extrabold tracking-wide">Reels</span>
+<span class="bg-emerald-500/80 text-[10px] px-2 py-0.5 rounded-full font-semibold">Exclusivo</span>
+</div>
+<button class="p-1 rounded-full bg-black/40 text-white"><i class="w-5 h-5" data-lucide="camera"></i></button>
+</div>
+<!-- Right Action Floating Bar -->
+<div class="absolute right-3 bottom-24 flex flex-col items-center gap-5 z-20">
+<button class="flex flex-col items-center gap-1 group">
+<div class="w-10 h-10 rounded-full bg-black/40 ios-blur flex items-center justify-center group-hover:scale-110 transition-transform">
+<i class="w-5 h-5 text-white" data-lucide="heart"></i>
+</div>
+<span class="text-[11px] font-semibold text-white">2.4k</span>
+</button>
+<button class="flex flex-col items-center gap-1 group" onclick="navigateTo('marketplace-detalle')">
+<div class="w-10 h-10 rounded-full bg-black/40 ios-blur flex items-center justify-center">
+<i class="w-5 h-5 text-white" data-lucide="message-circle"></i>
+</div>
+<span class="text-[11px] font-semibold text-white">128</span>
+</button>
+<button class="flex flex-col items-center gap-1 group">
+<div class="w-10 h-10 rounded-full bg-black/40 ios-blur flex items-center justify-center">
+<i class="w-5 h-5 text-white" data-lucide="send"></i>
+</div>
+<span class="text-[11px] font-semibold text-white">362</span>
+</button>
+<div class="w-10 h-10 rounded-full border-2 border-white overflow-hidden mt-1 cursor-pointer" onclick="navigateTo('agente-perfil')">
+<img alt="Agent avatar" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAV5CLmaAERQwQ4qYH1qBs-RHN2bMR_AmOqky-Zt_GpAlBMJwVUECKHcFw4-zQsFiYwSViqL_nr2GUfqoUTwtqEAXbjWe4an092NT5bV4JWtdGLau2UfcACTEtLsdC7mGvGSmtGzTzysmpvBlxmLrF59gfcWJNBp6hAH1RqRWfVvIAGJvj7FV2XMv5rhltuBFX5ULYu0d3cuiJ2n55aGt39vwyzEPiCLDl53p5X30MzTrPxh9rBN6RUaA"/>
+</div>
+</div>
+<!-- Bottom Meta Info -->
+<div class="absolute bottom-6 left-4 right-16 z-20 space-y-2">
+<div class="flex items-center gap-2 cursor-pointer" onclick="navigateTo('agente-perfil')">
+<span class="text-xs font-bold text-white">@homia.realestate</span>
+<button class="text-[10px] font-bold border border-white/80 px-2.5 py-0.5 rounded-full hover:bg-white hover:text-slate-900 transition-colors">Seguir</button>
+</div>
+<div>
+<h3 class="text-base font-bold text-white drop-shadow">Casa premium en Nordelta</h3>
+<p class="text-xs text-white/90 flex items-center gap-1 mt-0.5"><i class="w-3 h-3 text-emerald-400" data-lucide="map-pin"></i> Nordelta, Bs. As. • USD 520.000</p>
+</div>
+<p class="text-xs text-white/80 line-clamp-2 leading-relaxed">
+              Vivir como soñás es posible ✨ Vista al lago, piscina infinita y domótica integral. <span class="text-white font-medium">#Nordelta #Premium #Homia</span>
+</p>
+<div class="flex items-center gap-2 pt-1">
+<button class="bg-emerald-500 hover:bg-emerald-400 text-slate-950 text-xs font-extrabold px-4 py-2 rounded-xl flex items-center gap-1.5 shadow-lg" onclick="navigateTo('marketplace-detalle')">
+<i class="w-3.5 h-3.5" data-lucide="sparkles"></i> Ver Propiedad Completa
+              </button>
+</div>
+</div>
+</div>
+</section>
+<!-- END: SCREEN 02 -->
+<!-- ============================================== -->
+<!-- SCREEN 03: BÚSQUEDA CON FILTROS                -->
+<!-- ============================================== -->
+<section class="screen-view hidden absolute inset-0 bg-white overflow-y-auto no-scrollbar pb-24" id="screen-busqueda">
+<div class="sticky top-0 bg-white/95 ios-blur px-5 py-3 border-b border-slate-100 flex items-center justify-between z-10">
+<h2 class="text-xl font-bold text-slate-900">Búsqueda</h2>
+<button class="p-2 text-slate-500 hover:text-slate-900 rounded-full hover:bg-slate-100">
+<i class="w-5 h-5" data-lucide="sliders-horizontal"></i>
+</button>
+</div>
+<div class="p-5 space-y-5">
+<!-- Buy/Rent Toggle -->
+<div class="bg-slate-100 p-1 rounded-xl flex">
+<button class="flex-1 py-2 text-xs font-bold rounded-lg bg-slate-900 text-white shadow-sm transition-all">Comprar</button>
+<button class="flex-1 py-2 text-xs font-bold rounded-lg text-slate-600 hover:text-slate-900 transition-all">Alquilar</button>
+</div>
+<!-- Tipo de Inmueble -->
+<div>
+<label class="block text-xs font-bold text-slate-800 mb-2">Tipo de inmueble <span class="text-rose-500">*</span></label>
+<select class="w-full bg-slate-50 border border-slate-200 text-slate-800 text-xs rounded-xl p-3 focus:ring-2 focus:ring-slate-900 focus:outline-none font-medium">
+<option>Seleccioná una opción (Ej: Casa, Dpto, Lote)</option>
+<option>Departamento</option>
+<option>Casa Moderna</option>
+<option>Penthouse</option>
+</select>
+<div class="flex gap-2 mt-2">
+<button class="px-3 py-1.5 text-[11px] font-semibold rounded-lg bg-slate-900 text-white">Residencial</button>
+<button class="px-3 py-1.5 text-[11px] font-medium rounded-lg bg-slate-100 text-slate-700">Comercial</button>
+<button class="px-3 py-1.5 text-[11px] font-medium rounded-lg bg-slate-100 text-slate-700">Industrial</button>
+</div>
+</div>
+<!-- Ubicación Cascada -->
+<div class="space-y-2">
+<label class="block text-xs font-bold text-slate-800">Ubicación <span class="text-rose-500">*</span></label>
+<div class="flex items-center justify-between p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs cursor-pointer hover:bg-slate-100">
+<span class="text-slate-500">País</span>
+<div class="flex items-center gap-1 font-semibold text-slate-800">Argentina <i class="w-4 h-4 text-slate-400" data-lucide="chevron-right"></i></div>
+</div>
+<div class="flex items-center justify-between p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs cursor-pointer hover:bg-slate-100">
+<span class="text-slate-500">Provincia / Estado</span>
+<div class="flex items-center gap-1 font-semibold text-slate-800">Buenos Aires <i class="w-4 h-4 text-slate-400" data-lucide="chevron-right"></i></div>
+</div>
+<div class="flex items-center justify-between p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs cursor-pointer hover:bg-slate-100">
+<span class="text-slate-500">Ciudad / Localidad</span>
+<div class="flex items-center gap-1 font-semibold text-slate-800">Nordelta / Tigre <i class="w-4 h-4 text-slate-400" data-lucide="chevron-right"></i></div>
+</div>
+<div class="flex items-center justify-between p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs cursor-pointer hover:bg-slate-100">
+<span class="text-slate-500">Zona / Barrio</span>
+<div class="flex items-center gap-1 text-slate-400">Todas las zonas <i class="w-4 h-4 text-slate-400" data-lucide="chevron-right"></i></div>
+</div>
+</div>
+<!-- Rango de Precio -->
+<div>
+<label class="block text-xs font-bold text-slate-800 mb-2">Rango de precio (USD) <span class="text-rose-500">*</span></label>
+<div class="grid grid-cols-2 gap-3">
+<div class="relative">
+<span class="absolute left-3 top-3 text-xs text-slate-400">$</span>
+<input class="w-full bg-slate-50 border border-slate-200 rounded-xl py-2.5 pl-7 pr-3 text-xs font-semibold text-slate-800" placeholder="Mínimo" type="text" value="150.000"/>
+</div>
+<div class="relative">
+<span class="absolute left-3 top-3 text-xs text-slate-400">$</span>
+<input class="w-full bg-slate-50 border border-slate-200 rounded-xl py-2.5 pl-7 pr-3 text-xs font-semibold text-slate-800" placeholder="Máximo" type="text" value="550.000"/>
+</div>
+</div>
+</div>
+<!-- Prestaciones -->
+<div>
+<label class="block text-xs font-bold text-slate-800 mb-1.5">Prestaciones y Filtros Invisibles</label>
+<div class="flex flex-wrap gap-2">
+<span class="px-2.5 py-1 text-[11px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-lg">Piscina ✓</span>
+<span class="px-2.5 py-1 text-[11px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-lg">Seguridad 24hs ✓</span>
+<span class="px-2.5 py-1 text-[11px] font-semibold bg-slate-100 text-slate-600 rounded-lg">+ Cochera</span>
+<span class="px-2.5 py-1 text-[11px] font-semibold bg-slate-100 text-slate-600 rounded-lg">+ Vista al Lago</span>
+</div>
+</div>
+<!-- Submit Button -->
+<button class="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-3.5 rounded-2xl text-xs tracking-wide shadow-lg flex items-center justify-center gap-2 transition-all" onclick="navigateTo('match')">
+<i class="w-4 h-4" data-lucide="search"></i> Buscar propiedades
+          </button>
+</div>
+</section>
+<!-- END: SCREEN 03 -->
+<!-- ============================================== -->
+<!-- SCREEN 04: PERFIL DE AGENTE                    -->
+<!-- ============================================== -->
+<section class="screen-view hidden absolute inset-0 bg-white overflow-y-auto no-scrollbar pb-24" id="screen-agente-perfil">
+<!-- Top Bar Profile -->
+<div class="sticky top-0 bg-white/95 ios-blur px-4 py-2.5 border-b border-slate-100 flex items-center justify-between z-10">
+<button class="p-1 text-slate-700 hover:bg-slate-100 rounded-full" onclick="navigateBack()">
+<i class="w-6 h-6" data-lucide="chevron-left"></i>
+</button>
+<div class="flex items-center gap-1">
+<span class="text-xs font-bold text-slate-900">Sofía Martínez</span>
+<i class="w-4 h-4 text-blue-500 fill-blue-500" data-lucide="badge-check"></i>
+</div>
+<div class="flex items-center gap-2 text-slate-700">
+<button class="p-1"><i class="w-5 h-5" data-lucide="share"></i></button>
+<button class="p-1"><i class="w-5 h-5" data-lucide="more-horizontal"></i></button>
+</div>
+</div>
+<div class="p-4">
+<!-- Profile Header Stats -->
+<div class="flex items-center gap-4">
+<div class="relative">
+<img alt="Sofía Martínez" class="w-20 h-20 rounded-full object-cover ring-2 ring-emerald-500 p-0.5" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCwlsmvMcePPvhUVsDmdXk6lxMVs6FNE6NWb2Dcr9mdAmUF4dJMH3_28X3-WkVW77hw8NOlJsGJxgBc_UOGCnKJIsK1lPZM0Vg6xxX0DpSYijYVy27drNKR_OqYe5om0cXWJZmOmTq4pcK5BEj0d-oEe3dWkGzUG9Imly4bx2-q8FlexYjG1__YVLh-tojPBgYla2iNRDH3-SNjaxch-8yLxR0lBSwe4wbFX6us941285JVpE9nrNMdBQ"/>
+<span class="absolute bottom-0 right-0 bg-emerald-500 w-4 h-4 rounded-full border-2 border-white"></span>
+</div>
+<div class="flex-1 grid grid-cols-3 text-center">
+<div>
+<span class="block text-sm font-extrabold text-slate-900">248</span>
+<span class="text-[10px] text-slate-500">Publicaciones</span>
+</div>
+<div>
+<span class="block text-sm font-extrabold text-slate-900">12.4k</span>
+<span class="text-[10px] text-slate-500">Seguidores</span>
+</div>
+<div>
+<span class="block text-sm font-extrabold text-slate-900">1.1k</span>
+<span class="text-[10px] text-slate-500">Seguidos</span>
+</div>
+</div>
+</div>
+<!-- Bio -->
+<div class="mt-3 space-y-1">
+<div class="flex items-center gap-1.5">
+<h3 class="text-xs font-extrabold text-slate-900">Agente Inmobiliaria | REMAX</h3>
+<span class="bg-amber-100 text-amber-800 text-[10px] font-bold px-1.5 rounded flex items-center gap-0.5">
+                ★ 4.9 (321 reseñas)
+              </span>
+</div>
+<p class="text-xs text-slate-700 flex items-center gap-1">
+<i class="w-3.5 h-3.5 text-emerald-600 shrink-0" data-lucide="award"></i> Especialista en propiedades premium y desarrollos
+            </p>
+<p class="text-xs text-slate-500 flex items-center gap-1">
+<i class="w-3.5 h-3.5 shrink-0" data-lucide="map-pin"></i> Buenos Aires, Argentina
+            </p>
+<p class="text-xs text-slate-600 pt-1 leading-relaxed">
+              “Mi misión es ayudarte a encontrar tu lugar en el mundo. Personas, propiedades, historias.”
+            </p>
+</div>
+<!-- Action Buttons -->
+<div class="grid grid-cols-3 gap-2 mt-4">
+<button class="bg-slate-900 text-white font-bold py-2 rounded-xl text-xs hover:bg-slate-800 transition-colors">Seguir</button>
+<button class="bg-slate-100 text-slate-900 font-bold py-2 rounded-xl text-xs hover:bg-slate-200 transition-colors" onclick="navigateTo('networking')">Mensaje</button>
+<button class="border border-slate-300 text-slate-700 font-bold py-2 rounded-xl text-xs hover:bg-slate-50 transition-colors">Contacto</button>
+</div>
+<!-- Stories Highlights -->
+<div class="flex gap-4 overflow-x-auto no-scrollbar py-4 border-b border-slate-100">
+<div class="flex flex-col items-center gap-1 shrink-0">
+<div class="w-13 h-13 rounded-full border border-slate-300 p-1 flex items-center justify-center bg-slate-50">
+<i class="w-5 h-5 text-slate-700" data-lucide="home"></i>
+</div>
+<span class="text-[10px] font-medium text-slate-600">Propiedades</span>
+</div>
+<div class="flex flex-col items-center gap-1 shrink-0">
+<div class="w-13 h-13 rounded-full border border-slate-300 p-1 flex items-center justify-center bg-slate-50">
+<i class="w-5 h-5 text-slate-700" data-lucide="message-square"></i>
+</div>
+<span class="text-[10px] font-medium text-slate-600">Testimonios</span>
+</div>
+<div class="flex flex-col items-center gap-1 shrink-0">
+<div class="w-13 h-13 rounded-full border border-slate-300 p-1 flex items-center justify-center bg-slate-50">
+<i class="w-5 h-5 text-slate-700" data-lucide="users"></i>
+</div>
+<span class="text-[10px] font-medium text-slate-600">Equipo</span>
+</div>
+<div class="flex flex-col items-center gap-1 shrink-0">
+<div class="w-13 h-13 rounded-full border border-slate-300 p-1 flex items-center justify-center bg-slate-50">
+<i class="w-5 h-5 text-slate-700" data-lucide="calendar"></i>
+</div>
+<span class="text-[10px] font-medium text-slate-600">Eventos</span>
+</div>
+</div>
+<!-- Tabs (Grid / Reels / Tagged) -->
+<div class="flex border-b border-slate-100 text-slate-400">
+<button class="flex-1 py-2.5 flex justify-center border-b-2 border-slate-900 text-slate-900"><i class="w-4 h-4" data-lucide="grid"></i></button>
+<button class="flex-1 py-2.5 flex justify-center hover:text-slate-700"><i class="w-4 h-4" data-lucide="film"></i></button>
+<button class="flex-1 py-2.5 flex justify-center hover:text-slate-700"><i class="w-4 h-4" data-lucide="user-check"></i></button>
+</div>
+<!-- Property Grid -->
+<div class="grid grid-cols-3 gap-1 pt-2">
+<div class="aspect-square relative cursor-pointer" onclick="navigateTo('marketplace-detalle')">
+<img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAChIsGsHiz-kvcAKNBR6544P-yE51HIUdiRAdTcXQceYEpf9fiE2QRejm006InYMFgFihnmIITlLdKQX8SxmzPFA447V2ib7mIprcsE3QauHnwLyCvXUbz2Z_rRNITf9joOwk8Tngf6iJiFJJz5rEjREwHGQE6vqgViC0QvQbqPa3GfkIfxZ0Ri2FwrCezlgR0yTjSWRW-JcCkXLnazZ4PLVy9TqqkT2zOwdzZLQV_6fky_AK4f6mDsg"/>
+<div class="absolute bottom-1 left-1 bg-black/60 text-[9px] text-white px-1 rounded font-bold">USD 520k</div>
+</div>
+<div class="aspect-square relative cursor-pointer" onclick="navigateTo('marketplace-detalle')">
+<img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD_QozC9IqDrJSoyGipDY07XKd8okiY6ExPJbQddW8TkpMxVqICjW2bwbcUVPDvvMQYUmcSRIrw_26-_LdBF1TbWFkJyiduiEJc5h5jJ0dZn_1L4GURpXjf6kcre0skBiZmU61XummHNvs0rHqwNn1wfgOUwPwC1V9-w3tKO91Rf6Pnj4l6cFvTGIRd-qYRfkkbmSMrfc1aDO-g1j6ekuJwfRgwuO3QcGuDFV_7yCEA84JDIoAABitqqQ"/>
+</div>
+<div class="aspect-square relative cursor-pointer" onclick="navigateTo('marketplace-detalle')">
+<img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDLtDjYFxwcFP_NopsywbWVtmEhyxfUEUesWOEc5uHa1I_QKy3fOlnzG9GRed9ywQ_TZKye1_8k7w_5zqf365w09Ew7qbAaU11egVcYHssY-qGIqX1BytRPgg7c7RoxNkybRKhxnfUJ5Y2CEficoUWJ8aPWoUbZbItn9ZdEIZhDLnBiNFi9AFUHJnDpOTznuRgSUpuEF0AKjABRD1YH9qwSL_EoonnC7NLwRVVkCDZkZ2oNtHNScmxeIw"/>
+</div>
+<div class="aspect-square relative cursor-pointer" onclick="navigateTo('marketplace-detalle')">
+<img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA8r58ee824N5Sa1sh95Ublajov46KmvmxcPvZ1lyUp428HHl4j0ZO5I6VpHICBLQ9nhoWJUetjCSlxJEcknDF4ETJM97Nw_59dXAYbwY1b3KscdboL-cXFvl1RzM-40xq-g2cs3kAZBNqnvs58jT-MaisDXuf4GVleKEx4kZZRXoq9KgZLeda0nX4vCQ3JigjpJFgLpBLY9YuMmU0JaSB3VaGVg2KMxpfWsNMZYbYITcM_x0R1lA7B3Q"/>
+</div>
+<div class="aspect-square relative cursor-pointer" onclick="navigateTo('marketplace-detalle')">
+<img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBG24ySCFmHVAzbdOlGYOQ0hDEgXEkoXtBJZwQGktGnB9rms-xfD_c0vLcEK0Q0lRD593R-gLrPhCPvhpytg4tq7_WymuncjBm7B6VgmlV82qJY5-mEu5cSWEKldSBm5Fr9ddO_CSmpk1TJk2fYbSgFHJgR7L5sst2uHAYG9a_YwJ7crmWByqjCSP7ycVNq430Vx_pjdZ7v7RcImvr93ypVsme5fixdBfPqIWrBPKrHC3yVzqmbOKwqKg"/>
+</div>
+<div class="aspect-square relative cursor-pointer" onclick="navigateTo('marketplace-detalle')">
+<img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAnDB4ERowJADsiH2_zB4Sjx9UNBjnbeEvtDqSDpl0hql5Kd-vHz3SuJ_BViTgTpCwVuPnyUZ-oDIkLgFXz_Ahd5rVfX_KA-9t5ohKyKEGzntuLx2PmjIZ5B9kE4UMsYwrUzx2I1vDDOq7CEhhx4vAjYw422G2Vl_G7E-UTX4ZsdTLQTq_ZvEpjm5OG9Ijq9hSRobwMwq82gbzy1J8B4wCcWdnQOK1L5ZQvEf9WhRfpJlTEtYBG9Mop5g"/>
+</div>
+</div>
+</div>
+</section>
+<!-- END: SCREEN 04 -->
+<!-- ============================================== -->
+<!-- SCREEN 05: MARKETPLACE DE PROPIEDAD (DETALLE)  -->
+<!-- ============================================== -->
+<section class="screen-view hidden absolute inset-0 bg-white overflow-y-auto no-scrollbar pb-24" id="screen-marketplace-detalle">
+<!-- Hero Gallery Header -->
+<div class="relative w-full h-72">
+<img alt="Casa en Nordelta" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB4rYvSxQu-Ppz4FKZeIzWNKa-hRQfmbiz0NJ2NM81rkEFOGpPJZCJSJ0vgGfCbFyy91cjJpbDNfwSSAlbkNiAK4ZLFQR8af9bS92WdQpZc_Rusmw0qoxrqWMcw2s_zhBv1HVDmmZcdK24O4N3SXTOZST7Ilsyb_iqU60fZTu-0CQNp1bgoCZNRsP08OJrZN6ICbPf4W_eW0YuZk00Z4IncyXsRPIr5ymLYY_HZgagd9DD4BmC6btscqg"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/30"></div>
+<div class="absolute top-4 left-4 right-4 flex justify-between items-center z-10">
+<button class="w-9 h-9 rounded-full bg-white/80 ios-blur text-slate-800 flex items-center justify-center shadow" onclick="navigateBack()">
+<i class="w-5 h-5" data-lucide="arrow-left"></i>
+</button>
+<div class="flex items-center gap-2">
+<button class="w-9 h-9 rounded-full bg-white/80 ios-blur text-slate-800 flex items-center justify-center shadow">
+<i class="w-4 h-4" data-lucide="share-2"></i>
+</button>
+<button class="w-9 h-9 rounded-full bg-white/80 ios-blur text-slate-800 flex items-center justify-center shadow">
+<i class="w-4 h-4" data-lucide="heart"></i>
+</button>
+</div>
+</div>
+<div class="absolute bottom-3 right-4 bg-black/60 ios-blur text-white text-xs px-2.5 py-1 rounded-full font-semibold">
+            1/10
+          </div>
+</div>
+<div class="p-5 space-y-4">
+<!-- Title & Price -->
+<div class="border-b border-slate-100 pb-4">
+<div class="flex items-center justify-between">
+<span class="text-xs font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-md">Venta Exclusiva</span>
+<span class="text-xs text-slate-400">ID: HM-99214</span>
+</div>
+<h1 class="text-xl font-extrabold text-slate-900 mt-1">Casa de Diseño en Nordelta</h1>
+<p class="text-xs text-slate-500 flex items-center gap-1 mt-1">
+<i class="w-3.5 h-3.5 text-slate-400" data-lucide="map-pin"></i> Nordelta, Buenos Aires
+            </p>
+<div class="mt-3 flex items-baseline gap-2">
+<span class="text-2xl font-black text-slate-900 tracking-tight">USD 520.000</span>
+<span class="text-xs text-slate-400">($2.080 / m²)</span>
+</div>
+</div>
+<!-- Fast Specs -->
+<div class="grid grid-cols-4 gap-2 text-center py-2 bg-slate-50 rounded-2xl border border-slate-100">
+<div>
+<span class="text-xs text-slate-400 block font-medium">Dormitorios</span>
+<strong class="text-sm font-bold text-slate-800">4 dorm</strong>
+</div>
+<div>
+<span class="text-xs text-slate-400 block font-medium">Baños</span>
+<strong class="text-sm font-bold text-slate-800">3 baños</strong>
+</div>
+<div>
+<span class="text-xs text-slate-400 block font-medium">Superficie</span>
+<strong class="text-sm font-bold text-slate-800">250 m²</strong>
+</div>
+<div>
+<span class="text-xs text-slate-400 block font-medium">Cochera</span>
+<strong class="text-sm font-bold text-slate-800">2 autos</strong>
+</div>
+</div>
+<!-- Rendimiento en Homia (Proprietary Performance Metrics) -->
+<div class="border border-slate-200 rounded-2xl p-4 bg-white shadow-card space-y-3">
+<div class="flex items-center justify-between">
+<h4 class="text-xs font-extrabold uppercase text-slate-900 tracking-wide flex items-center gap-1.5">
+<i class="w-4 h-4 text-emerald-500" data-lucide="trending-up"></i> Rendimiento en Homia
+              </h4>
+<span class="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded-full">Alta demanda</span>
+</div>
+<div class="grid grid-cols-4 gap-1 text-center divide-x divide-slate-100 pt-1">
+<div>
+<span class="text-[10px] text-slate-400 block">Vistas</span>
+<span class="text-sm font-extrabold text-slate-900">12.4k</span>
+</div>
+<div>
+<span class="text-[10px] text-slate-400 block">Consultas</span>
+<span class="text-sm font-extrabold text-slate-900">892</span>
+</div>
+<div>
+<span class="text-[10px] text-slate-400 block">Visitas</span>
+<span class="text-sm font-extrabold text-slate-900">236</span>
+</div>
+<div>
+<span class="text-[10px] text-slate-400 block">Ofertas</span>
+<span class="text-sm font-extrabold text-emerald-600 font-black">7</span>
+</div>
+</div>
+<div class="text-[11px] text-slate-500 pt-2 border-t border-slate-100 flex justify-between items-center">
+<span class="flex items-center gap-1"><i class="w-3.5 h-3.5 text-slate-400" data-lucide="clock"></i> En mercado: 45 días</span>
+<span class="text-slate-400">Desde 12/03/2024</span>
+</div>
+</div>
+<!-- Historial de Precios -->
+<div class="border border-slate-200 rounded-2xl p-4 bg-white space-y-2.5">
+<h4 class="text-xs font-bold text-slate-900 flex items-center gap-1.5">
+<i class="w-4 h-4 text-slate-500" data-lucide="history"></i> Historial de precios
+            </h4>
+<div class="space-y-1.5 text-xs">
+<div class="flex justify-between items-center text-slate-400 line-through">
+<span>USD 540.000</span>
+<span class="text-[10px]">12/03/24</span>
+</div>
+<div class="flex justify-between items-center text-slate-800 font-bold">
+<span class="text-emerald-600">USD 520.000 (-3.7%)</span>
+<span class="text-[10px] text-slate-500">28/04/24</span>
+</div>
+</div>
+<a class="text-[11px] text-blue-600 font-semibold inline-block pt-1 hover:underline" href="#">Ver historial completo &gt;</a>
+</div>
+<!-- Sticky Contact Buttons bottom -->
+<div class="pt-2 flex gap-3">
+<button class="flex-1 bg-slate-900 hover:bg-slate-800 text-white font-bold py-3 rounded-xl text-xs flex items-center justify-center gap-1.5 shadow" onclick="navigateTo('networking')">
+<i class="w-4 h-4" data-lucide="message-square"></i> Consultar
+            </button>
+<button class="flex-1 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black py-3 rounded-xl text-xs flex items-center justify-center gap-1.5 shadow" onclick="alert('Oferta formal iniciada. Tu propuesta se cargará en Mi Panel.')">
+<i class="w-4 h-4" data-lucide="file-check"></i> Hacer oferta
+            </button>
+</div>
+</div>
+</section>
+<!-- END: SCREEN 05 -->
+<!-- ============================================== -->
+<!-- SCREEN 06: SELL - QUIERO VENDER                 -->
+<!-- ============================================== -->
+<section class="screen-view hidden absolute inset-0 bg-white overflow-y-auto no-scrollbar pb-24" id="screen-vender">
+<!-- Top bar -->
+<div class="sticky top-0 bg-white px-4 py-3 border-b border-slate-100 flex items-center justify-between z-10">
+<button class="p-1 text-slate-700 hover:bg-slate-100 rounded-full" onclick="navigateBack()">
+<i class="w-5 h-5" data-lucide="x"></i>
+</button>
+<div class="flex items-center gap-2">
+<div class="w-5 h-5 bg-slate-900 text-white rounded text-xs flex items-center justify-center font-bold">H</div>
+<span class="text-xs font-bold text-slate-900">Quiero Vender</span>
+</div>
+<span class="text-xs font-bold text-slate-400">1 / 7</span>
+</div>
+<div class="p-6 space-y-6">
+<div>
+<span class="text-[10px] font-bold text-emerald-600 uppercase tracking-wider">Paso 1: Precalificación</span>
+<h2 class="text-xl font-extrabold text-slate-900 mt-1">¿Por qué querés vender?</h2>
+<p class="text-xs text-slate-500 mt-1">Entender tu objetivo nos permite asignarte al agente ideal con mayor tasa de éxito.</p>
+</div>
+<!-- Radio Options Group -->
+<div class="space-y-2.5" id="vender-options">
+<label class="flex items-center gap-3.5 p-4 rounded-2xl border-2 border-emerald-500 bg-emerald-50/40 cursor-pointer transition-all">
+<input checked="" class="text-emerald-600 focus:ring-emerald-500" name="sell_reason" type="radio"/>
+<div class="flex items-center gap-3">
+<i class="w-5 h-5 text-emerald-600" data-lucide="home"></i>
+<span class="text-xs font-bold text-slate-900">Me mudo a otra propiedad</span>
+</div>
+</label>
+<label class="flex items-center gap-3.5 p-4 rounded-2xl border border-slate-200 hover:border-slate-300 bg-white cursor-pointer transition-all">
+<input class="text-slate-900 focus:ring-slate-900" name="sell_reason" type="radio"/>
+<div class="flex items-center gap-3">
+<i class="w-5 h-5 text-slate-600" data-lucide="trending-up"></i>
+<span class="text-xs font-bold text-slate-800">Inversión / Rentabilidad</span>
+</div>
+</label>
+<label class="flex items-center gap-3.5 p-4 rounded-2xl border border-slate-200 hover:border-slate-300 bg-white cursor-pointer transition-all">
+<input class="text-slate-900 focus:ring-slate-900" name="sell_reason" type="radio"/>
+<div class="flex items-center gap-3">
+<i class="w-5 h-5 text-slate-600" data-lucide="dollar-sign"></i>
+<span class="text-xs font-bold text-slate-800">Necesidad económica / Liquidez</span>
+</div>
+</label>
+<label class="flex items-center gap-3.5 p-4 rounded-2xl border border-slate-200 hover:border-slate-300 bg-white cursor-pointer transition-all">
+<input class="text-slate-900 focus:ring-slate-900" name="sell_reason" type="radio"/>
+<div class="flex items-center gap-3">
+<i class="w-5 h-5 text-slate-600" data-lucide="repeat"></i>
+<span class="text-xs font-bold text-slate-800">Cambio de propiedad (Permuta)</span>
+</div>
+</label>
+<label class="flex items-center gap-3.5 p-4 rounded-2xl border border-slate-200 hover:border-slate-300 bg-white cursor-pointer transition-all">
+<input class="text-slate-900 focus:ring-slate-900" name="sell_reason" type="radio"/>
+<div class="flex items-center gap-3">
+<i class="w-5 h-5 text-slate-600" data-lucide="file-text"></i>
+<span class="text-xs font-bold text-slate-800">Herencia / Sucesión</span>
+</div>
+</label>
+<label class="flex items-center gap-3.5 p-4 rounded-2xl border border-slate-200 hover:border-slate-300 bg-white cursor-pointer transition-all">
+<input class="text-slate-900 focus:ring-slate-900" name="sell_reason" type="radio"/>
+<div class="flex items-center gap-3">
+<i class="w-5 h-5 text-slate-600" data-lucide="more-horizontal"></i>
+<span class="text-xs font-bold text-slate-800">Otro motivo</span>
+</div>
+</label>
+</div>
+<button class="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-3.5 rounded-2xl text-xs tracking-wide shadow-md" onclick="alert('Paso 1 completado. Tu tasación instantánea se conectó con la red Homia.'); navigateTo('panel')">
+            Siguiente
+          </button>
+</div>
+</section>
+<!-- END: SCREEN 06 -->
+<!-- ============================================== -->
+<!-- SCREEN 07: SOY COMPRADOR                       -->
+<!-- ============================================== -->
+<section class="screen-view hidden absolute inset-0 bg-white overflow-y-auto no-scrollbar pb-24" id="screen-comprador">
+<!-- Top bar -->
+<div class="sticky top-0 bg-white px-4 py-3 border-b border-slate-100 flex items-center justify-between z-10">
+<button class="p-1 text-slate-700 hover:bg-slate-100 rounded-full" onclick="navigateBack()">
+<i class="w-5 h-5" data-lucide="x"></i>
+</button>
+<div class="flex items-center gap-2">
+<div class="w-5 h-5 bg-slate-900 text-white rounded text-xs flex items-center justify-center font-bold">H</div>
+<span class="text-xs font-bold text-slate-900">Soy Comprador</span>
+</div>
+<span class="text-xs font-bold text-slate-400">1 / 6</span>
+</div>
+<div class="p-6 space-y-6">
+<div>
+<span class="text-[10px] font-bold text-emerald-600 uppercase tracking-wider">Perfil Inteligente</span>
+<h2 class="text-xl font-extrabold text-slate-900 mt-1">¿Qué tipo de inmueble buscás?</h2>
+</div>
+<!-- Cards Selector -->
+<div class="grid grid-cols-3 gap-3">
+<div class="p-3 border-2 border-emerald-500 bg-emerald-50/30 rounded-2xl text-center cursor-pointer">
+<i class="w-6 h-6 text-emerald-600 mx-auto" data-lucide="home"></i>
+<span class="text-[11px] font-bold text-slate-800 mt-2 block">Residencial</span>
+</div>
+<div class="p-3 border border-slate-200 rounded-2xl text-center cursor-pointer hover:border-slate-300">
+<i class="w-6 h-6 text-slate-600 mx-auto" data-lucide="building-2"></i>
+<span class="text-[11px] font-bold text-slate-800 mt-2 block">Comercial</span>
+</div>
+<div class="p-3 border border-slate-200 rounded-2xl text-center cursor-pointer hover:border-slate-300">
+<i class="w-6 h-6 text-slate-600 mx-auto" data-lucide="warehouse"></i>
+<span class="text-[11px] font-bold text-slate-800 mt-2 block">Industrial</span>
+</div>
+</div>
+<!-- Question 2 -->
+<div>
+<h3 class="text-sm font-bold text-slate-900 mb-3">¿Cómo pensás financiar la compra?</h3>
+<div class="space-y-2">
+<label class="flex items-center gap-3 p-3 rounded-xl border border-slate-200 cursor-pointer hover:bg-slate-50">
+<input checked="" class="text-slate-900" name="financing" type="radio"/>
+<span class="text-xs font-semibold text-slate-700">Contado / Fondos propios</span>
+</label>
+<label class="flex items-center gap-3 p-3 rounded-xl border border-slate-200 cursor-pointer hover:bg-slate-50">
+<input class="text-slate-900" name="financing" type="radio"/>
+<span class="text-xs font-semibold text-slate-700">Crédito hipotecario</span>
+</label>
+<label class="flex items-center gap-3 p-3 rounded-xl border border-slate-200 cursor-pointer hover:bg-slate-50">
+<input class="text-slate-900" name="financing" type="radio"/>
+<span class="text-xs font-semibold text-slate-700">Financiación propia del desarrollador</span>
+</label>
+<label class="flex items-center gap-3 p-3 rounded-xl border border-slate-200 cursor-pointer hover:bg-slate-50">
+<input class="text-slate-900" name="financing" type="radio"/>
+<span class="text-xs font-semibold text-slate-700">Permuta como parte de pago</span>
+</label>
+</div>
+</div>
+<button class="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-3.5 rounded-2xl text-xs tracking-wide shadow-md" onclick="navigateTo('match')">
+            Continuar al Match Inteligente
+          </button>
+</div>
+</section>
+<!-- END: SCREEN 07 -->
+<!-- ============================================== -->
+<!-- SCREEN 08: MATCH INTELIGENTE (TIPO TINDER)     -->
+<!-- ============================================== -->
+<section class="screen-view hidden absolute inset-0 bg-slate-100 flex flex-col pb-20" id="screen-match">
+<!-- Match Header -->
+<div class="bg-white px-5 py-3 border-b border-slate-200 flex items-center justify-between shrink-0">
+<button class="p-1 text-slate-600" onclick="navigateBack()"><i class="w-6 h-6" data-lucide="chevron-left"></i></button>
+<div class="flex items-center gap-1.5">
+<i class="w-4 h-4 text-emerald-500 fill-emerald-500" data-lucide="sparkles"></i>
+<h2 class="text-base font-extrabold text-slate-900">Match</h2>
+</div>
+<button class="p-1 text-slate-600"><i class="w-5 h-5" data-lucide="sliders"></i></button>
+</div>
+<!-- Swipe Card Area -->
+<div class="flex-1 p-4 flex flex-col justify-center items-center relative overflow-hidden">
+<!-- Card Container -->
+<div class="w-full max-w-sm bg-white rounded-3xl shadow-xl overflow-hidden border border-slate-200 flex flex-col relative transition-transform duration-300" id="match-card">
+<!-- Property Image with Match Tag -->
+<div class="relative w-full h-64 bg-slate-200">
+<img class="w-full h-full object-cover" id="match-card-img" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBigBlyBCSCYK_tX7O0cf89znQI1eaNjfoRPNdfrUsAeSW6WI5_BMAAqm_0SQTnQD31XPgECIIX005vT5LjbiofKCcvqWvb3P6zsDKG4W_r-sNBIUXRDarY_t-3ovpRKEwu3SePcCy-8wcoOQ2Bna8iz0tRHxwwtmCtd5wWdCPPcFcxNpsYkY6Cn9xRTXZSzWqsQjAPp4U4UBiiqyYMOVfbcBPbAfU1TM41MxWUYNA093kLCoq4fl1wMg"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-black/20"></div>
+<!-- Match Percentage Pill -->
+<div class="absolute top-3 right-3 bg-emerald-500 text-slate-950 px-3 py-1 rounded-full text-xs font-black flex items-center gap-1 shadow-lg">
+<i class="w-3.5 h-3.5" data-lucide="sparkles"></i>
+<span id="match-card-pct">95% Match</span>
+</div>
+<!-- Badges over photo -->
+<div class="absolute bottom-3 left-4 text-white">
+<h3 class="text-lg font-extrabold leading-tight" id="match-card-title">Casa moderna en Pilar</h3>
+<p class="text-xs text-slate-300" id="match-card-sub">Pilar, Buenos Aires</p>
+<p class="text-sm font-black text-emerald-400 mt-0.5" id="match-card-price">USD 310.000</p>
+</div>
+</div>
+<!-- Card Specs & Invisible Filters Match Reason -->
+<div class="p-4 space-y-3 bg-white">
+<!-- Specs -->
+<div class="flex justify-between items-center text-xs font-semibold text-slate-600 pb-2 border-b border-slate-100">
+<span class="flex items-center gap-1"><i class="w-4 h-4 text-slate-400" data-lucide="bed"></i> 3 dorm</span>
+<span class="flex items-center gap-1"><i class="w-4 h-4 text-slate-400" data-lucide="bath"></i> 2 baños</span>
+<span class="flex items-center gap-1"><i class="w-4 h-4 text-slate-400" data-lucide="maximize"></i> 250 m²</span>
+</div>
+<!-- Match Reasons / Algorithmic compatibility -->
+<div class="space-y-1.5 pt-1">
+<div class="flex items-center gap-2 text-[11px] text-emerald-700 font-semibold">
+<i class="w-4 h-4 text-emerald-500 shrink-0" data-lucide="check-circle-2"></i>
+<span>Coincide con tu presupuesto máximo</span>
+</div>
+<div class="flex items-center gap-2 text-[11px] text-emerald-700 font-semibold">
+<i class="w-4 h-4 text-emerald-500 shrink-0" data-lucide="check-circle-2"></i>
+<span>Zona preferida con colegios cercanos</span>
+</div>
+<div class="flex items-center gap-2 text-[11px] text-emerald-700 font-semibold">
+<i class="w-4 h-4 text-emerald-500 shrink-0" data-lucide="check-circle-2"></i>
+<span>Compatible con tu forma de pago (Permuta)</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Tinder-style Action Bar -->
+<div class="flex items-center justify-center gap-6 mt-4">
+<!-- Dislike (X) -->
+<button class="w-13 h-13 rounded-full bg-white text-rose-500 shadow-float border border-rose-100 flex items-center justify-center hover:scale-110 active:scale-95 transition-all" onclick="handleSwipe('left')">
+<i class="w-7 h-7 stroke-[2.5]" data-lucide="x"></i>
+</button>
+<!-- Info -->
+<button class="w-10 h-10 rounded-full bg-white text-blue-500 shadow-card border border-blue-100 flex items-center justify-center hover:scale-105 active:scale-95 transition-all" onclick="navigateTo('marketplace-detalle')">
+<i class="w-5 h-5 stroke-[2.5]" data-lucide="info"></i>
+</button>
+<!-- Super Like / Match (Heart) -->
+<button class="w-13 h-13 rounded-full bg-emerald-500 text-white shadow-float flex items-center justify-center hover:scale-110 active:scale-95 transition-all" onclick="handleSwipe('right')">
+<i class="w-7 h-7 stroke-[2.5] fill-white" data-lucide="heart"></i>
+</button>
+</div>
+</div>
+</section>
+<!-- END: SCREEN 08 -->
+<!-- ============================================== -->
+<!-- SCREEN 09: HOMIA ACADEMIA                      -->
+<!-- ============================================== -->
+<section class="screen-view hidden absolute inset-0 bg-white overflow-y-auto no-scrollbar pb-24" id="screen-academia">
+<!-- Top bar -->
+<div class="sticky top-0 bg-white/95 ios-blur px-4 py-3 border-b border-slate-100 z-10">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 bg-slate-900 text-white rounded flex items-center justify-center text-xs font-bold">H</div>
+<h2 class="text-base font-extrabold text-slate-900">Homia Academia</h2>
+</div>
+<button class="text-xs font-bold text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-full flex items-center gap-1" onclick="navigateTo('networking')">
+<i class="w-3.5 h-3.5" data-lucide="network"></i> Networking
+            </button>
+</div>
+<!-- Search Input -->
+<div class="relative mt-2.5">
+<i class="w-4 h-4 text-slate-400 absolute left-3 top-2.5" data-lucide="search"></i>
+<input class="w-full bg-slate-100 border-0 rounded-xl py-2 pl-9 pr-3 text-xs text-slate-800 placeholder-slate-400 focus:ring-1 focus:ring-slate-900" placeholder="Buscar cursos, podcasts, audioguías..." type="text"/>
+</div>
+<!-- Categories Filter Pills -->
+<div class="flex gap-2 mt-3 overflow-x-auto no-scrollbar" id="academia-pills">
+<button class="academia-pill px-3 py-1 rounded-full text-xs font-bold bg-slate-900 text-white">Todo</button>
+<button class="academia-pill px-3 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-600 hover:bg-slate-200">Podcasts</button>
+<button class="academia-pill px-3 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-600 hover:bg-slate-200">Videos</button>
+<button class="academia-pill px-3 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-600 hover:bg-slate-200">Audiolibros</button>
+</div>
+</div>
+<div class="p-4 space-y-5">
+<!-- Featured Course Banner -->
+<div>
+<h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Destacados</h3>
+<div class="relative rounded-2xl overflow-hidden shadow-card cursor-pointer group" onclick="alert('Abriendo episodio: El futuro del real estate en Latinoamérica')">
+<img alt="Podcast" class="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDPfjUPkMMDRKcVfq1pg4Ldgr6ulgshSD01GLTEYzpvc4siLKDGGXDzG0f27AD89gFEn_gO4ZU5kCTh8Kz_qZzxID-07Z_T5E-quawg2AydAs4uTUNy_3pP5opWOQSEByDOFzWScqUUoHD62rEW4WyMYtQ5APrC2mmnJTTrcCQRTDvhWRLRJRsNsgaZs0-r_FWjf8OMiTdaUuUMil0cxs6Y9OZ6IDBigIkPlEAlVqAGThPgiYaPxMPwKQ"/>
+<div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-900/60 to-transparent"></div>
+<div class="absolute top-3 left-3 bg-emerald-500 text-slate-950 text-[10px] font-black px-2 py-0.5 rounded-md uppercase">
+                Podcast • Nuevo
+              </div>
+<div class="absolute bottom-3 left-3 right-3 flex items-end justify-between">
+<div>
+<h4 class="text-sm font-extrabold text-white leading-tight">El futuro del real estate en Latinoamérica</h4>
+<p class="text-[11px] text-slate-300 mt-0.5">Con Carlos Muñoz &amp; Directores Homia • 35 min</p>
+</div>
+<div class="w-9 h-9 rounded-full bg-white text-slate-900 flex items-center justify-center shadow-lg shrink-0">
+<i class="w-4 h-4 fill-slate-900" data-lucide="play"></i>
+</div>
+</div>
+</div>
+</div>
+<!-- Continuar viendo -->
+<div>
+<h3 class="text-xs font-bold text-slate-900 mb-2.5">Continuar aprendiendo</h3>
+<div class="space-y-2.5">
+<div class="flex items-center gap-3 p-2.5 bg-slate-50 rounded-xl border border-slate-100 cursor-pointer hover:bg-slate-100">
+<div class="relative w-16 h-14 rounded-lg overflow-hidden shrink-0">
+<img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDfQjB9-X0uiRIbr3Gkw5nrMfmoFIeNFBzYS544r3vNypy3kuiDnlzDagY7vtGdIFj-GqD0tIYiJbuGzg6DIkxWfbqzM-bebad8TdaMReslZMDPnec2ByNWjhX_F_Wc4PV_WOXMSHtUIsTeWXOfIMVhYEbFKSOJICGb9TZ8fY8XoaFbAl-Ah-s7wR8VzgQCw3zUtrOkgqxW7aLrLr7pFSHvBcYs0Lx7g3JW243YVxLD3zfRgqWzqc0A9g"/>
+<div class="absolute inset-0 bg-black/20 flex items-center justify-center">
+<i class="w-4 h-4 text-white" data-lucide="play"></i>
+</div>
+</div>
+<div class="flex-1 min-w-0">
+<h5 class="text-xs font-bold text-slate-800 truncate">Técnicas de negociación inmobiliaria moderna</h5>
+<p class="text-[10px] text-slate-500">Video curso • 12 min restantes</p>
+<div class="w-full bg-slate-200 h-1 rounded-full mt-1.5 overflow-hidden">
+<div class="bg-emerald-500 h-full w-2/3"></div>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-3 p-2.5 bg-slate-50 rounded-xl border border-slate-100 cursor-pointer hover:bg-slate-100">
+<div class="relative w-16 h-14 rounded-lg overflow-hidden shrink-0">
+<img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAO9gU0pPJk0k2QDFa0HYDDJdLdZp0pWdcpbrSrYEHOHFxAtHHy5cji2SU2GT3WP3r_kmt6KR3AXMK7GV13VndwDZa0KtUkOU99g__IUhfo3Tviy786GPCd0sU33h0orpC8iL8vLTJR3Z3aZ8ZwxLAV1RK0XGKbq6ItE0GhaYlmGRt5LuMfHhWjm-rqXQXzUGso5ftK8Ah-zUge5JnLVdt4j31628Nzfi4aDfuPlNXGhzKtA-Ck2ScqCQ"/>
+<div class="absolute inset-0 bg-black/20 flex items-center justify-center">
+<i class="w-4 h-4 text-white" data-lucide="headphones"></i>
+</div>
+</div>
+<div class="flex-1 min-w-0">
+<h5 class="text-xs font-bold text-slate-800 truncate">Análisis de mercado: Valuación y Cap Rates</h5>
+<p class="text-[10px] text-slate-500">Audiolibro • 28 min restantes</p>
+<div class="w-full bg-slate-200 h-1 rounded-full mt-1.5 overflow-hidden">
+<div class="bg-emerald-500 h-full w-1/4"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Categorías de Aprendizaje -->
+<div>
+<h3 class="text-xs font-bold text-slate-900 mb-2.5">Explorar temas</h3>
+<div class="grid grid-cols-4 gap-2 text-center">
+<div class="p-2.5 bg-slate-50 rounded-xl border border-slate-150 cursor-pointer hover:bg-slate-100">
+<div class="w-8 h-8 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center mx-auto">
+<i class="w-4 h-4" data-lucide="megaphone"></i>
+</div>
+<span class="text-[10px] font-bold text-slate-700 mt-1.5 block">Marketing</span>
+</div>
+<div class="p-2.5 bg-slate-50 rounded-xl border border-slate-150 cursor-pointer hover:bg-slate-100">
+<div class="w-8 h-8 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center mx-auto">
+<i class="w-4 h-4" data-lucide="trending-up"></i>
+</div>
+<span class="text-[10px] font-bold text-slate-700 mt-1.5 block">Ventas</span>
+</div>
+<div class="p-2.5 bg-slate-50 rounded-xl border border-slate-150 cursor-pointer hover:bg-slate-100">
+<div class="w-8 h-8 rounded-full bg-amber-100 text-amber-700 flex items-center justify-center mx-auto">
+<i class="w-4 h-4" data-lucide="pie-chart"></i>
+</div>
+<span class="text-[10px] font-bold text-slate-700 mt-1.5 block">Inversión</span>
+</div>
+<div class="p-2.5 bg-slate-50 rounded-xl border border-slate-150 cursor-pointer hover:bg-slate-100">
+<div class="w-8 h-8 rounded-full bg-purple-100 text-purple-700 flex items-center justify-center mx-auto">
+<i class="w-4 h-4" data-lucide="scale"></i>
+</div>
+<span class="text-[10px] font-bold text-slate-700 mt-1.5 block">Legislación</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- END: SCREEN 09 -->
+<!-- ============================================== -->
+<!-- SCREEN 10: NETWORKING GLOBAL                   -->
+<!-- ============================================== -->
+<section class="screen-view hidden absolute inset-0 bg-white flex flex-col pb-20" id="screen-networking">
+<!-- Top bar -->
+<div class="bg-white px-4 py-3 border-b border-slate-100 flex items-center justify-between shrink-0">
+<button class="p-1 text-slate-600" onclick="navigateBack()"><i class="w-5 h-5" data-lucide="arrow-left"></i></button>
+<div class="flex items-center gap-1.5">
+<i class="w-4 h-4 text-slate-900" data-lucide="globe"></i>
+<h2 class="text-base font-extrabold text-slate-900">Networking Global</h2>
+</div>
+<button class="p-1 text-slate-600"><i class="w-5 h-5" data-lucide="message-circle"></i></button>
+</div>
+<!-- Segment Toggle: Mapa / Lista / Chats -->
+<div class="px-4 py-2 border-b border-slate-100">
+<div class="bg-slate-100 p-1 rounded-xl flex text-xs font-bold">
+<button class="flex-1 py-1.5 rounded-lg bg-white shadow-sm text-slate-900">Mapa</button>
+<button class="flex-1 py-1.5 rounded-lg text-slate-500 hover:text-slate-800">Lista</button>
+<button class="flex-1 py-1.5 rounded-lg text-slate-500 hover:text-slate-800">Chats</button>
+</div>
+</div>
+<!-- Interactive Network Map Simulation -->
+<div class="flex-1 relative bg-slate-100 overflow-hidden">
+<!-- Stylized map background -->
+<div class="absolute inset-0 opacity-40 bg-[radial-gradient(#94a3b8_1px,transparent_1px)] [background-size:16px_16px]"></div>
+<!-- Search agents floating bar -->
+<div class="absolute top-3 left-4 right-4 z-10">
+<div class="relative shadow-md">
+<i class="w-4 h-4 text-slate-400 absolute left-3 top-2.5" data-lucide="search"></i>
+<input class="w-full bg-white border border-slate-200 rounded-xl py-2 pl-9 pr-3 text-xs" placeholder="Buscar agentes, ciudades o países..." type="text"/>
+</div>
+</div>
+<!-- Network Pins on Map -->
+<div class="absolute top-28 left-16 cursor-pointer transform -translate-x-1/2" onclick="showAgentDetail('María López', 'Lima, Perú')">
+<div class="relative group">
+<div class="w-10 h-10 rounded-full border-2 border-emerald-500 bg-white shadow-lg overflow-hidden">
+<img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCVrsiGEWCRBnJfnVNIA-brSHVZC6PQcPfHCinNHpdTFa6CCX5bmphYS39YiTscdcDCqRtBBVWBYbozO4hA8-kW4E3lwAvQ7LWy3CPBBqiXLxU1K5K6cUlXvA00u6JlANsUv3pKav8JXSd5gn1I77VRCfUxPHBu85TYt4bXegaHiBtwl9wPkzVY9vU-sH961CoZfvDsChc0iMlRWs4lDyQofKoRtBj6O86WKU_P4EL7YRU33F__nytwjA"/>
+</div>
+<span class="absolute -bottom-1 -right-1 w-3.5 h-3.5 bg-emerald-500 border-2 border-white rounded-full"></span>
+</div>
+</div>
+<div class="absolute top-44 right-20 cursor-pointer" onclick="showAgentDetail('Lucas Rossi', 'Madrid, España')">
+<div class="relative group">
+<div class="w-10 h-10 rounded-full border-2 border-blue-500 bg-white shadow-lg overflow-hidden">
+<img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDz_m0SkSuvqHSKMPueXjYlVejpOvakBZ3i2_iGdeZcbDs13-rtyjxScR1SAxiRLSCmJmoTpV7nqOAxrzspz3WLAWckBe9TM0oa504VyRcenjMoH2OFLqXXvl_Gn7ylHMb4D8BuyGVqhFp3iYhsJzCUUUwJ9MxOmqiRu6d_olFqaGEh9D_oTOj-_lLyIBLJrNEk7b7FGwuvIyhQ1GVnVgeOtTWP895EPl_1JP_iWk7GoEVnNhTz9ogQBg"/>
+</div>
+<span class="absolute -bottom-1 -right-1 w-3.5 h-3.5 bg-blue-500 border-2 border-white rounded-full"></span>
+</div>
+</div>
+<div class="absolute bottom-40 left-32 cursor-pointer" onclick="showAgentDetail('Sofía Martínez', 'Buenos Aires')">
+<div class="relative group">
+<div class="w-11 h-11 rounded-full border-2 border-slate-900 bg-white shadow-xl overflow-hidden ring-4 ring-emerald-500/20">
+<img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBZEauUE7smHIF-VMRjUn60pVDt3l7cpzDn4cQYN_6EmtuH2BdBmoXw5Yciew3IEv_gJ0D9W_d65-I8q8D0Q7_F2K9cwmv-F3W-SbJpL5oJ2bZ_qI2-SVs2D_uJgjvmU-Y7qkRey3Npl51IvVMiV8yhleOOOlHpzBWqX_dWvDt4SpjptKLgV8vOcRNydsYQZyoWwUij37BjbJAzRrEjVXhdRZtHD0GKBW6qC2QctUKKEIDDOhpW5kslGQ"/>
+</div>
+</div>
+</div>
+<!-- Floating Agent Detail Card on Map -->
+<div class="absolute bottom-20 left-4 right-4 bg-white/95 ios-blur p-3.5 rounded-2xl shadow-xl border border-slate-200 flex items-center justify-between" id="agent-popup">
+<div class="flex items-center gap-3">
+<img class="w-11 h-11 rounded-full object-cover" id="popup-avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCkD94j4RBOBbQc4mT16oqPMtIyz2V5X9DbEje267nCuB_JWC8wTfvY5geBnh0wAB45eqfwGzUL9rV4X7ys8uS9omQDI59kVO-DxtTZb0CClXiqOeZc6LVZzffADHCZsJD3M2bKI3dKe2eOqjGworTsV3I2EBBNlpI1uvBpAxdQMDu0QzY0rvg9czDW-k4_5qn6F0Kb2zH-dT2Xoor96u-0E83ckdg_-NF7T-NEWDtkpgT-3V0Ydw1qXw"/>
+<div>
+<h4 class="text-xs font-bold text-slate-900" id="popup-name">María López</h4>
+<p class="text-[10px] text-slate-500" id="popup-role">Agente en Lima, Perú • Especialista en inversión</p>
+</div>
+</div>
+<div class="flex gap-1.5">
+<button class="bg-slate-900 text-white text-[11px] font-bold px-3 py-1.5 rounded-xl hover:bg-slate-800" onclick="alert('Solicitud de conexión enviada.')">Conectar</button>
+<button class="bg-slate-100 text-slate-700 text-[11px] font-bold px-2 py-1.5 rounded-xl" onclick="navigateTo('agente-perfil')"><i class="w-3.5 h-3.5" data-lucide="arrow-right"></i></button>
+</div>
+</div>
+<!-- Bottom Cities Carousel -->
+<div class="absolute bottom-2 left-0 right-0 px-4 flex gap-2 overflow-x-auto no-scrollbar">
+<span class="px-3 py-1 bg-white shadow-sm border border-slate-200 rounded-full text-[11px] font-bold text-slate-700 shrink-0">Lima</span>
+<span class="px-3 py-1 bg-white shadow-sm border border-slate-200 rounded-full text-[11px] font-bold text-slate-700 shrink-0">Santiago</span>
+<span class="px-3 py-1 bg-white shadow-sm border border-slate-200 rounded-full text-[11px] font-bold text-slate-700 shrink-0">Bogotá</span>
+<span class="px-3 py-1 bg-white shadow-sm border border-slate-200 rounded-full text-[11px] font-bold text-slate-700 shrink-0">CDMX</span>
+<span class="px-3 py-1 bg-white shadow-sm border border-slate-200 rounded-full text-[11px] font-bold text-slate-700 shrink-0">Madrid</span>
+</div>
+</div>
+</section>
+<!-- END: SCREEN 10 -->
+<!-- ============================================== -->
+<!-- SCREEN 11: MI PANEL (AGENTE DASHBOARD)         -->
+<!-- ============================================== -->
+<section class="screen-view hidden absolute inset-0 bg-slate-50 overflow-y-auto no-scrollbar pb-24" id="screen-panel">
+<!-- Top bar -->
+<div class="sticky top-0 bg-white/95 ios-blur px-5 py-3 border-b border-slate-100 flex items-center justify-between z-10">
+<div class="flex items-center gap-2">
+<button class="p-1 -ml-1 text-slate-600" onclick="navigateTo('inicio')"><i class="w-5 h-5" data-lucide="chevron-left"></i></button>
+<h2 class="text-base font-extrabold text-slate-900">Mi Panel</h2>
+</div>
+<div class="flex items-center gap-2">
+<button class="p-1.5 text-slate-600 relative hover:bg-slate-100 rounded-full">
+<i class="w-5 h-5" data-lucide="bell"></i>
+<span class="absolute top-1 right-1 w-2 h-2 bg-rose-500 rounded-full"></span>
+</button>
+<button class="text-xs font-bold text-slate-900 bg-slate-100 px-2.5 py-1 rounded-full flex items-center gap-1 hover:bg-slate-200" onclick="navigateTo('agente-perfil')">
+              Ver perfil público <i class="w-3 h-3" data-lucide="external-link"></i>
+</button>
+</div>
+</div>
+<div class="p-4 space-y-4">
+<!-- Profile Badge Preview -->
+<div class="bg-white p-3.5 rounded-2xl border border-slate-200/80 shadow-sm flex items-center justify-between">
+<div class="flex items-center gap-3">
+<img alt="Juan Pérez" class="w-11 h-11 rounded-full object-cover ring-2 ring-slate-100" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC7g0M48i3uQdwlyA7re3tWRv4PoccK8QeYRX8I-ohDXeaJgYnxjZHQTnRTFt6AtcdLQf2j72h9gx2CFSZEzOELgDirsrAooAu2Ufo_GylPAufP1CYBwbu8Ia4t5RAe0cLaM_PZzH_HIhghRJwHy_hsGRERSZOqVG8HBHsoSbumsuy9LWkUCdDC2_EXv8V9Ea4urygkYYDTmRyg5RPb_1zK7QpiWu3cSvaUddfTVT3Ug9WNGftROyd3hQ"/>
+<div>
+<h3 class="text-xs font-extrabold text-slate-900">Juan Pérez</h3>
+<p class="text-[10px] text-slate-500">Agente Inmobiliario | Century 21</p>
+</div>
+</div>
+<span class="text-[10px] font-bold bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full">Nivel Pro</span>
+</div>
+<!-- Section Switcher Tabs (Resumen / Propiedades / Clientes / Finanzas) -->
+<div class="flex gap-2 overflow-x-auto no-scrollbar text-xs font-bold pb-1">
+<button class="px-3 py-1.5 bg-slate-900 text-white rounded-xl shrink-0">Resumen</button>
+<button class="px-3 py-1.5 bg-white border border-slate-200 text-slate-600 rounded-xl shrink-0" onclick="navigateTo('marketplace-detalle')">Propiedades</button>
+<button class="px-3 py-1.5 bg-white border border-slate-200 text-slate-600 rounded-xl shrink-0">Clientes</button>
+<button class="px-3 py-1.5 bg-white border border-slate-200 text-slate-600 rounded-xl shrink-0">Finanzas</button>
+</div>
+<!-- Key Metrics Grid -->
+<div class="grid grid-cols-2 gap-3">
+<div class="bg-white p-3.5 rounded-2xl border border-slate-200/80 shadow-sm">
+<span class="text-[10px] uppercase font-bold text-slate-400">Ventas este mes</span>
+<p class="text-base font-black text-slate-900 mt-1">USD 48.500</p>
+<div class="flex items-center gap-1 text-[10px] font-bold text-emerald-600 mt-1">
+<i class="w-3 h-3" data-lucide="trending-up"></i> +12% vs mes anterior
+              </div>
+</div>
+<div class="bg-white p-3.5 rounded-2xl border border-slate-200/80 shadow-sm">
+<span class="text-[10px] uppercase font-bold text-slate-400">Comisiones</span>
+<p class="text-base font-black text-emerald-600 mt-1">USD 6.300</p>
+<div class="flex items-center gap-1 text-[10px] font-bold text-emerald-600 mt-1">
+<i class="w-3 h-3" data-lucide="arrow-up-right"></i> +8% este mes
+              </div>
+</div>
+<div class="bg-white p-3.5 rounded-2xl border border-slate-200/80 shadow-sm">
+<span class="text-[10px] uppercase font-bold text-slate-400">Propiedades activas</span>
+<p class="text-base font-black text-slate-900 mt-1">12</p>
+<span class="text-[10px] font-semibold text-slate-500 mt-1 block">+3 en revisión</span>
+</div>
+<div class="bg-white p-3.5 rounded-2xl border border-slate-200/80 shadow-sm">
+<span class="text-[10px] uppercase font-bold text-slate-400">Leads Calificados</span>
+<p class="text-base font-black text-slate-900 mt-1">86</p>
+<span class="text-[10px] font-semibold text-emerald-600 mt-1 block">+24% ratio conv.</span>
+</div>
+</div>
+<!-- Embudo de Ventas (Sales Funnel Exact from Mockup) -->
+<div class="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm space-y-3">
+<div class="flex items-center justify-between">
+<h4 class="text-xs font-bold text-slate-900 flex items-center gap-1.5">
+<i class="w-4 h-4 text-slate-600" data-lucide="filter"></i> Embudo de ventas
+              </h4>
+<span class="text-[10px] text-slate-400 font-semibold">Últimos 30 días</span>
+</div>
+<div class="space-y-2 pt-1">
+<!-- Leads -->
+<div>
+<div class="flex justify-between text-[11px] font-bold text-slate-700 mb-1">
+<span>Leads iniciales</span>
+<span>240</span>
+</div>
+<div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
+<div class="bg-slate-900 h-full w-full rounded-full"></div>
+</div>
+</div>
+<!-- Contactos -->
+<div>
+<div class="flex justify-between text-[11px] font-bold text-slate-700 mb-1">
+<span>Contactos efectivos</span>
+<span>128</span>
+</div>
+<div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
+<div class="bg-slate-800 h-full w-[53%] rounded-full"></div>
+</div>
+</div>
+<!-- Visitas -->
+<div>
+<div class="flex justify-between text-[11px] font-bold text-slate-700 mb-1">
+<span>Visitas a propiedades</span>
+<span>56</span>
+</div>
+<div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
+<div class="bg-slate-700 h-full w-[23%] rounded-full"></div>
+</div>
+</div>
+<!-- Ofertas -->
+<div>
+<div class="flex justify-between text-[11px] font-bold text-slate-700 mb-1">
+<span>Ofertas recibidas</span>
+<span>18</span>
+</div>
+<div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
+<div class="bg-emerald-600 h-full w-[8%] rounded-full"></div>
+</div>
+</div>
+<!-- Ventas -->
+<div>
+<div class="flex justify-between text-[11px] font-bold text-emerald-700 mb-1">
+<span>Ventas cerradas</span>
+<span class="font-extrabold">7</span>
+</div>
+<div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
+<div class="bg-emerald-500 h-full w-[3%] rounded-full"></div>
+</div>
+</div>
+</div>
+<!-- Objetivo mensual bar -->
+<div class="pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
+<span class="text-slate-500">Objetivo mensual (70%)</span>
+<span class="font-extrabold text-slate-900">USD 48.500 / 70.000</span>
+</div>
+</div>
+</div>
+</section>
+<!-- END: SCREEN 11 -->
+</main>
+<!-- END: ScreensViewport -->
+<!-- BEGIN: BottomNavigation -->
+<nav class="w-full bg-white/95 ios-blur border-t border-slate-200 px-2 py-1.5 flex justify-around items-center z-50 shrink-0 shadow-nav">
+<!-- Tab 1: Inicio -->
+<button class="nav-tab active-tab flex flex-col items-center gap-0.5 py-1 px-2 text-slate-900 transition-colors" id="nav-inicio" onclick="navigateTo('inicio')">
+<i class="w-5 h-5" data-lucide="home"></i>
+<span class="text-[10px] font-bold tracking-tight">Inicio</span>
+</button>
+<!-- Tab 2: Búsqueda -->
+<button class="nav-tab flex flex-col items-center gap-0.5 py-1 px-2 text-slate-400 hover:text-slate-900 transition-colors" id="nav-busqueda" onclick="navigateTo('busqueda')">
+<i class="w-5 h-5" data-lucide="search"></i>
+<span class="text-[10px] font-medium tracking-tight">Búsqueda</span>
+</button>
+<!-- Tab 3: Reels -->
+<button class="nav-tab flex flex-col items-center gap-0.5 py-1 px-2 text-slate-400 hover:text-slate-900 transition-colors" id="nav-reels" onclick="navigateTo('reels')">
+<i class="w-5 h-5" data-lucide="play-circle"></i>
+<span class="text-[10px] font-medium tracking-tight">Reels</span>
+</button>
+<!-- Tab 4: Match -->
+<button class="nav-tab flex flex-col items-center gap-0.5 py-1 px-2 text-slate-400 hover:text-slate-900 transition-colors" id="nav-match" onclick="navigateTo('match')">
+<div class="relative">
+<i class="w-5 h-5" data-lucide="heart"></i>
+<span class="absolute -top-1 -right-1 w-2 h-2 bg-emerald-500 rounded-full"></span>
+</div>
+<span class="text-[10px] font-medium tracking-tight">Match</span>
+</button>
+<!-- Tab 5: Academia -->
+<button class="nav-tab flex flex-col items-center gap-0.5 py-1 px-2 text-slate-400 hover:text-slate-900 transition-colors" id="nav-academia" onclick="navigateTo('academia')">
+<i class="w-5 h-5" data-lucide="graduation-cap"></i>
+<span class="text-[10px] font-medium tracking-tight">Academia</span>
+</button>
+<!-- Tab 6: Agente / Panel -->
+<button class="nav-tab flex flex-col items-center gap-0.5 py-1 px-2 text-slate-400 hover:text-slate-900 transition-colors" id="nav-panel" onclick="navigateTo('panel')">
+<i class="w-5 h-5" data-lucide="user"></i>
+<span class="text-[10px] font-medium tracking-tight">Agente</span>
+</button>
+</nav>
+<!-- END: BottomNavigation -->
+<!-- BEGIN: iOSHomeIndicator -->
+<footer class="w-full h-4 bg-white/95 ios-blur flex justify-center items-center pb-1">
+<div class="w-32 h-1 bg-slate-400/60 rounded-full"></div>
+</footer>
+<!-- END: iOSHomeIndicator -->
+</div>
+<!-- END: PhoneFrame -->
+<!-- BEGIN: InteractiveScript -->
+<script data-purpose="app-controller">
+    // Navigation History Stack
+    const historyStack = ['inicio'];
+    let currentScreen = 'inicio';
+
+    // Match Deck mock data
+    const matchCards = [
+      {
+        title: "Casa moderna en Pilar",
+        sub: "Pilar, Buenos Aires",
+        price: "USD 310.000",
+        match: "95% Match",
+        img: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=700&auto=format&fit=crop&q=80"
+      },
+      {
+        title: "Penthouse con Terraza",
+        sub: "Palermo Hollywood, CABA",
+        price: "USD 440.000",
+        match: "92% Match",
+        img: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=700&auto=format&fit=crop&q=80"
+      },
+      {
+        title: "Villa al Lago con Muelle",
+        sub: "Nordelta, Bs. As.",
+        price: "USD 650.000",
+        match: "89% Match",
+        img: "https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=700&auto=format&fit=crop&q=80"
+      }
+    ];
+    let currentMatchIndex = 0;
+
+    function navigateTo(screenId) {
+      if (screenId === currentScreen) return;
+
+      // Hide all screens
+      document.querySelectorAll('.screen-view').forEach(screen => {
+        screen.classList.add('hidden');
+      });
+
+      // Show destination screen
+      const targetScreen = document.getElementById(`screen-${screenId}`);
+      if (targetScreen) {
+        targetScreen.classList.remove('hidden');
+        targetScreen.scrollTop = 0;
+        
+        // Push history if not already current
+        if (historyStack[historyStack.length - 1] !== screenId) {
+          historyStack.push(screenId);
+        }
+        currentScreen = screenId;
+      }
+
+      // Update Nav Bar Tab styling
+      updateNavHighlight(screenId);
+    }
+
+    function navigateBack() {
+      if (historyStack.length > 1) {
+        historyStack.pop(); // Remove current
+        const prevScreen = historyStack[historyStack.length - 1];
+        
+        document.querySelectorAll('.screen-view').forEach(screen => {
+          screen.classList.add('hidden');
+        });
+        const target = document.getElementById(`screen-${prevScreen}`);
+        if (target) {
+          target.classList.remove('hidden');
+          currentScreen = prevScreen;
+          updateNavHighlight(prevScreen);
+        }
+      } else {
+        navigateTo('inicio');
+      }
+    }
+
+    function updateNavHighlight(screenId) {
+      // Map screens to their corresponding main nav tabs
+      let activeTabId = null;
+      if (['inicio', 'vender', 'comprador'].includes(screenId)) activeTabId = 'nav-inicio';
+      else if (screenId === 'busqueda') activeTabId = 'nav-busqueda';
+      else if (screenId === 'reels') activeTabId = 'nav-reels';
+      else if (screenId === 'match') activeTabId = 'nav-match';
+      else if (['academia', 'networking'].includes(screenId)) activeTabId = 'nav-academia';
+      else if (['panel', 'agente-perfil', 'marketplace-detalle'].includes(screenId)) activeTabId = 'nav-panel';
+
+      document.querySelectorAll('.nav-tab').forEach(tab => {
+        tab.classList.remove('text-slate-900', 'font-bold');
+        tab.classList.add('text-slate-400');
+        const span = tab.querySelector('span');
+        if (span) span.classList.remove('font-bold');
+      });
+
+      if (activeTabId) {
+        const activeTab = document.getElementById(activeTabId);
+        if (activeTab) {
+          activeTab.classList.remove('text-slate-400');
+          activeTab.classList.add('text-slate-900');
+          const span = activeTab.querySelector('span');
+          if (span) span.classList.add('font-bold');
+        }
+      }
+    }
+
+    // Match Swiping Interaction simulation
+    function handleSwipe(direction) {
+      const card = document.getElementById('match-card');
+      const offset = direction === 'right' ? 300 : -300;
+      card.style.transform = `translateX(${offset}px) rotate(${direction === 'right' ? 15 : -15}deg)`;
+      card.style.opacity = '0';
+
+      setTimeout(() => {
+        currentMatchIndex = (currentMatchIndex + 1) % matchCards.length;
+        const next = matchCards[currentMatchIndex];
+        
+        document.getElementById('match-card-img').src = next.img;
+        document.getElementById('match-card-title').textContent = next.title;
+        document.getElementById('match-card-sub').textContent = next.sub;
+        document.getElementById('match-card-price').textContent = next.price;
+        document.getElementById('match-card-pct').textContent = next.match;
+
+        card.style.transition = 'none';
+        card.style.transform = 'translateX(0px) rotate(0deg)';
+        card.style.opacity = '1';
+
+        setTimeout(() => {
+          card.style.transition = 'transform 0.3s ease, opacity 0.3s ease';
+        }, 50);
+
+        if (direction === 'right') {
+          // Trigger subtle toast notification
+          alert(`¡Es un Match! Propiedad agregada a tus favoritos y comunicada al agente.`);
+        }
+      }, 250);
+    }
+
+    // Networking Map dynamic popup helper
+    function showAgentDetail(name, location) {
+      const popupName = document.getElementById('popup-name');
+      const popupRole = document.getElementById('popup-role');
+      if (popupName && popupRole) {
+        popupName.textContent = name;
+        popupRole.textContent = `Agente verificado • ${location}`;
+      }
+    }
+
+    // Academia pill click filter toggle
+    document.querySelectorAll('.academia-pill').forEach(pill => {
+      pill.addEventListener('click', function() {
+        document.querySelectorAll('.academia-pill').forEach(p => {
+          p.classList.remove('bg-slate-900', 'text-white');
+          p.classList.add('bg-slate-100', 'text-slate-600');
+        });
+        this.classList.add('bg-slate-900', 'text-white');
+        this.classList.remove('bg-slate-100', 'text-slate-600');
+      });
+    });
+
+    // Initialize Lucide Icons on load
+    document.addEventListener('DOMContentLoaded', () => {
+      lucide.createIcons();
+    });
+  </script>
+<!-- END: InteractiveScript -->
+</body></html>
