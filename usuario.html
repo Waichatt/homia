@@ -3,7 +3,7 @@
 <html class="h-full bg-slate-900" lang="es"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
-<title>Homia - Mobile App Ecosystem</title>
+<title>Homia - Vista del usuario final</title>
 <!-- Tailwind CSS CDN with plugins -->
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <!-- Lucide Icons -->
@@ -75,27 +75,17 @@
 <section class="screen-view absolute inset-0 overflow-y-auto no-scrollbar pb-24 transition-opacity duration-200" id="screen-inicio">
 <!-- Top Nav Homia -->
 <div class="sticky top-0 bg-white/95 ios-blur z-30 px-4 py-2.5 flex items-center justify-between border-b border-slate-100">
-<div class="flex items-center gap-2">
-<button class="p-1.5 text-slate-700 hover:bg-slate-100 rounded-full" onclick="navigateTo('busqueda')">
-<i class="w-5 h-5" data-lucide="search"></i>
-</button>
 <div class="flex items-center gap-1 cursor-pointer" onclick="navigateTo('inicio')">
 <div class="w-6 h-6 rounded-md bg-slate-900 flex items-center justify-center text-white font-black text-xs tracking-tighter">H</div>
 <span class="text-xl font-extrabold tracking-tight text-slate-900">Homia</span>
 </div>
-</div>
-<div class="flex items-center gap-3">
-<button class="text-[11px] font-bold bg-slate-900 text-white px-2.5 py-1 rounded-full flex items-center gap-1 shadow-sm" onclick="navigateTo('vender')">
-<i class="w-3 h-3" data-lucide="plus"></i> Vender
-            </button>
-<button class="relative p-1.5 text-slate-700 hover:bg-slate-100 rounded-full" onclick="navigateTo('networking')">
-<i class="w-5 h-5" data-lucide="globe"></i>
+<button class="relative p-1.5 text-slate-700 hover:bg-slate-100 rounded-full" aria-label="Ver notificaciones">
+<i class="w-5 h-5" data-lucide="bell"></i>
 <span class="absolute top-1 right-1 w-2 h-2 bg-emerald-500 rounded-full border border-white"></span>
 </button>
 </div>
-</div>
-<!-- Stories / Historias -->
-<div class="py-3 px-4 flex gap-3.5 overflow-x-auto no-scrollbar border-b border-slate-100 bg-white">
+<!-- Historias anteriores, conservadas para referencia del prototipo -->
+<div class="hidden py-3 px-4 gap-3.5 overflow-x-auto no-scrollbar border-b border-slate-100 bg-white">
 <!-- User Story -->
 <div class="flex flex-col items-center gap-1.5 shrink-0 cursor-pointer" onclick="navigateTo('agente-perfil')">
 <div class="relative w-15 h-15 p-[2px] rounded-full ring-2 ring-emerald-500">
@@ -128,6 +118,46 @@
 <span class="text-[11px] font-medium text-slate-700">Miami</span>
 </div>
 </div>
+<!-- Destacados / Contenido rápido de propiedades -->
+<div class="py-3 px-4 border-b border-slate-100 bg-white">
+<div class="flex items-center justify-between mb-2.5">
+<div>
+<p class="text-[9px] uppercase tracking-wider font-bold text-emerald-600">Descubrí</p>
+<h3 class="text-sm font-extrabold text-slate-900">Destacados para vos</h3>
+</div>
+<button class="text-[10px] font-bold text-slate-500">Ver todos</button>
+</div>
+<div class="flex gap-2.5 overflow-x-auto no-scrollbar">
+<button class="relative w-24 h-28 shrink-0 overflow-hidden rounded-2xl bg-slate-900 text-left shadow-sm" onclick="navigateTo('match')">
+<div class="absolute inset-0 bg-gradient-to-b from-emerald-500/40 to-slate-950"></div>
+<div class="relative h-full p-2.5 flex flex-col justify-between">
+<span class="w-8 h-8 rounded-xl bg-emerald-400 text-slate-950 flex items-center justify-center shadow-lg">
+<i class="w-4 h-4" data-lucide="home"></i>
+</span>
+<span class="text-[11px] font-extrabold leading-tight text-white">Oportunidades</span>
+<span class="text-[9px] leading-tight text-emerald-200">Bajaron de precio</span>
+</div>
+</button>
+<button class="relative w-24 h-28 shrink-0 overflow-hidden rounded-2xl text-left shadow-sm" onclick="navigateTo('marketplace-detalle')">
+<img alt="Propiedades en Buenos Aires" class="absolute inset-0 w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD7n-vYuC11rI_84QeLyI3E5DVUH9rLt6MlKBkwqseSCjlugdOHXWSvaUwJak43oco3FugKsvxtvWbPEgkpXZOvOm4lT2ZGy3vyRl7nu6VUmOhwdtzbMzx8jby3kcYWiHZ9fXdh4LwQhtkmbxfw14qECXPa0nbYa3Oy5eWqi0wqHp5u0XSjSkkuC9NHhYvuq8wjvnTvw4XSU_tc2cT8porzKJwOGQv0YLUKE_XtkO4CjZLqX8O5d6bciQ"/>
+<div class="absolute inset-0 bg-gradient-to-b from-slate-950/10 to-slate-950/80"></div>
+<span class="absolute top-2 left-2 w-6 h-6 rounded-lg bg-white/90 text-emerald-700 flex items-center justify-center"><i class="w-3 h-3" data-lucide="home"></i></span>
+<span class="absolute bottom-2 left-2 right-2 text-[11px] font-extrabold text-white">Bajaron de precio</span>
+</button>
+<button class="relative w-24 h-28 shrink-0 overflow-hidden rounded-2xl text-left shadow-sm" onclick="navigateTo('marketplace-detalle')">
+<img alt="Propiedades en Madrid" class="absolute inset-0 w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBx-e_BQze7UUVJLneGsyaA95WvUhfbLePtAjiZRpB3lsOZeJr5uT_P-mZylvGyoeP87-BvceSN-yMrCv9SWJ4gO5xLX7DejV1447HXbNTG96atmcucYARN2zFcWDmexanneVRGvObjKIdEH6DsMoiL87PmQ8j-f-sF3A4dRTFvAg8MTou4ZjAPYnKGBN92T-2tcebsXfM_xeCc-HArD1yIcy-ivUjYkIPtu2z_zb5KhBKugFsL_EO0ew"/>
+<div class="absolute inset-0 bg-gradient-to-b from-slate-950/10 to-slate-950/80"></div>
+<span class="absolute top-2 left-2 w-6 h-6 rounded-lg bg-white/90 text-emerald-700 flex items-center justify-center"><i class="w-3 h-3" data-lucide="home"></i></span>
+<span class="absolute bottom-2 left-2 right-2 text-[11px] font-extrabold text-white">Cerca tuyo</span>
+</button>
+<button class="relative w-24 h-28 shrink-0 overflow-hidden rounded-2xl text-left shadow-sm" onclick="navigateTo('marketplace-detalle')">
+<img alt="Propiedades en Miami" class="absolute inset-0 w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDRf1kNsTRn5oIHXku0JxqoEEkfC2qwZwaqOi9_J_5C63IRHm9HG5u7zHL14Crbkl3-CdMEpEo06XDZZGaxsgC-wT2GEVjw3oMAM3v6FYMQ4WQwY0tVoRN50bMgLstqgHdPMAKiq8SiyaToIX8Jba-fsAieEjbIqEB-OSUhAAgzerAKQZCTGP7eqe5YnTkzNBT7GdOn36CUoFLCrA0KSBuYwnSyA7xANtDpqDjkNA8rfmyM65_7gNhFqw"/>
+<div class="absolute inset-0 bg-gradient-to-b from-slate-950/10 to-slate-950/80"></div>
+<span class="absolute top-2 left-2 w-6 h-6 rounded-lg bg-white/90 text-emerald-700 flex items-center justify-center"><i class="w-3 h-3" data-lucide="home"></i></span>
+<span class="absolute bottom-2 left-2 right-2 text-[11px] font-extrabold text-white">Nuevas</span>
+</button>
+</div>
+</div>
 <!-- Quick Pre-qualification Banner (Sell / Buy) -->
 <div class="px-4 pt-3 flex gap-2">
 <div class="flex-1 bg-gradient-to-br from-slate-900 to-slate-800 text-white p-3 rounded-2xl cursor-pointer shadow-sm flex items-center justify-between" onclick="navigateTo('vender')">
@@ -142,25 +172,25 @@
 <div class="flex-1 bg-white border border-slate-200 text-slate-800 p-3 rounded-2xl cursor-pointer shadow-sm flex items-center justify-between" onclick="navigateTo('comprador')">
 <div>
 <span class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Inversor / Cliente</span>
-<p class="text-xs font-bold leading-tight mt-0.5">Soy Comprador</p>
+<p class="text-xs font-bold leading-tight mt-0.5">Quiero comprar</p>
 </div>
 <div class="w-7 h-7 bg-slate-100 rounded-full flex items-center justify-center">
 <i class="w-3.5 h-3.5 text-slate-700" data-lucide="home"></i>
 </div>
 </div>
 </div>
-<!-- Property Post Card (Instagram Feed Style) -->
+<!-- Property Listing Card -->
 <article class="bg-white mt-3 border-y border-slate-100 pb-3">
 <!-- Post Header -->
 <div class="p-3 flex items-center justify-between">
 <div class="flex items-center gap-2.5 cursor-pointer" onclick="navigateTo('agente-perfil')">
-<img alt="Agent" class="w-9 h-9 rounded-full object-cover ring-1 ring-slate-200" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD69PylVPnZbTXC2NHHIytAiqZhIa4RRVJNx1uY558EgdaKw7j4oO2oJkPfcmjU12s87KucAKnLDL0oQEC8t9EiTtlKLFVQkk3am3mCabHFxzfXuzY50vbdxlhxwtZWI7p_qMATrQLag4sSFEcVsSL1e0fo58f3t0ABTbmFzYGlTtd3a-moMhcvcsg4Su82Ad-PYCgabJM-ynborGak1CrKirINQKpPG5j18ODzpnIm0LEPx0Gz2DOcHw"/>
+<img alt="Sofía Martínez" class="w-9 h-9 rounded-full object-cover ring-1 ring-slate-200" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD69PylVPnZbTXC2NHHIytAiqZhIa4RRVJNx1uY558EgdaKw7j4oO2oJkPfcmjU12s87KucAKnLDL0oQEC8t9EiTtlKLFVQkk3am3mCabHFxzfXuzY50vbdxlhxwtZWI7p_qMATrQLag4sSFEcVsSL1e0fo58f3t0ABTbmFzYGlTtd3a-moMhcvcsg4Su82Ad-PYCgabJM-ynborGak1CrKirINQKpPG5j18ODzpnIm0LEPx0Gz2DOcHw"/>
 <div>
 <div class="flex items-center gap-1">
-<h4 class="text-xs font-bold text-slate-900 leading-tight">RE/MAX Premium</h4>
+<h4 class="text-xs font-bold text-slate-900 leading-tight">Sofía Martínez</h4>
 <span class="bg-blue-500 text-white rounded-full p-0.5"><i class="w-2 h-2 stroke-[3]" data-lucide="check"></i></span>
 </div>
-<p class="text-[10px] text-slate-500">Buenos Aires, Argentina</p>
+<p class="text-[10px] text-slate-500">RE/MAX Premium · Buenos Aires, Argentina</p>
 </div>
 </div>
 <button class="text-slate-400 hover:text-slate-600"><i class="w-4 h-4" data-lucide="more-horizontal"></i></button>
@@ -168,6 +198,9 @@
 <!-- Post Media with badge -->
 <div class="relative cursor-pointer" onclick="navigateTo('marketplace-detalle')">
 <img alt="Departamento Palermo" class="w-full aspect-[4/3] object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCFfHVsJF08Gafz3P9MEHKiPa_IzKHI9jZI0l6A8a9zxsunye8vffOa40ldIs65gQiA0EvVfw2elk0VyJ5cU2jmcLVZEwxyqmyRct5FcGEzvIQBcAFZRjeZgawRnNBchp_ZWb806a8qtOKAZGnWh6-TWH31tcgFNc31D2E5XAobJegiysf38-l-u-9cs1JlXccnsOtjWG8r-OLUJNuFSZHm1rsjd0RNJvlrYX0qiKBLNCsfCFDYTan58w"/>
+<div class="absolute top-3 left-3 bg-emerald-500 text-slate-950 text-[10px] font-extrabold px-2.5 py-1 rounded-full shadow-sm">
+              Muy buscada
+            </div>
 <div class="absolute top-3 right-3 bg-slate-900/80 ios-blur text-white text-[10px] font-semibold px-2 py-0.5 rounded-full">
               1/10
             </div>
@@ -176,38 +209,34 @@
 <span class="text-sm font-extrabold tracking-tight">245.000</span>
 </div>
 </div>
-<!-- Post Action Bar -->
-<div class="px-3 pt-2.5 flex justify-between items-center">
-<div class="flex items-center gap-4 text-slate-700">
-<button class="flex items-center gap-1 hover:text-rose-500 transition-colors">
-<i class="w-5 h-5" data-lucide="heart"></i>
-<span class="text-xs font-bold">1.2k</span>
+<!-- Property Actions -->
+<div class="px-3 pt-3 flex items-center justify-between">
+<div class="flex items-center gap-2.5 text-slate-600">
+<button id="property-like-button" class="flex items-center gap-1 text-[10px] font-bold hover:text-rose-500" onclick="togglePropertyLike()" aria-label="Me gusta esta propiedad" aria-pressed="false">
+<i class="w-4 h-4" data-lucide="heart"></i><span>Me gusta</span><strong id="property-like-count">1,2k</strong>
 </button>
-<button class="flex items-center gap-1 hover:text-slate-900">
-<i class="w-5 h-5" data-lucide="message-circle"></i>
-<span class="text-xs font-bold">48</span>
-</button>
-<button class="hover:text-slate-900">
-<i class="w-5 h-5" data-lucide="send"></i>
+<button class="flex items-center gap-1 text-[10px] font-bold hover:text-emerald-600" onclick="navigateTo('networking')" aria-label="Ver preguntas sobre esta propiedad">
+<i class="w-4 h-4" data-lucide="message-circle"></i><span>Preguntas</span><strong>48</strong>
 </button>
 </div>
-<button class="text-slate-700 hover:text-slate-900">
-<i class="w-5 h-5" data-lucide="bookmark"></i>
+<div class="flex items-center gap-1.5">
+<button class="flex items-center gap-1 rounded-lg bg-slate-50 px-2 py-1.5 text-[10px] font-bold text-slate-700 hover:bg-slate-100" aria-label="Guardar propiedad">
+<i class="w-4 h-4" data-lucide="bookmark"></i><span>Guardar</span>
 </button>
+<button class="p-1.5 text-slate-600 hover:text-slate-900" aria-label="Compartir propiedad">
+<i class="w-5 h-5" data-lucide="share-2"></i>
+</button>
+</div>
 </div>
 <!-- Property Details Description -->
 <div class="px-3 pt-2">
 <h5 class="text-xs font-bold text-slate-900 cursor-pointer" onclick="navigateTo('marketplace-detalle')">Departamento exclusivo en Palermo Soho</h5>
 <p class="text-[11px] text-slate-600 mt-0.5">3 ambientes, balcón terraza aterrazado con parrilla propia y amenities premium...</p>
-<!-- Metrics pill preview -->
-<div class="mt-2.5 bg-slate-50 border border-slate-150 rounded-lg p-2 flex items-center justify-between text-[10px] font-medium text-slate-500">
-<span>Vistas <strong class="text-slate-800">4.8k</strong></span>
-<span class="text-slate-300">|</span>
-<span>Consultas <strong class="text-slate-800">320</strong></span>
-<span class="text-slate-300">|</span>
-<span>Visitas <strong class="text-slate-800">45</strong></span>
-<span class="text-slate-300">|</span>
-<span>Ofertas <strong class="text-emerald-600 font-bold">3</strong></span>
+<!-- Property Specs Preview -->
+<div class="mt-2.5 flex items-center gap-2 text-[10px] font-bold text-slate-500">
+<span class="rounded-lg bg-slate-50 border border-slate-100 px-2 py-1">3 ambientes</span>
+<span class="rounded-lg bg-slate-50 border border-slate-100 px-2 py-1">2 baños</span>
+<span class="rounded-lg bg-slate-50 border border-slate-100 px-2 py-1">98 m²</span>
 </div>
 <span class="text-[9px] uppercase tracking-wider text-slate-400 font-semibold block mt-1.5">Hace 3 días</span>
 </div>
@@ -235,11 +264,11 @@
 <div class="relative w-full h-full">
 <img alt="Casa Reel" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAk1nyuLlLTFXFCnEjHeH94HJChwDmNZiVzBOCi9Yr-Ua0eu1fVr2W6TqO5u0PX7vEJB2Mszwn7HM1WnFkdOc73Q4LwzmAPYUQ9kFSCL8olcEovSxYcvcZuFhGA-27YCJSiU4y6m3uytg6a7WiDpe1B6t62UoXh4tuyOkVLzXljTwRW51w8rnH2Z3AOV8V4pfwNRnYLbEFd1wMY3Qa400yYsq8PLA-Iomdm3BivjAqg-R55KGKrzmTT-Q"/>
 <div class="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/90"></div>
-<!-- Top Header Reels -->
+<!-- Top Header Recorridos -->
 <div class="absolute top-2 left-0 right-0 px-4 flex justify-between items-center z-10">
 <div class="flex items-center gap-2">
-<span class="text-sm font-extrabold tracking-wide">Reels</span>
-<span class="bg-emerald-500/80 text-[10px] px-2 py-0.5 rounded-full font-semibold">Exclusivo</span>
+<span class="text-sm font-extrabold tracking-wide">Recorridos</span>
+<span class="bg-emerald-500/80 text-[10px] px-2 py-0.5 rounded-full font-semibold">Propiedades destacadas</span>
 </div>
 <button class="p-1 rounded-full bg-black/40 text-white"><i class="w-5 h-5" data-lucide="camera"></i></button>
 </div>
@@ -270,8 +299,8 @@
 <!-- Bottom Meta Info -->
 <div class="absolute bottom-6 left-4 right-16 z-20 space-y-2">
 <div class="flex items-center gap-2 cursor-pointer" onclick="navigateTo('agente-perfil')">
-<span class="text-xs font-bold text-white">@homia.realestate</span>
-<button class="text-[10px] font-bold border border-white/80 px-2.5 py-0.5 rounded-full hover:bg-white hover:text-slate-900 transition-colors">Seguir</button>
+<span class="text-xs font-bold text-white">Homia Propiedades</span>
+<button class="text-[10px] font-bold border border-white/80 px-2.5 py-0.5 rounded-full hover:bg-white hover:text-slate-900 transition-colors">Ver perfil</button>
 </div>
 <div>
 <h3 class="text-base font-bold text-white drop-shadow">Casa premium en Nordelta</h3>
@@ -304,6 +333,65 @@
 <div class="bg-slate-100 p-1 rounded-xl flex">
 <button class="flex-1 py-2 text-xs font-bold rounded-lg bg-slate-900 text-white shadow-sm transition-all">Comprar</button>
 <button class="flex-1 py-2 text-xs font-bold rounded-lg text-slate-600 hover:text-slate-900 transition-all">Alquilar</button>
+</div>
+<!-- Búsqueda con IA -->
+<div class="rounded-2xl border border-emerald-200 bg-gradient-to-br from-emerald-50 to-white p-3 shadow-sm" id="ai-search-card">
+<button type="button" class="w-full flex items-center gap-3 text-left" onclick="openAiChat()">
+<span class="w-10 h-10 rounded-xl bg-emerald-500 text-slate-950 flex items-center justify-center shrink-0 shadow-sm">
+<i class="w-5 h-5" data-lucide="sparkles"></i>
+</span>
+<span class="flex-1 min-w-0">
+<span class="block text-sm font-extrabold text-slate-900">Buscar con IA</span>
+<span class="block text-[10px] text-slate-600 mt-0.5">Contale a Homia qué propiedad estás buscando</span>
+</span>
+<span class="w-8 h-8 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0">
+<i class="w-4 h-4" data-lucide="arrow-right"></i>
+</span>
+</button>
+</div>
+<div class="hidden absolute inset-0 z-[60] bg-slate-50 flex flex-col" id="ai-search-panel">
+<div class="bg-white shrink-0">
+<div class="px-4 py-3 border-b border-slate-200 flex items-center gap-3">
+<button type="button" class="w-8 h-8 rounded-full bg-slate-100 text-slate-700 flex items-center justify-center" onclick="closeAiChat()" aria-label="Cerrar búsqueda con IA">
+<i class="w-4 h-4" data-lucide="arrow-left"></i>
+</button>
+<span class="w-8 h-8 rounded-xl bg-emerald-500 text-slate-950 flex items-center justify-center">
+<i class="w-4 h-4" data-lucide="sparkles"></i>
+</span>
+<div class="flex-1">
+<h3 class="text-sm font-extrabold text-slate-900">Buscar con IA</h3>
+<p class="text-[10px] text-emerald-600 font-semibold">Asistente de búsqueda de Homia</p>
+</div>
+<span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto p-4 space-y-3" id="ai-chat-messages">
+<div class="flex items-end gap-2">
+<span class="w-7 h-7 rounded-full bg-emerald-500 text-slate-950 flex items-center justify-center shrink-0">
+<i class="w-3.5 h-3.5" data-lucide="sparkles"></i>
+</span>
+<div class="max-w-[82%] rounded-2xl rounded-bl-md bg-white border border-slate-200 px-3.5 py-3 shadow-sm">
+<p class="text-xs leading-relaxed text-slate-700">¡Hola! Contame qué propiedad estás buscando y te ayudo a encontrar opciones que encajen con vos.</p>
+</div>
+</div>
+<div class="pl-9">
+<p class="text-[10px] font-bold text-slate-400 mb-2">Podés empezar con una de estas opciones:</p>
+<div class="flex flex-wrap gap-2">
+<button type="button" class="px-3 py-2 rounded-full bg-emerald-50 border border-emerald-200 text-[10px] font-bold text-emerald-700" onclick="useAiSuggestion('Busco una casa con jardín para mi familia')">Casa con jardín</button>
+<button type="button" class="px-3 py-2 rounded-full bg-emerald-50 border border-emerald-200 text-[10px] font-bold text-emerald-700" onclick="useAiSuggestion('Busco una propiedad para invertir')">Para invertir</button>
+<button type="button" class="px-3 py-2 rounded-full bg-emerald-50 border border-emerald-200 text-[10px] font-bold text-emerald-700" onclick="useAiSuggestion('Busco un departamento cerca de colegios')">Cerca de colegios</button>
+</div>
+</div>
+</div>
+<div class="bg-white border-t border-slate-200 p-3 shrink-0">
+<div class="flex items-end gap-2 bg-slate-100 rounded-2xl p-2">
+<textarea id="ai-search-input" rows="1" class="flex-1 bg-transparent border-0 p-2 text-xs text-slate-800 placeholder-slate-400 resize-none focus:ring-0 focus:outline-none" placeholder="Escribí qué estás buscando..." onkeydown="if(event.key === 'Enter' && !event.shiftKey) { event.preventDefault(); sendAiMessage(); }"></textarea>
+<button type="button" class="w-9 h-9 rounded-xl bg-emerald-500 text-slate-950 flex items-center justify-center shrink-0" onclick="sendAiMessage()" aria-label="Enviar mensaje">
+<i class="w-4 h-4" data-lucide="arrow-up"></i>
+</button>
+</div>
+<p class="text-[9px] text-slate-400 text-center mt-2">Podés escribirlo como se lo contarías a una persona.</p>
+</div>
 </div>
 <!-- Tipo de Inmueble -->
 <div>
@@ -354,6 +442,8 @@
 </div>
 </div>
 </div>
+<!-- Forma de compra -->
+<div id="search-financing-section"></div>
 <!-- Prestaciones -->
 <div>
 <label class="block text-xs font-bold text-slate-800 mb-1.5">Prestaciones y Filtros Invisibles</label>
@@ -414,7 +504,7 @@
 <!-- Bio -->
 <div class="mt-3 space-y-1">
 <div class="flex items-center gap-1.5">
-<h3 class="text-xs font-extrabold text-slate-900">Agente Inmobiliaria | REMAX</h3>
+<h3 class="text-xs font-extrabold text-slate-900">RE/MAX Premium</h3>
 <span class="bg-amber-100 text-amber-800 text-[10px] font-bold px-1.5 rounded flex items-center gap-0.5">
                 ★ 4.9 (321 reseñas)
               </span>
@@ -552,6 +642,18 @@
 <span class="text-xs text-slate-400 block font-medium">Cochera</span>
 <strong class="text-sm font-bold text-slate-800">2 autos</strong>
 </div>
+</div>
+<!-- Descripción de la propiedad -->
+<div class="border border-slate-200 rounded-2xl p-4 bg-white space-y-2.5">
+<h4 class="text-xs font-extrabold text-slate-900 flex items-center gap-1.5">
+<i class="w-4 h-4 text-emerald-500" data-lucide="file-text"></i> Descripción
+</h4>
+<p class="text-xs leading-relaxed text-slate-600">
+              Casa de diseño en Nordelta, ubicada en un entorno tranquilo y rodeado de naturaleza. Cuenta con 4 dormitorios, 3 baños, 2 cocheras y 250 m² cubiertos.
+            </p>
+<p class="text-xs leading-relaxed text-slate-600">
+              Se destaca por sus ambientes amplios y luminosos, vista al lago, piscina y espacios pensados para disfrutar en familia.
+            </p>
 </div>
 <!-- Rendimiento en Homia (Proprietary Performance Metrics) -->
 <div class="border border-slate-200 rounded-2xl p-4 bg-white shadow-card space-y-3">
@@ -696,7 +798,7 @@
 </button>
 <div class="flex items-center gap-2">
 <div class="w-5 h-5 bg-slate-900 text-white rounded text-xs flex items-center justify-center font-bold">H</div>
-<span class="text-xs font-bold text-slate-900">Soy Comprador</span>
+<span class="text-xs font-bold text-slate-900">Quiero comprar</span>
 </div>
 <span class="text-xs font-bold text-slate-400">1 / 6</span>
 </div>
@@ -720,26 +822,75 @@
 <span class="text-[11px] font-bold text-slate-800 mt-2 block">Industrial</span>
 </div>
 </div>
-<!-- Question 2 -->
-<div>
+<!-- Question 2: se mueve a Búsqueda al cargar el prototipo -->
+<div id="financing-question">
 <h3 class="text-sm font-bold text-slate-900 mb-3">¿Cómo pensás financiar la compra?</h3>
 <div class="space-y-2">
 <label class="flex items-center gap-3 p-3 rounded-xl border border-slate-200 cursor-pointer hover:bg-slate-50">
-<input checked="" class="text-slate-900" name="financing" type="radio"/>
+<input checked="" class="text-slate-900" name="financing" type="radio" value="contado" onchange="updateFinancingDetails()"/>
 <span class="text-xs font-semibold text-slate-700">Contado / Fondos propios</span>
 </label>
 <label class="flex items-center gap-3 p-3 rounded-xl border border-slate-200 cursor-pointer hover:bg-slate-50">
-<input class="text-slate-900" name="financing" type="radio"/>
+<input class="text-slate-900" name="financing" type="radio" value="credito" onchange="updateFinancingDetails()"/>
 <span class="text-xs font-semibold text-slate-700">Crédito hipotecario</span>
 </label>
 <label class="flex items-center gap-3 p-3 rounded-xl border border-slate-200 cursor-pointer hover:bg-slate-50">
-<input class="text-slate-900" name="financing" type="radio"/>
+<input class="text-slate-900" name="financing" type="radio" value="directa" onchange="updateFinancingDetails()"/>
 <span class="text-xs font-semibold text-slate-700">Financiación propia del desarrollador</span>
 </label>
 <label class="flex items-center gap-3 p-3 rounded-xl border border-slate-200 cursor-pointer hover:bg-slate-50">
-<input class="text-slate-900" name="financing" type="radio"/>
+<input class="text-slate-900" name="financing" type="radio" value="permuta" onchange="updateFinancingDetails()"/>
 <span class="text-xs font-semibold text-slate-700">Permuta como parte de pago</span>
 </label>
+</div>
+
+<div class="mt-4 rounded-2xl bg-slate-50 border border-slate-200 p-4 space-y-3" id="financing-details">
+<div data-financing-detail="contado" class="space-y-2">
+<div>
+<p class="text-xs font-extrabold text-slate-900">Contado / Fondos propios</p>
+<p class="text-[10px] text-slate-500 mt-0.5">Indicá cuánto tenés disponible para buscar propiedades dentro de tu rango.</p>
+</div>
+<label class="block text-[10px] font-bold text-slate-600">Fondos disponibles
+<div class="relative mt-1"><span class="absolute left-3 top-2.5 text-xs text-slate-400">USD</span><input class="w-full bg-white border border-slate-200 rounded-xl py-2 pl-10 pr-3 text-xs" placeholder="150.000" type="text"/></div>
+</label>
+</div>
+
+<div data-financing-detail="credito" class="space-y-2 hidden">
+<div>
+<p class="text-xs font-extrabold text-slate-900">Crédito hipotecario</p>
+<p class="text-[10px] text-slate-500 mt-0.5">Con estos datos podemos mostrar propiedades compatibles con el crédito.</p>
+</div>
+<div class="grid grid-cols-2 gap-2">
+<label class="block text-[10px] font-bold text-slate-600">Monto a financiar<input class="w-full mt-1 bg-white border border-slate-200 rounded-xl py-2 px-3 text-xs" placeholder="200.000" type="text"/></label>
+<label class="block text-[10px] font-bold text-slate-600">Anticipo disponible<input class="w-full mt-1 bg-white border border-slate-200 rounded-xl py-2 px-3 text-xs" placeholder="100.000" type="text"/></label>
+</div>
+<label class="block text-[10px] font-bold text-slate-600">Banco o entidad (opcional)<input class="w-full mt-1 bg-white border border-slate-200 rounded-xl py-2 px-3 text-xs" placeholder="Ej. Banco Nación" type="text"/></label>
+</div>
+
+<div data-financing-detail="directa" class="space-y-2 hidden">
+<div>
+<p class="text-xs font-extrabold text-slate-900">Financiación propia del desarrollador</p>
+<p class="text-[10px] text-slate-500 mt-0.5">Definí el anticipo y la cuota que podrías asumir.</p>
+</div>
+<div class="grid grid-cols-2 gap-2">
+<label class="block text-[10px] font-bold text-slate-600">Anticipo<input class="w-full mt-1 bg-white border border-slate-200 rounded-xl py-2 px-3 text-xs" placeholder="30%" type="text"/></label>
+<label class="block text-[10px] font-bold text-slate-600">Cantidad de cuotas<input class="w-full mt-1 bg-white border border-slate-200 rounded-xl py-2 px-3 text-xs" placeholder="24" type="text"/></label>
+</div>
+<label class="block text-[10px] font-bold text-slate-600">Cuota máxima mensual<input class="w-full mt-1 bg-white border border-slate-200 rounded-xl py-2 px-3 text-xs" placeholder="USD 1.500" type="text"/></label>
+</div>
+
+<div data-financing-detail="permuta" class="space-y-2 hidden">
+<div>
+<p class="text-xs font-extrabold text-slate-900">Permuta como parte de pago</p>
+<p class="text-[10px] text-slate-500 mt-0.5">Contanos qué querés entregar y qué porcentaje representa.</p>
+</div>
+<div class="grid grid-cols-2 gap-2">
+<label class="block text-[10px] font-bold text-slate-600">Tipo de bien<select class="w-full mt-1 bg-white border border-slate-200 rounded-xl py-2 px-2 text-xs"><option>Inmueble</option><option>Vehículo</option></select></label>
+<label class="block text-[10px] font-bold text-slate-600">Valor aproximado<input class="w-full mt-1 bg-white border border-slate-200 rounded-xl py-2 px-3 text-xs" placeholder="USD 120.000" type="text"/></label>
+</div>
+<label class="block text-[10px] font-bold text-slate-600">Porcentaje de la compra<input class="w-full mt-1 bg-white border border-slate-200 rounded-xl py-2 px-3 text-xs" placeholder="40%" type="text"/></label>
+<button type="button" class="w-full border border-dashed border-slate-300 bg-white text-slate-600 font-bold py-2.5 rounded-xl text-[11px]">+ Agregar fotos del bien</button>
+</div>
 </div>
 </div>
 <button class="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-3.5 rounded-2xl text-xs tracking-wide shadow-md" onclick="navigateTo('match')">
@@ -751,7 +902,7 @@
 <!-- ============================================== -->
 <!-- SCREEN 08: MATCH INTELIGENTE (TIPO TINDER)     -->
 <!-- ============================================== -->
-<section class="screen-view hidden absolute inset-0 bg-slate-100 flex flex-col pb-20" id="screen-match">
+<section class="screen-view hidden absolute inset-0 bg-slate-100 flex flex-col pb-20 overflow-y-auto no-scrollbar" id="screen-match">
 <!-- Match Header -->
 <div class="bg-white px-5 py-3 border-b border-slate-200 flex items-center justify-between shrink-0">
 <button class="p-1 text-slate-600" onclick="navigateBack()"><i class="w-6 h-6" data-lucide="chevron-left"></i></button>
@@ -762,11 +913,11 @@
 <button class="p-1 text-slate-600"><i class="w-5 h-5" data-lucide="sliders"></i></button>
 </div>
 <!-- Swipe Card Area -->
-<div class="flex-1 p-4 flex flex-col justify-center items-center relative overflow-hidden">
+<div class="w-full flex-none p-3 flex flex-col justify-start items-center relative">
 <!-- Card Container -->
-<div class="w-full max-w-sm bg-white rounded-3xl shadow-xl overflow-hidden border border-slate-200 flex flex-col relative transition-transform duration-300" id="match-card">
+<div class="w-full max-w-sm shrink-0 bg-white rounded-3xl shadow-xl overflow-hidden border border-slate-200 flex flex-col relative transition-transform duration-300" id="match-card">
 <!-- Property Image with Match Tag -->
-<div class="relative w-full h-64 bg-slate-200">
+<div class="relative w-full h-48 bg-slate-200">
 <img class="w-full h-full object-cover" id="match-card-img" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBigBlyBCSCYK_tX7O0cf89znQI1eaNjfoRPNdfrUsAeSW6WI5_BMAAqm_0SQTnQD31XPgECIIX005vT5LjbiofKCcvqWvb3P6zsDKG4W_r-sNBIUXRDarY_t-3ovpRKEwu3SePcCy-8wcoOQ2Bna8iz0tRHxwwtmCtd5wWdCPPcFcxNpsYkY6Cn9xRTXZSzWqsQjAPp4U4UBiiqyYMOVfbcBPbAfU1TM41MxWUYNA093kLCoq4fl1wMg"/>
 <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-black/20"></div>
 <!-- Match Percentage Pill -->
@@ -782,32 +933,43 @@
 </div>
 </div>
 <!-- Card Specs & Invisible Filters Match Reason -->
-<div class="p-4 space-y-3 bg-white">
+<div class="p-3.5 space-y-3 bg-white">
 <!-- Specs -->
-<div class="flex justify-between items-center text-xs font-semibold text-slate-600 pb-2 border-b border-slate-100">
-<span class="flex items-center gap-1"><i class="w-4 h-4 text-slate-400" data-lucide="bed"></i> 3 dorm</span>
-<span class="flex items-center gap-1"><i class="w-4 h-4 text-slate-400" data-lucide="bath"></i> 2 baños</span>
-<span class="flex items-center gap-1"><i class="w-4 h-4 text-slate-400" data-lucide="maximize"></i> 250 m²</span>
+<div class="grid grid-cols-3 gap-2 text-[11px] font-semibold text-slate-600 pb-3 border-b border-slate-100">
+<span class="flex items-center gap-1.5"><i class="w-4 h-4 text-slate-400 shrink-0" data-lucide="bed"></i> 3 dorm.</span>
+<span class="flex items-center gap-1.5"><i class="w-4 h-4 text-slate-400 shrink-0" data-lucide="bath"></i> 2 baños</span>
+<span class="flex items-center gap-1.5"><i class="w-4 h-4 text-slate-400 shrink-0" data-lucide="maximize"></i> 250 m²</span>
 </div>
 <!-- Match Reasons / Algorithmic compatibility -->
-<div class="space-y-1.5 pt-1">
-<div class="flex items-center gap-2 text-[11px] text-emerald-700 font-semibold">
-<i class="w-4 h-4 text-emerald-500 shrink-0" data-lucide="check-circle-2"></i>
-<span>Coincide con tu presupuesto máximo</span>
+<div class="rounded-2xl bg-emerald-50/70 border border-emerald-100 p-3">
+<p class="text-[11px] font-extrabold text-slate-900">Coincide porque:</p>
+<div class="grid grid-cols-2 gap-2 mt-2">
+<div class="flex items-start gap-1.5 text-[10px] text-emerald-800 font-semibold">
+<i class="w-3.5 h-3.5 text-emerald-500 shrink-0 mt-0.5" data-lucide="check-circle-2"></i>
+<span><strong class="block text-[9px] uppercase tracking-wide text-emerald-600">Ubicación</strong>Pilar, Buenos Aires</span>
 </div>
-<div class="flex items-center gap-2 text-[11px] text-emerald-700 font-semibold">
-<i class="w-4 h-4 text-emerald-500 shrink-0" data-lucide="check-circle-2"></i>
-<span>Zona preferida con colegios cercanos</span>
+<div class="flex items-start gap-1.5 text-[10px] text-emerald-800 font-semibold">
+<i class="w-3.5 h-3.5 text-emerald-500 shrink-0 mt-0.5" data-lucide="check-circle-2"></i>
+<span><strong class="block text-[9px] uppercase tracking-wide text-emerald-600">Precio</strong>USD 250.000–350.000</span>
 </div>
-<div class="flex items-center gap-2 text-[11px] text-emerald-700 font-semibold">
-<i class="w-4 h-4 text-emerald-500 shrink-0" data-lucide="check-circle-2"></i>
-<span>Compatible con tu forma de pago (Permuta)</span>
+<div class="flex items-start gap-1.5 text-[10px] text-emerald-800 font-semibold">
+<i class="w-3.5 h-3.5 text-emerald-500 shrink-0 mt-0.5" data-lucide="check-circle-2"></i>
+<span><strong class="block text-[9px] uppercase tracking-wide text-emerald-600">Características</strong>3 dorm. · 2 baños</span>
+</div>
+<div class="flex items-start gap-1.5 text-[10px] text-emerald-800 font-semibold">
+<i class="w-3.5 h-3.5 text-emerald-500 shrink-0 mt-0.5" data-lucide="check-circle-2"></i>
+<span><strong class="block text-[9px] uppercase tracking-wide text-emerald-600">Forma de pago</strong>Permuta aceptada</span>
+</div>
+<div class="flex items-start gap-1.5 text-[10px] text-emerald-800 font-semibold col-span-2">
+<i class="w-3.5 h-3.5 text-emerald-500 shrink-0 mt-0.5" data-lucide="check-circle-2"></i>
+<span><strong class="block text-[9px] uppercase tracking-wide text-emerald-600">Financiación</strong>Opción compatible con tu búsqueda</span>
+</div>
 </div>
 </div>
 </div>
 </div>
 <!-- Tinder-style Action Bar -->
-<div class="flex items-center justify-center gap-6 mt-4">
+<div class="flex shrink-0 items-center justify-center gap-6 mt-3 mb-2">
 <!-- Dislike (X) -->
 <button class="w-13 h-13 rounded-full bg-white text-rose-500 shadow-float border border-rose-100 flex items-center justify-center hover:scale-110 active:scale-95 transition-all" onclick="handleSwipe('left')">
 <i class="w-7 h-7 stroke-[2.5]" data-lucide="x"></i>
@@ -1172,10 +1334,10 @@
 <i class="w-5 h-5" data-lucide="search"></i>
 <span class="text-[10px] font-medium tracking-tight">Búsqueda</span>
 </button>
-<!-- Tab 3: Reels -->
+<!-- Tab 3: Recorridos -->
 <button class="nav-tab flex flex-col items-center gap-0.5 py-1 px-2 text-slate-400 hover:text-slate-900 transition-colors" id="nav-reels" onclick="navigateTo('reels')">
 <i class="w-5 h-5" data-lucide="play-circle"></i>
-<span class="text-[10px] font-medium tracking-tight">Reels</span>
+<span class="text-[10px] font-medium tracking-tight">Recorridos</span>
 </button>
 <!-- Tab 4: Match -->
 <button class="nav-tab flex flex-col items-center gap-0.5 py-1 px-2 text-slate-400 hover:text-slate-900 transition-colors" id="nav-match" onclick="navigateTo('match')">
@@ -1184,16 +1346,6 @@
 <span class="absolute -top-1 -right-1 w-2 h-2 bg-emerald-500 rounded-full"></span>
 </div>
 <span class="text-[10px] font-medium tracking-tight">Match</span>
-</button>
-<!-- Tab 5: Academia -->
-<button class="nav-tab flex flex-col items-center gap-0.5 py-1 px-2 text-slate-400 hover:text-slate-900 transition-colors" id="nav-academia" onclick="navigateTo('academia')">
-<i class="w-5 h-5" data-lucide="graduation-cap"></i>
-<span class="text-[10px] font-medium tracking-tight">Academia</span>
-</button>
-<!-- Tab 6: Agente / Panel -->
-<button class="nav-tab flex flex-col items-center gap-0.5 py-1 px-2 text-slate-400 hover:text-slate-900 transition-colors" id="nav-panel" onclick="navigateTo('panel')">
-<i class="w-5 h-5" data-lucide="user"></i>
-<span class="text-[10px] font-medium tracking-tight">Agente</span>
 </button>
 </nav>
 <!-- END: BottomNavigation -->
@@ -1235,6 +1387,138 @@
       }
     ];
     let currentMatchIndex = 0;
+
+    function updateFinancingDetails() {
+      const selected = document.querySelector('input[name="financing"]:checked');
+      const selectedValue = selected ? selected.value : 'contado';
+
+      document.querySelectorAll('[data-financing-detail]').forEach(detail => {
+        detail.classList.toggle('hidden', detail.dataset.financingDetail !== selectedValue);
+      });
+    }
+
+    function moveFinancingToSearch() {
+      const financingSection = document.getElementById('financing-question');
+      const searchPlaceholder = document.getElementById('search-financing-section');
+
+      if (financingSection && searchPlaceholder) {
+        searchPlaceholder.appendChild(financingSection);
+      }
+    }
+
+    function openAiChat() {
+      const panel = document.getElementById('ai-search-panel');
+      if (panel) {
+        panel.classList.remove('hidden');
+        document.getElementById('ai-search-input')?.focus();
+      }
+    }
+
+    function closeAiChat() {
+      const panel = document.getElementById('ai-search-panel');
+      if (panel) panel.classList.add('hidden');
+    }
+
+    function useAiSuggestion(text) {
+      const input = document.getElementById('ai-search-input');
+      if (input) {
+        input.value = text;
+        input.focus();
+      }
+    }
+
+    function addAiMessage(text, type) {
+      const messages = document.getElementById('ai-chat-messages');
+      if (!messages) return null;
+
+      const row = document.createElement('div');
+      row.className = type === 'user' ? 'flex justify-end' : 'flex items-end gap-2';
+
+      if (type === 'assistant') {
+        const icon = document.createElement('span');
+        icon.className = 'w-7 h-7 rounded-full bg-emerald-500 text-slate-950 flex items-center justify-center shrink-0';
+        icon.innerHTML = '<i class="w-3.5 h-3.5" data-lucide="sparkles"></i>';
+        row.appendChild(icon);
+      }
+
+      const bubble = document.createElement('div');
+      bubble.className = type === 'user'
+        ? 'max-w-[82%] rounded-2xl rounded-br-md bg-slate-900 text-white px-3.5 py-3 shadow-sm'
+        : 'max-w-[82%] rounded-2xl rounded-bl-md bg-white border border-slate-200 px-3.5 py-3 shadow-sm';
+      bubble.textContent = text;
+      row.appendChild(bubble);
+      messages.appendChild(row);
+      messages.scrollTop = messages.scrollHeight;
+      if (window.lucide) lucide.createIcons({ nodes: row.querySelectorAll('[data-lucide]') });
+      return row;
+    }
+
+    function addAiPropertyCard() {
+      const messages = document.getElementById('ai-chat-messages');
+      const property = matchCards[0];
+      if (!messages || !property) return;
+
+      const card = document.createElement('div');
+      card.className = 'ml-9 w-[calc(100%-2.25rem)] overflow-hidden rounded-2xl bg-white border border-slate-200 shadow-sm cursor-pointer';
+      card.setAttribute('role', 'button');
+      card.setAttribute('tabindex', '0');
+      card.setAttribute('aria-label', `Ver ${property.title}`);
+      card.innerHTML = `
+        <img class="w-full h-28 object-cover" src="${property.img}" alt="${property.title}">
+        <div class="p-3">
+          <div class="flex items-start justify-between gap-2">
+            <div>
+              <p class="text-xs font-extrabold text-slate-900">${property.title}</p>
+              <p class="text-[10px] text-slate-500 mt-0.5">${property.sub}</p>
+            </div>
+            <span class="shrink-0 rounded-full bg-emerald-100 px-2 py-1 text-[9px] font-extrabold text-emerald-700">${property.match}</span>
+          </div>
+          <div class="flex items-center justify-between mt-2">
+            <span class="text-sm font-black text-emerald-600">${property.price}</span>
+            <span class="text-[10px] font-bold text-slate-500">Ver detalle →</span>
+          </div>
+        </div>`;
+      card.onclick = () => {
+        closeAiChat();
+        navigateTo('match');
+      };
+      card.onkeydown = (event) => {
+        if (event.key === 'Enter' || event.key === ' ') card.click();
+      };
+      messages.appendChild(card);
+      messages.scrollTop = messages.scrollHeight;
+    }
+
+    function sendAiMessage() {
+      const input = document.getElementById('ai-search-input');
+      const message = input?.value.trim();
+      if (!message) {
+        input?.focus();
+        return;
+      }
+
+      addAiMessage(message, 'user');
+      input.value = '';
+      const thinking = addAiMessage('Perfecto, estoy buscando propiedades que coincidan con eso...', 'assistant');
+
+      setTimeout(() => {
+        thinking?.remove();
+        addAiMessage('Entendí tu búsqueda. Encontré propiedades compatibles por ubicación, presupuesto y características.', 'assistant');
+        addAiPropertyCard();
+      }, 700);
+    }
+
+    function togglePropertyLike() {
+      const button = document.getElementById('property-like-button');
+      const count = document.getElementById('property-like-count');
+      if (!button || !count) return;
+
+      const liked = button.getAttribute('aria-pressed') === 'true';
+      button.setAttribute('aria-pressed', String(!liked));
+      button.classList.toggle('text-rose-500', !liked);
+      button.classList.toggle('text-slate-600', liked);
+      count.textContent = liked ? '1,2k' : '1,3k';
+    }
 
     function navigateTo(screenId) {
       if (screenId === currentScreen) return;
@@ -1365,6 +1649,8 @@
     // Initialize Lucide Icons on load
     document.addEventListener('DOMContentLoaded', () => {
       lucide.createIcons();
+      moveFinancingToSearch();
+      updateFinancingDetails();
     });
   </script>
 <!-- END: InteractiveScript -->

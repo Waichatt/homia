@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+
+<html lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<title>Homia - Vista del agente</title>
+<script src="https://unpkg.com/lucide@latest"></script>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              navy: '#0b2238',
+              navyHover: '#133352',
+              teal: '#0d9488',
+              tealLight: '#0f766e',
+              accent: '#10b981'
+            }
+          },
+          fontFamily: {
+            sans: ['-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    .ios-blur { backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }
+    /* La publicación directa se ofrece desde Propiedades, no desde Resumen. */
+    #panel-resumen > div.bg-gradient-to-r { display: none; }
+    /* En Propiedades dejamos un único acceso para cargar inmuebles. */
+    #panel-propiedades > div.bg-gradient-to-r { display: none; }
+    body {
+      background-color: #0b1727;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 0;
+    }
+    .iphone-frame {
+      width: 100%;
+      max-width: 412px;
+      height: 100dvh;
+      max-height: 880px;
+      background-color: #ffffff;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.45);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    @media (min-width: 640px) {
+      body { padding: 1rem; }
+      .iphone-frame {
+        border-radius: 44px;
+        border: 8px solid #1e293b;
+      }
+    }
+  </style>
+</head>
+<body class="antialiased text-slate-800">
+<div class="iphone-frame">
+<!-- Status Bar -->
+<header class="w-full pt-3 pb-2 px-6 flex justify-between items-center bg-white sticky top-0 z-30 select-none shrink-0 border-b border-slate-50">
+<span class="text-xs font-semibold tracking-tight text-slate-900">9:41</span>
+<div class="flex items-center space-x-1.5 text-slate-900">
+<svg class="w-3.5 h-3.5 fill-current" viewbox="0 0 24 24"><rect height="6" rx="1" width="3" x="16"></rect><rect height="10" rx="1" width="3" x="7" y="12"></rect><rect height="14" rx="1" width="3" x="12" y="8"></rect><rect height="19" rx="1" width="3" x="17" y="3"></rect></svg>
+<svg class="w-3.5 h-3.5 fill-current" viewbox="0 0 24 24"><path d="M12 4C7.31 4 3.07 5.9 0 8.98L12 21 24 8.98C20.93 5.9 16.69 4 12 4zm0 3.5c3.56 0 6.78 1.44 9.12 3.76L12 19.35 2.88 11.26C5.22 8.94 8.44 7.5 12 7.5z"></path></svg>
+<div class="w-5 h-2.5 border border-slate-900 rounded-sm p-0.5 flex items-center">
+<div class="h-full w-full bg-slate-900 rounded-2xs"></div>
+</div>
+</div>
+</header>
+<!-- Content Viewport -->
+<main class="relative flex-1 w-full min-h-0 overflow-hidden bg-white" id="agentViews">
+<!-- 1. VISTA: ACM -->
+<div class="agent-view absolute inset-0 flex flex-col overflow-y-auto no-scrollbar" id="agent-screen-acm">
+<header class="px-4 py-2 flex items-center justify-between bg-white border-b border-slate-100 shrink-0 sticky top-0 z-20"><button aria-label="Volver" class="p-1.5 -ml-1.5 text-slate-700 hover:text-slate-950 transition-colors" onclick="showAgentView('panel')" type="button"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewbox="0 0 24 24"><path d="M15 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round"></path></svg></button><h1 class="text-base font-bold tracking-tight text-slate-900">ACM</h1><button aria-label="Guardar" class="p-1.5 -mr-1.5 text-slate-700 hover:text-slate-950 transition-colors" onclick="alert('Estudio guardado en tus reportes ACM.')" type="button"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewbox="0 0 24 24"><path d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" stroke-linecap="round" stroke-linejoin="round"></path></svg></button></header>
+<!-- Contenido del ACM exacto -->
+<div class="p-3.5 space-y-3.5 flex-1 pb-20" id="acmContent">
+<!-- Tarjeta de filtros superiores -->
+<div class="bg-white border border-slate-200 rounded-xl p-3 shadow-2xs space-y-2.5">
+<div class="flex items-center gap-2">
+<div class="w-7 h-7 rounded-lg bg-teal-50 flex items-center justify-center text-brand-teal shrink-0">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" stroke-linecap="round" stroke-linejoin="round"></path><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+</div>
+<div>
+<h2 class="text-xs font-bold text-slate-900 leading-tight">Yerba Buena, Tucumán</h2>
+<p class="text-[10px] text-slate-400 font-medium leading-none mt-0.5">Torres Jacarandá 2</p>
+</div>
+</div>
+<div class="grid grid-cols-3 gap-1.5">
+<button class="flex items-center justify-between px-2 py-1.5 bg-slate-50 hover:bg-slate-100 border border-slate-200 rounded-lg text-[10px] font-semibold text-slate-700 transition" type="button">
+<span class="flex items-center gap-1">
+<svg class="w-3 h-3 text-slate-400" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" stroke-linecap="round" stroke-linejoin="round"></path></svg> 1 Dorm.
+        </span>
+<svg class="w-3 h-3 text-slate-400" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+</button>
+<button class="flex items-center justify-between px-2 py-1.5 bg-slate-50 hover:bg-slate-100 border border-slate-200 rounded-lg text-[10px] font-semibold text-slate-700 transition" type="button">
+<span class="flex items-center gap-1">
+<svg class="w-3 h-3 text-slate-400" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" stroke-linecap="round" stroke-linejoin="round"></path></svg> 0 Baños
+        </span>
+<svg class="w-3 h-3 text-slate-400" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+</button>
+<button class="flex items-center justify-between px-2 py-1.5 bg-slate-50 hover:bg-slate-100 border border-slate-200 rounded-lg text-[10px] font-semibold text-slate-700 transition" type="button">
+<span class="flex items-center gap-1">
+<svg class="w-3 h-3 text-slate-400" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" stroke-linecap="round" stroke-linejoin="round"></path></svg> Todas
+        </span>
+<svg class="w-3 h-3 text-slate-400" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+</button>
+</div>
+<button class="w-full bg-brand-navy hover:bg-brand-navyHover text-white py-2 px-3 rounded-lg text-xs font-bold transition shadow-xs flex items-center justify-center gap-1.5" onclick="alert('Mercado recalculado con 6 comparables.')" type="button">
+<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" stroke-linecap="round" stroke-linejoin="round"></path></svg> Analizar mercado
+    </button>
+</div>
+<!-- Tarjeta PROPIEDAD A ANALIZAR -->
+<div class="bg-white border border-slate-200 rounded-xl p-3 shadow-2xs space-y-2.5">
+<div class="flex items-center justify-between">
+<span class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Propiedad a analizar</span>
+<button class="text-brand-teal text-[11px] font-bold flex items-center gap-1 hover:underline" onclick="alert('Modo edición de datos de la propiedad')" type="button">
+<svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" stroke-linecap="round" stroke-linejoin="round"></path></svg> Editar
+      </button>
+</div>
+<div class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-lg bg-brand-navy text-white flex items-center justify-center shrink-0">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+</div>
+<div>
+<h3 class="text-xs font-bold text-slate-900 leading-tight">Torres Jacarandá 2</h3>
+<p class="text-[10px] text-slate-500">Yerba Buena, Tucumán</p>
+</div>
+</div>
+<div class="grid grid-cols-3 gap-1.5 text-center pt-0.5">
+<div class="bg-slate-50 border border-slate-100 p-1.5 rounded-lg">
+<span class="text-[8.5px] uppercase font-semibold text-slate-400 block">Sup. Cubierta</span>
+<span class="text-xs font-bold text-slate-800">48 m²</span>
+</div>
+<div class="bg-slate-50 border border-slate-100 p-1.5 rounded-lg">
+<span class="text-[8.5px] uppercase font-semibold text-slate-400 block">Sup. Semicub.</span>
+<span class="text-xs font-bold text-slate-800">4 m²</span>
+</div>
+<div class="bg-teal-50/50 border border-teal-200 p-1.5 rounded-lg">
+<span class="text-[8.5px] uppercase font-bold text-brand-teal block">Sup. Homologada</span>
+<span class="text-xs font-extrabold text-brand-teal">50 m²</span>
+</div>
+</div>
+<div class="grid grid-cols-4 gap-1.5 text-center text-[10px] text-slate-600 border-t border-slate-100 pt-2">
+<div>
+<span class="text-[8.5px] text-slate-400 block uppercase">Piso</span>
+<strong class="text-slate-800 font-semibold">5°</strong>
+</div>
+<div>
+<span class="text-[8.5px] text-slate-400 block uppercase">Orientación</span>
+<strong class="text-slate-800 font-semibold">Frente</strong>
+</div>
+<div>
+<span class="text-[8.5px] text-slate-400 block uppercase">Antigüedad</span>
+<strong class="text-slate-800 font-semibold">2 años</strong>
+</div>
+<div>
+<span class="text-[8.5px] text-slate-400 block uppercase">Amenities</span>
+<strong class="text-emerald-600 font-bold">Sí</strong>
+</div>
+</div>
+</div>
+<!-- Sección Resultados comparables (6) -->
+<div class="space-y-1.5">
+<div class="flex justify-between items-center">
+<h3 class="text-xs font-bold text-slate-900">Resultados comparables (6)</h3>
+<button class="text-[10px] text-brand-teal font-medium hover:underline flex items-center gap-0.5" onclick="showAgentView('networking')" type="button">
+<svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon><line x1="8" x2="8" y1="2" y2="18"></line><line x1="16" x2="16" y1="6" y2="22"></line></svg> Ver mapa
+      </button>
+</div>
+<div class="border border-slate-200 rounded-xl overflow-x-auto shadow-2xs bg-white">
+<table class="w-full text-[10px] text-left min-w-[360px]">
+<thead class="bg-slate-100 text-slate-500 uppercase font-bold text-[8.5px] tracking-wider border-b border-slate-200">
+<tr>
+<th class="py-2 px-1.5 text-center">#</th>
+<th class="py-2 px-2">Dirección / Edif.</th>
+<th class="py-2 px-1.5 text-center">Sup.(m²)</th>
+<th class="py-2 px-1.5 text-right">Precio (USD)</th>
+<th class="py-2 px-1.5 text-center">Días</th>
+<th class="py-2 px-1.5 text-center">Ajuste</th>
+<th class="py-2 px-2 text-right">USD/m² Hom.</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100">
+<tr class="hover:bg-slate-50/80 transition-colors">
+<td class="py-2 px-1.5 text-center font-bold text-slate-900">1</td>
+<td class="py-2 px-2"><p class="font-bold text-slate-900 leading-none">Jacarandá 2 (P5)</p><span class="text-[8.5px] text-slate-400">Mismo edificio</span></td>
+<td class="py-2 px-1.5 text-center font-medium text-slate-700">52</td>
+<td class="py-2 px-1.5 text-right font-bold text-slate-900">$73.000</td>
+<td class="py-2 px-1.5 text-center text-slate-500">45</td>
+<td class="py-2 px-1.5 text-center"><span class="text-[9px] font-bold text-emerald-600 bg-emerald-50 px-1 py-0.5 rounded">0%</span></td>
+<td class="py-2 px-2 text-right font-extrabold text-brand-teal">$1.404</td>
+</tr>
+<tr class="hover:bg-slate-50/80 transition-colors">
+<td class="py-2 px-1.5 text-center font-bold text-slate-900">2</td>
+<td class="py-2 px-2"><p class="font-bold text-slate-900 leading-none">Jacarandá 2 (P3)</p><span class="text-[8.5px] text-slate-400">Contra-frente</span></td>
+<td class="py-2 px-1.5 text-center font-medium text-slate-700">50</td>
+<td class="py-2 px-1.5 text-right font-bold text-slate-900">$68.000</td>
+<td class="py-2 px-1.5 text-center text-slate-500">80</td>
+<td class="py-2 px-1.5 text-center"><span class="text-[9px] font-bold text-amber-600 bg-amber-50 px-1 py-0.5 rounded">-2%</span></td>
+<td class="py-2 px-2 text-right font-extrabold text-brand-teal">$1.333</td>
+</tr>
+<tr class="hover:bg-slate-50/80 transition-colors">
+<td class="py-2 px-1.5 text-center font-bold text-slate-900">3</td>
+<td class="py-2 px-2"><p class="font-bold text-slate-900 leading-none">Distrito Av. (P8)</p><span class="text-[8.5px] text-slate-400">A 200m • Amenities</span></td>
+<td class="py-2 px-1.5 text-center font-medium text-slate-700">55</td>
+<td class="py-2 px-1.5 text-right font-bold text-slate-900">$75.000</td>
+<td class="py-2 px-1.5 text-center text-slate-500">28</td>
+<td class="py-2 px-1.5 text-center"><span class="text-[9px] font-bold text-emerald-600 bg-emerald-50 px-1 py-0.5 rounded">+1%</span></td>
+<td class="py-2 px-2 text-right font-extrabold text-brand-teal">$1.341</td>
+</tr>
+<tr class="hover:bg-slate-50/80 transition-colors">
+<td class="py-2 px-1.5 text-center font-bold text-slate-900">4</td>
+<td class="py-2 px-2"><p class="font-bold text-slate-900 leading-none">Edif. Aconquija</p><span class="text-[8.5px] text-slate-400">A 450m • S/cochera</span></td>
+<td class="py-2 px-1.5 text-center font-medium text-slate-700">49</td>
+<td class="py-2 px-1.5 text-right font-bold text-slate-900">$67.500</td>
+<td class="py-2 px-1.5 text-center text-slate-500">64</td>
+<td class="py-2 px-1.5 text-center"><span class="text-[9px] font-bold text-slate-500 bg-slate-100 px-1 py-0.5 rounded">0%</span></td>
+<td class="py-2 px-2 text-right font-extrabold text-brand-teal">$1.377</td>
+</tr>
+<tr class="hover:bg-slate-50/80 transition-colors">
+<td class="py-2 px-1.5 text-center font-bold text-slate-900">5</td>
+<td class="py-2 px-2"><p class="font-bold text-slate-900 leading-none">Parque Norte 1</p><span class="text-[8.5px] text-slate-400">A 600m • Amenities</span></td>
+<td class="py-2 px-1.5 text-center font-medium text-slate-700">51</td>
+<td class="py-2 px-1.5 text-right font-bold text-slate-900">$72.000</td>
+<td class="py-2 px-1.5 text-center text-slate-500">95</td>
+<td class="py-2 px-1.5 text-center"><span class="text-[9px] font-bold text-amber-600 bg-amber-50 px-1 py-0.5 rounded">-3%</span></td>
+<td class="py-2 px-2 text-right font-extrabold text-brand-teal">$1.350</td>
+</tr>
+<tr class="hover:bg-slate-50/80 transition-colors">
+<td class="py-2 px-1.5 text-center font-bold text-slate-900">6</td>
+<td class="py-2 px-2"><p class="font-bold text-slate-900 leading-none">Torres Jacarandá 1</p><span class="text-[8.5px] text-slate-400">Mismo complejo</span></td>
+<td class="py-2 px-1.5 text-center font-medium text-slate-700">50</td>
+<td class="py-2 px-1.5 text-right font-bold text-slate-900">$69.500</td>
+<td class="py-2 px-1.5 text-center text-slate-500">110</td>
+<td class="py-2 px-1.5 text-center"><span class="text-[9px] font-bold text-amber-600 bg-amber-50 px-1 py-0.5 rounded">-5%</span></td>
+<td class="py-2 px-2 text-right font-extrabold text-brand-teal">$1.320</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Resultados del algoritmo ACM -->
+<div class="space-y-2 pt-1">
+<div class="flex items-center justify-between">
+<h3 class="text-xs font-bold text-slate-900">Resultados del algoritmo ACM</h3>
+<span class="text-[10px] text-emerald-600 font-bold bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200">Confiabilidad Alta</span>
+</div>
+<div class="grid grid-cols-3 gap-1.5">
+<div class="bg-teal-50 border border-teal-200 p-2 rounded-xl text-center shadow-2xs">
+<span class="text-[8.5px] uppercase font-bold text-brand-teal block leading-tight">Valor de Mercado</span>
+<p class="text-xs font-black text-slate-900 mt-1">USD 70.000</p>
+<span class="text-[8.5px] text-slate-400 font-medium block mt-0.5">$1.400/m²</span>
+</div>
+<div class="bg-slate-100 border border-slate-200 p-2 rounded-xl text-center">
+<span class="text-[8.5px] uppercase font-bold text-slate-700 block leading-tight">Valor Sugerido</span>
+<p class="text-xs font-black text-brand-navy mt-1">USD 72.000</p>
+<span class="text-[8.5px] text-slate-500 font-medium block mt-0.5">Margen neg. 3%</span>
+</div>
+<div class="bg-slate-50 border border-slate-200 p-2 rounded-xl text-center">
+<span class="text-[8.5px] uppercase font-bold text-slate-400 block leading-tight">Fuera Mercado</span>
+<p class="text-xs font-bold text-slate-600 mt-1">USD 66.000</p>
+<span class="text-[8.5px] text-slate-400 block mt-0.5">&gt; 90 días</span>
+</div>
+</div>
+<div class="bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-center text-[10px] text-slate-600 space-y-0.5">
+<p class="font-bold text-slate-800">Rango estimado: USD 64.000 – 76.000</p>
+<p class="text-[9px] text-slate-400">Basado en 6 comparables en un radio de 2 km.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- 2. VISTA: PANEL INTERNO DEL AGENTE -->
+<div class="agent-view absolute inset-0 flex flex-col overflow-y-auto no-scrollbar bg-slate-50/60 hidden" id="agent-screen-panel">
+<!-- Agent Header Card -->
+<div class="bg-gradient-to-br from-brand-navy via-slate-900 to-slate-950 text-white p-4 shrink-0 shadow-md">
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-3">
+<div class="relative">
+<img alt="Juan Pérez" class="w-12 h-12 rounded-full object-cover border-2 border-emerald-400 shadow-sm" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDz_m0SkSuvqHSKMPueXjYlVejpOvakBZ3i2_iGdeZcbDs13-rtyjxScR1SAxiRLSCmJmoTpV7nqOAxrzspz3WLAWckBe9TM0oa504VyRcenjMoH2OFLqXXvl_Gn7ylHMb4D8BuyGVqhFp3iYhsJzCUUUwJ9MxOmqiRu6d_olFqaGEh9D_oTOj-_lLyIBLJrNEk7b7FGwuvIyhQ1GVnVgeOtTWP895EPl_1JP_iWk7GoEVnNhTz9ogQBg"/>
+<span class="absolute bottom-0 right-0 w-3.5 h-3.5 bg-emerald-500 border-2 border-brand-navy rounded-full"></span>
+</div>
+<div>
+<div class="flex items-center gap-1.5">
+<h2 class="text-sm font-bold text-white tracking-tight">Juan Pérez</h2>
+<span class="bg-emerald-500/20 text-emerald-300 text-[9px] font-extrabold px-1.5 py-0.5 rounded border border-emerald-400/30 uppercase tracking-wider">Nivel Pro</span>
+</div>
+<p class="text-[11px] text-slate-300">Century 21 • Yerba Buena &amp; Tucumán</p>
+<div class="flex items-center gap-1 mt-0.5 text-[10px] text-slate-300">
+<svg aria-hidden="true" class="lucide lucide-star w-3 h-3 text-amber-400 fill-amber-400" data-lucide="star" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"></path></svg>
+<span class="text-white font-semibold">4.9</span> (42 reseñas)
+              </div>
+</div>
+</div>
+<button class="bg-white/10 hover:bg-white/20 active:scale-95 text-white border border-white/20 text-[10px] font-semibold px-2.5 py-1.5 rounded-lg flex items-center gap-1 transition" onclick="openPublicProfileModal()">
+<svg aria-hidden="true" class="lucide lucide-external-link w-3 h-3" data-lucide="external-link" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M15 3h6v6"></path><path d="M10 14 21 3"></path><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path></svg> Ver perfil público
+          </button>
+</div>
+<div class="grid grid-cols-3 gap-2 mt-3 pt-3 border-t border-white/10 text-center">
+<div class="bg-white/5 rounded-lg py-1 px-1">
+<span class="text-[9px] text-slate-300 block">Objetivo Mes</span>
+<span class="text-xs font-bold text-emerald-400">82%</span>
+</div>
+<div class="bg-white/5 rounded-lg py-1 px-1">
+<span class="text-[9px] text-slate-300 block">Cartera Activa</span>
+<span class="text-xs font-bold text-white header-cartera-count">12 Props</span>
+</div>
+<div class="bg-white/5 rounded-lg py-1 px-1">
+<span class="text-[9px] text-slate-300 block">Ranking C21</span>
+<span class="text-xs font-bold text-sky-400">Top 5%</span>
+</div>
+</div>
+</div>
+<!-- 4 Pestañas Internas del Panel -->
+<nav class="sticky top-0 z-20 bg-white/95 ios-blur border-b border-slate-200 px-3 py-1.5 flex gap-1 shadow-2xs shrink-0"><button class="panel-tab-btn flex-1 py-1.5 text-[11px] font-bold rounded-md bg-brand-navy text-white text-center transition" onclick="switchPanelTab('resumen', this)">Resumen</button><button class="panel-tab-btn flex-1 py-1.5 text-[11px] font-medium text-slate-600 hover:text-slate-900 rounded-md text-center transition" onclick="switchPanelTab('calendario', this)">Calendario</button><button class="panel-tab-btn flex-1 py-1.5 text-[11px] font-medium text-slate-600 hover:text-slate-900 rounded-md text-center transition" onclick="switchPanelTab('finanzas', this)">Finanzas</button><button class="panel-tab-btn flex-1 py-1.5 text-[11px] font-medium text-slate-600 hover:text-slate-900 rounded-md text-center transition" onclick="switchPanelTab('propiedades', this)">Propiedades</button></nav>
+<div class="p-3.5 space-y-4 flex-1 pb-20">
+<!-- SUB-TAB 1: RESUMEN -->
+<section class="panel-section space-y-3.5" id="panel-resumen">
+<div class="bg-gradient-to-r from-brand-navy via-slate-800 to-brand-teal p-3 rounded-2xl text-white shadow-md space-y-2 border border-brand-teal/30"><div class="flex items-start justify-between"><div class="flex items-center gap-2"><div class="w-8 h-8 rounded-xl bg-white/10 flex items-center justify-center text-emerald-300 shrink-0 border border-white/15"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewbox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><line x1="12" x2="12" y1="11" y2="17"></line><line x1="9" x2="15" y1="14" y2="14"></line></svg></div><div><h3 class="text-xs font-bold text-white tracking-tight">Publicación directa de inmuebles</h3><span class="inline-flex items-center gap-1 text-[9.5px] font-semibold text-emerald-300 bg-emerald-500/20 px-2 py-0.5 rounded-full border border-emerald-400/30"><svg class="w-2.5 h-2.5" fill="none" stroke="currentColor" stroke-width="2.5" viewbox="0 0 24 24"><path d="M20 6L9 17l-5-5"></path></svg> Publicación directa · No requiere tasación previa</span></div></div></div><p class="text-[10px] text-slate-200 leading-snug">Publicá en minutos para comenzar a recibir interesados en tu perfil y redes de contactos.</p><button class="w-full bg-emerald-500 hover:bg-emerald-600 active:scale-[0.98] text-slate-950 py-2.5 px-3 rounded-xl text-xs font-black transition shadow-sm flex items-center justify-center gap-2 tracking-wide" onclick="openPublishPropertyFlow()" type="button"><svg class="w-4 h-4 text-slate-950" fill="none" stroke="currentColor" stroke-width="2.5" viewbox="0 0 24 24"><path d="M12 5v14m-7-7h14"></path></svg><span>Agregar propiedad</span></button></div><div class="grid grid-cols-2 gap-2.5">
+<div class="bg-white border border-slate-200 rounded-xl p-3 shadow-2xs">
+<span class="text-[10px] text-slate-500 font-medium">Ventas del mes</span>
+<p class="text-base font-extrabold text-slate-900 mt-0.5">3 ops</p>
+<span class="text-[10px] text-emerald-600 font-medium flex items-center gap-0.5 mt-0.5"><svg aria-hidden="true" class="lucide lucide-trending-up w-2.5 h-2.5" data-lucide="trending-up" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M16 7h6v6"></path><path d="m22 7-8.5 8.5-5-5L2 17"></path></svg> +1 vs mes anterior</span>
+</div>
+<div class="bg-white border border-slate-200 rounded-xl p-3 shadow-2xs">
+<span class="text-[10px] text-slate-500 font-medium">Comisiones</span>
+<p class="text-base font-extrabold text-brand-teal mt-0.5">USD 14.850</p>
+<span class="text-[10px] text-slate-500">USD 4.200 a liquidar</span>
+</div>
+<div class="bg-white border border-slate-200 rounded-xl p-3 shadow-2xs">
+<span class="text-[10px] text-slate-500 font-medium">Propiedades activas</span>
+<p class="text-base font-extrabold text-slate-900 mt-0.5 main-cartera-count">12 activas</p>
+<span class="text-[10px] text-slate-500">4 en negociación</span>
+</div>
+<div class="bg-white border border-slate-200 rounded-xl p-3 shadow-2xs">
+<span class="text-[10px] text-slate-500 font-medium">Leads calificados</span>
+<p class="text-base font-extrabold text-slate-900 mt-0.5">29 clientes</p>
+<span class="text-[10px] text-amber-600 font-medium">7 listos para visita</span>
+</div>
+</div>
+<!-- Objetivo del Mes -->
+<div class="bg-white border border-slate-200 rounded-xl p-3 shadow-2xs">
+<div class="flex justify-between items-center mb-1.5">
+<span class="text-xs font-bold text-slate-800 flex items-center gap-1.5"><svg aria-hidden="true" class="lucide lucide-target w-3.5 h-3.5 text-brand-teal" data-lucide="target" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg> Objetivo Q2 (USD 60.000)</span>
+<span class="text-xs font-extrabold text-brand-teal">82%</span>
+</div>
+<div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
+<div class="bg-brand-teal h-full rounded-full" style="width: 82%"></div>
+</div>
+<div class="flex justify-between text-[10px] text-slate-400 mt-1">
+<span class="">Acumulado: USD 49.200</span>
+<span class="">Faltan: USD 10.800</span>
+</div>
+</div>
+<!-- Embudo de Ventas -->
+<div class="bg-white border border-slate-200 rounded-xl p-3.5 shadow-2xs space-y-2">
+<h3 class="text-xs font-bold text-slate-900 flex items-center gap-1.5"><svg aria-hidden="true" class="lucide lucide-filter w-3.5 h-3.5 text-brand-navy" data-lucide="filter" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M10 20a1 1 0 0 0 .553.895l2 1A1 1 0 0 0 14 21v-7a2 2 0 0 1 .517-1.341L21.74 4.67A1 1 0 0 0 21 3H3a1 1 0 0 0-.742 1.67l7.225 7.989A2 2 0 0 1 10 14z"></path></svg> Embudo de ventas comercial</h3>
+<div class="space-y-1.5 pt-1">
+<div>
+<div class="flex justify-between text-[11px] text-slate-700 font-medium"><span class="">1. Leads ingresados</span><span class="font-bold text-slate-900">84</span></div>
+<div class="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden"><div class="bg-slate-700 h-full w-full"></div></div>
+</div>
+<div>
+<div class="flex justify-between text-[11px] text-slate-700 font-medium"><span class="">2. Calificados para visita</span><span class="font-bold text-slate-900">52 (62%)</span></div>
+<div class="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden"><div class="bg-sky-600 h-full w-[62%]"></div></div>
+</div>
+<div>
+<div class="flex justify-between text-[11px] text-slate-700 font-medium"><span class="">3. Visitas a propiedades</span><span class="font-bold text-slate-900">24 (28%)</span></div>
+<div class="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden"><div class="bg-brand-teal h-full w-[28%]"></div></div>
+</div>
+<div>
+<div class="flex justify-between text-[11px] text-slate-700 font-medium"><span class="">4. Ofertas presentadas</span><span class="font-bold text-slate-900">7 (8.3%)</span></div>
+<div class="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden"><div class="bg-amber-500 h-full w-[8.3%]"></div></div>
+</div>
+<div>
+<div class="flex justify-between text-[11px] text-slate-700 font-medium"><span class="">5. Cierres &amp; Escrituras</span><span class="font-bold text-emerald-600">3 (3.6%)</span></div>
+<div class="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden"><div class="bg-emerald-500 h-full w-[4%]"></div></div>
+</div>
+</div>
+</div>
+<div class="bg-gradient-to-r from-brand-navy via-slate-800 to-brand-teal p-3 rounded-2xl text-white shadow-md space-y-2 border border-brand-teal/30"><div class="flex items-start justify-between"><div class="flex items-center gap-2"><div class="w-8 h-8 rounded-xl bg-white/10 flex items-center justify-center text-emerald-300 shrink-0 border border-white/15"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewbox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><line x1="12" x2="12" y1="11" y2="17"></line><line x1="9" x2="15" y1="14" y2="14"></line></svg></div><div><h3 class="text-xs font-bold text-white tracking-tight">Publicación directa de inmuebles</h3><span class="inline-flex items-center gap-1 text-[9.5px] font-semibold text-emerald-300 bg-emerald-500/20 px-2 py-0.5 rounded-full border border-emerald-400/30"><svg class="w-2.5 h-2.5" fill="none" stroke="currentColor" stroke-width="2.5" viewbox="0 0 24 24"><path d="M20 6L9 17l-5-5"></path></svg> Publicación directa · No requiere tasación previa</span></div></div></div><p class="text-[10px] text-slate-200 leading-snug">Publicá en minutos para comenzar a recibir interesados en tu perfil y redes de contactos.</p><button class="w-full bg-emerald-500 hover:bg-emerald-600 active:scale-[0.98] text-slate-950 py-2.5 px-3 rounded-xl text-xs font-black transition shadow-sm flex items-center justify-center gap-2 tracking-wide" onclick="openPublishPropertyFlow()" type="button"><svg class="w-4 h-4 text-slate-950" fill="none" stroke="currentColor" stroke-width="2.5" viewbox="0 0 24 24"><path d="M12 5v14m-7-7h14"></path></svg><span>Agregar propiedad</span></button></div><div class="grid grid-cols-2 gap-2">
+<button class="bg-brand-navy text-white rounded-xl p-2.5 text-left text-xs font-semibold flex items-center justify-between hover:bg-brand-navyHover" onclick="showAgentView('acm')">
+<span class="">Nueva tasación ACM</span>
+<svg aria-hidden="true" class="lucide lucide-calculator w-3.5 h-3.5" data-lucide="calculator" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><rect height="20" rx="2" width="16" x="4" y="2"></rect><line x1="8" x2="16" y1="6" y2="6"></line><line x1="16" x2="16" y1="14" y2="18"></line><path d="M16 10h.01"></path><path d="M12 10h.01"></path><path d="M8 10h.01"></path><path d="M12 14h.01"></path><path d="M8 14h.01"></path><path d="M12 18h.01"></path><path d="M8 18h.01"></path></svg>
+</button>
+<button class="bg-brand-teal text-white rounded-xl p-2.5 text-left text-xs font-semibold flex items-center justify-between hover:bg-brand-tealLight" onclick="openGlobalAIChat()"><span>Consultar Asistente IA</span><svg class="w-3.5 h-3.5" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8V4H8"></path><rect height="12" rx="2" width="16" x="4" y="8"></rect><path d="M2 14h2"></path><path d="M20 14h2"></path><path d="M15 13v2"></path><path d="M9 13v2"></path></svg></button>
+</div>
+</section>
+<!-- SUB-TAB 2: CALENDARIO -->
+<section class="panel-section hidden space-y-3.5" id="panel-calendario">
+<div class="bg-white border border-slate-200 rounded-xl p-3 shadow-2xs">
+<div class="flex justify-between items-center mb-2">
+<span class="text-xs font-extrabold text-slate-900">Mayo 2025</span>
+<span class="text-[10px] text-slate-400">Semana 20</span>
+</div>
+<div class="grid grid-cols-7 gap-1 text-center text-[10px]">
+<span class="text-slate-400 font-medium">L</span><span class="text-slate-400 font-medium">M</span><span class="text-slate-400 font-medium">M</span><span class="text-slate-400 font-medium">J</span><span class="text-slate-400 font-medium">V</span><span class="text-slate-400 font-medium">S</span><span class="text-slate-400 font-medium">D</span>
+<div class="py-1 rounded text-slate-600">12</div>
+<div class="py-1 rounded text-slate-600">13</div>
+<div class="py-1 rounded bg-brand-navy text-white font-bold shadow-xs">14</div>
+<div class="py-1 rounded text-slate-600 relative">15<span class="w-1 h-1 rounded-full bg-brand-teal absolute bottom-0.5 left-1/2 -translate-x-1/2"></span></div>
+<div class="py-1 rounded text-slate-600 relative">16<span class="w-1 h-1 rounded-full bg-amber-500 absolute bottom-0.5 left-1/2 -translate-x-1/2"></span></div>
+<div class="py-1 rounded text-slate-400">17</div>
+<div class="py-1 rounded text-slate-400">18</div>
+</div>
+</div>
+<div class="space-y-2">
+<h4 class="text-xs font-bold text-slate-900 flex justify-between items-center">
+<span class="">Agenda de hoy (14 de Mayo)</span>
+<span class="text-[10px] text-brand-teal font-semibold">3 citas</span>
+</h4>
+<div class="bg-white border-l-4 border-l-brand-teal border border-slate-200 rounded-r-xl p-2.5 shadow-2xs">
+<span class="text-[10px] font-bold text-brand-teal uppercase">10:30 hs • Visita guiada</span>
+<h5 class="text-xs font-bold text-slate-900 mt-0.5">Depto Jacarandá 2 (Piso 5)</h5>
+<p class="text-[11px] text-slate-500">Cliente: Lic. Mariana Ramos (+54 9 381 445-9821)</p>
+</div>
+<div class="bg-white border-l-4 border-l-amber-500 border border-slate-200 rounded-r-xl p-2.5 shadow-2xs">
+<span class="text-[10px] font-bold text-amber-600 uppercase">15:00 hs • Tasación in situ</span>
+<h5 class="text-xs font-bold text-slate-900 mt-0.5">Casa en Las Cañas (800 m²)</h5>
+<p class="text-[11px] text-slate-500">Propietario: Dr. Federico Albarracín</p>
+</div>
+<div class="bg-white border-l-4 border-l-sky-500 border border-slate-200 rounded-r-xl p-2.5 shadow-2xs">
+<span class="text-[10px] font-bold text-sky-600 uppercase">18:30 hs • Firma de Reserva</span>
+<h5 class="text-xs font-bold text-slate-900 mt-0.5">Local Av. Aconquija 1250</h5>
+<p class="text-[11px] text-slate-500">Escribanía Gómez &amp; Asociados • Seña USD 5.000</p>
+</div>
+</div>
+<div class="bg-white border border-slate-200 rounded-xl p-3 shadow-2xs space-y-2">
+<h4 class="text-xs font-bold text-slate-900">Tareas de seguimiento</h4>
+<div class="space-y-1.5 text-xs text-slate-700">
+<label class="flex items-center gap-2 cursor-pointer"><input checked="" class="rounded text-brand-teal" type="checkbox"/><span class="line-through text-slate-400">Enviar fotos y ficha de Jacarandá a Mariana</span></label>
+<label class="flex items-center gap-2 cursor-pointer"><input checked="" class="rounded text-brand-teal" type="checkbox"/><span class="line-through text-slate-400">Revisar informe de dominio para escritura</span></label>
+<label class="flex items-center gap-2 cursor-pointer"><input class="rounded text-brand-teal" type="checkbox"/><span class="">Reagendar visita lote Country YB Norte</span></label>
+<label class="flex items-center gap-2 cursor-pointer"><input class="rounded text-brand-teal" type="checkbox"/><span class="">Actualizar precio sugerido en ACM para San Martín</span></label>
+</div>
+</div>
+</section>
+<!-- SUB-TAB 3: FINANZAS -->
+<section class="panel-section hidden space-y-3.5" id="panel-finanzas">
+<div class="grid grid-cols-2 gap-2.5">
+<div class="bg-gradient-to-br from-slate-900 to-brand-navy text-white rounded-xl p-3 shadow-sm">
+<span class="text-[10px] text-slate-300">Ingresos Totales (Q2)</span>
+<p class="text-base font-black text-white mt-0.5">USD 49.200</p>
+<span class="text-[10px] text-emerald-400 font-semibold">+18% vs trimestre ant.</span>
+</div>
+<div class="bg-emerald-50 border border-emerald-200 rounded-xl p-3">
+<span class="text-[10px] text-emerald-700 font-semibold">Comisión Neta (Mes)</span>
+<p class="text-base font-black text-emerald-950 mt-0.5">USD 14.850</p>
+<span class="text-[10px] text-emerald-800">Honorarios liquidados</span>
+</div>
+</div>
+<div class="bg-white border border-slate-200 rounded-xl p-3 shadow-2xs space-y-2">
+<h4 class="text-xs font-bold text-slate-900">Próximos cobros a liquidar</h4>
+<div class="space-y-1.5 text-xs">
+<div class="flex justify-between items-center pb-1.5 border-b border-slate-100">
+<div><p class="font-bold text-slate-800">Escritura Jacarandá 2</p><span class="text-[10px] text-slate-400">22 de Mayo</span></div>
+<span class="font-extrabold text-brand-teal">USD 2.800</span>
+</div>
+<div class="flex justify-between items-center">
+<div><p class="font-bold text-slate-800">Seña Local Comercial</p><span class="text-[10px] text-slate-400">28 de Mayo</span></div>
+<span class="font-extrabold text-brand-teal">USD 1.400</span>
+</div>
+</div>
+</div>
+<div class="bg-white border border-slate-200 rounded-xl p-3 shadow-2xs">
+<div class="flex justify-between items-center mb-2">
+<h4 class="text-xs font-bold text-slate-900">Evolución de Comisiones</h4>
+<span class="text-[10px] text-slate-400">Ene - May 2025</span>
+</div>
+<div class="h-24 flex items-end justify-between gap-2 px-2 border-b border-slate-200 pb-1">
+<div class="flex-1 flex flex-col items-center gap-0.5"><div class="w-full bg-slate-300 rounded-t h-10"></div><span class="text-[9px] text-slate-500">Ene</span></div>
+<div class="flex-1 flex flex-col items-center gap-0.5"><div class="w-full bg-slate-300 rounded-t h-14"></div><span class="text-[9px] text-slate-500">Feb</span></div>
+<div class="flex-1 flex flex-col items-center gap-0.5"><div class="w-full bg-slate-300 rounded-t h-12"></div><span class="text-[9px] text-slate-500">Mar</span></div>
+<div class="flex-1 flex flex-col items-center gap-0.5"><div class="w-full bg-slate-400 rounded-t h-16"></div><span class="text-[9px] text-slate-500">Abr</span></div>
+<div class="flex-1 flex flex-col items-center gap-0.5"><div class="w-full bg-brand-teal rounded-t h-20"></div><span class="text-[9px] font-bold text-brand-teal">May</span></div>
+</div>
+</div>
+</section>
+<!-- SUB-TAB 4: PROPIEDADES -->
+<section class="panel-section hidden space-y-3" id="panel-propiedades"><div class="bg-gradient-to-r from-brand-navy to-brand-teal p-3 rounded-2xl text-white shadow-sm flex flex-col gap-2"><div class="flex items-center justify-between"><div class="flex items-center gap-2"><div class="w-7 h-7 rounded-lg bg-emerald-500/20 text-emerald-300 flex items-center justify-center font-bold"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewbox="0 0 24 24"><path d="M12 5v14m-7-7h14"></path></svg></div><span class="text-xs font-bold">Carga de nueva propiedad</span></div><span class="text-[9px] font-bold text-emerald-300 bg-emerald-500/20 px-2 py-0.5 rounded-full border border-emerald-400/30">Directa</span></div><p class="text-[10.5px] text-slate-200">Publicación directa · No requiere tasación previa</p><button class="w-full bg-brand-teal hover:bg-brand-tealLight text-white py-2 px-3 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 shadow-xs" onclick="openPublishPropertyFlow()" type="button"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewbox="0 0 24 24"><path d="M12 5v14m-7-7h14"></path></svg><span>Agregar propiedad ahora</span></button></div><div class="flex items-center justify-between pt-1"><h4 class="text-xs font-bold text-slate-900">Cartera Activa (<span class="cartera-badge-num">12</span>)</h4><div class="flex items-center gap-2"><button class="text-[10.5px] text-emerald-700 font-bold bg-emerald-50 hover:bg-emerald-100 px-2.5 py-1 rounded-lg border border-emerald-200 flex items-center gap-1 transition" onclick="openPublishPropertyFlow()" type="button"><svg class="w-3 h-3 text-emerald-600" fill="none" stroke="currentColor" stroke-width="2.5" viewbox="0 0 24 24"><path d="M12 5v14m-7-7h14"></path></svg><span>Agregar</span></button><button class="text-[10px] text-brand-teal font-semibold hover:underline" onclick="showAgentView('acm')" type="button">Tasar con ACM</button></div></div><div class="space-y-2" id="propertiesListContainer"><div class="p-2.5 bg-white border border-slate-200 rounded-xl shadow-2xs flex items-center justify-between"><div class="flex items-center gap-2.5"><div class="w-9 h-9 rounded-lg bg-brand-navy text-white flex items-center justify-center font-bold text-xs shrink-0">J2</div><div><h5 class="text-xs font-bold text-slate-900 leading-tight">Torres Jacarandá 2 (P5)</h5><span class="text-[10px] text-slate-400">Yerba Buena • 50 m² • 1 Dorm.</span></div></div><div class="text-right"><span class="text-xs font-black text-slate-900 block">USD 73.000</span><span class="text-[9px] text-emerald-600 font-bold bg-emerald-50 px-1 py-0.5 rounded">Activo</span></div></div><div class="p-2.5 bg-white border border-slate-200 rounded-xl shadow-2xs flex items-center justify-between"><div class="flex items-center gap-2.5"><div class="w-9 h-9 rounded-lg bg-teal-50 text-brand-teal border border-teal-200 flex items-center justify-center font-bold text-xs shrink-0">LC</div><div><h5 class="text-xs font-bold text-slate-900 leading-tight">Casa Las Cañas Country</h5><span class="text-[10px] text-slate-400">Yerba Buena • 280 m² • 4 Dorm.</span></div></div><div class="text-right"><span class="text-xs font-black text-slate-900 block">USD 380.000</span><span class="text-[9px] text-amber-600 font-bold bg-amber-50 px-1 py-0.5 rounded">En oferta</span></div></div><div class="p-2.5 bg-white border border-slate-200 rounded-xl shadow-2xs flex items-center justify-between"><div class="flex items-center gap-2.5"><div class="w-9 h-9 rounded-lg bg-slate-100 text-slate-700 flex items-center justify-center font-bold text-xs shrink-0">AC</div><div><h5 class="text-xs font-bold text-slate-900 leading-tight">Local Comercial Aconquija</h5><span class="text-[10px] text-slate-400">Av. Aconquija 1250 • 120 m²</span></div></div><div class="text-right"><span class="text-xs font-black text-slate-900 block">USD 240.000</span><span class="text-[9px] text-sky-600 font-bold bg-sky-50 px-1 py-0.5 rounded">Reserva</span></div></div></div></section>
+</div>
+</div>
+<!-- 3. VISTA: ACADEMIA -->
+<div class="agent-view absolute inset-0 flex flex-col overflow-y-auto bg-white no-scrollbar hidden" id="agent-screen-academia">
+<div class="sticky top-0 bg-white/95 ios-blur px-4 py-3 border-b border-slate-100 z-10 shrink-0">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 bg-slate-900 text-white rounded flex items-center justify-center text-xs font-bold">H</div>
+<h2 class="text-base font-extrabold text-slate-900">Homia Academia</h2>
+</div>
+<button class="text-xs font-bold text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-full flex items-center gap-1" onclick="showAgentView('networking')">
+<svg aria-hidden="true" class="lucide lucide-network w-3.5 h-3.5" data-lucide="network" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><rect height="6" rx="1" width="6" x="16" y="16"></rect><rect height="6" rx="1" width="6" x="2" y="16"></rect><rect height="6" rx="1" width="6" x="9" y="2"></rect><path d="M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3"></path><path d="M12 12V8"></path></svg> Networking
+          </button>
+</div>
+<div class="relative mt-2.5">
+<svg aria-hidden="true" class="lucide lucide-search w-4 h-4 text-slate-400 absolute left-3 top-2.5" data-lucide="search" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="m21 21-4.34-4.34"></path><circle cx="11" cy="11" r="8"></circle></svg>
+<input class="w-full bg-slate-100 border-0 rounded-xl py-2 pl-9 pr-3 text-xs text-slate-800 placeholder-slate-400" placeholder="Buscar cursos, podcasts, audioguías..." type="text"/>
+</div>
+</div>
+<div class="p-4 space-y-4 pb-20">
+<div>
+<h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Destacados</h3>
+<div class="relative rounded-2xl overflow-hidden shadow-sm cursor-pointer" onclick="alert('Abriendo episodio: El futuro del real estate en Latinoamérica')">
+<img alt="Podcast" class="w-full h-40 object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDPfjUPkMMDRKcVfq1pg4Ldgr6ulgshSD01GLTEYzpvc4siLKDGGXDzG0f27AD89gFEn_gO4ZU5kCTh8Kz_qZzxID-07Z_T5E-quawg2AydAs4uTUNy_3pP5opWOQSEByDOFzWScqUUoHD62rEW4WyMYtQ5APrC2mmnJTTrcCQRTDvhWRLRJRsNsgaZs0-r_FWjf8OMiTdaUuUMil0cxs6Y9OZ6IDBigIkPlEAlVqAGThPgiYaPxMPwKQ"/>
+<div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-900/60 to-transparent"></div>
+<div class="absolute top-2.5 left-2.5 bg-emerald-500 text-slate-950 text-[9px] font-black px-2 py-0.5 rounded uppercase">Podcast • Nuevo</div>
+<div class="absolute bottom-3 left-3 right-3 flex items-end justify-between">
+<div>
+<h4 class="text-xs font-extrabold text-white leading-tight">El futuro del real estate en Latinoamérica</h4>
+<p class="text-[10px] text-slate-300 mt-0.5">Carlos Muñoz &amp; Directores Homia • 35 min</p>
+</div>
+<div class="w-8 h-8 rounded-full bg-white text-slate-900 flex items-center justify-center shrink-0"><svg aria-hidden="true" class="lucide lucide-play w-3.5 h-3.5 fill-slate-900" data-lucide="play" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M5 5a2 2 0 0 1 3.008-1.728l11.997 6.998a2 2 0 0 1 .003 3.458l-12 7A2 2 0 0 1 5 19z"></path></svg></div>
+</div>
+</div>
+</div>
+<div>
+<h3 class="text-xs font-bold text-slate-900 mb-2">Continuar aprendiendo</h3>
+<div class="space-y-2">
+<div class="flex items-center gap-3 p-2 bg-slate-50 rounded-xl border border-slate-100 cursor-pointer">
+<div class="w-14 h-12 rounded-lg bg-slate-200 overflow-hidden relative shrink-0">
+<img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDfQjB9-X0uiRIbr3Gkw5nrMfmoFIeNFBzYS544r3vNypy3kuiDnlzDagY7vtGdIFj-GqD0tIYiJbuGzg6DIkxWfbqzM-bebad8TdaMReslZMDPnec2ByNWjhX_F_Wc4PV_WOXMSHtUIsTeWXOfIMVhYEbFKSOJICGb9TZ8fY8XoaFbAl-Ah-s7wR8VzgQCw3zUtrOkgqxW7aLrLr7pFSHvBcYs0Lx7g3JW243YVxLD3zfRgqWzqc0A9g"/>
+</div>
+<div class="flex-1 min-w-0">
+<h5 class="text-xs font-bold text-slate-800 truncate">Técnicas de negociación inmobiliaria</h5>
+<p class="text-[10px] text-slate-500">Video curso • 12 min restantes</p>
+<div class="w-full bg-slate-200 h-1 rounded-full mt-1.5 overflow-hidden"><div class="bg-emerald-500 h-full w-2/3"></div></div>
+</div>
+</div>
+</div>
+</div>
+<div>
+<h3 class="text-xs font-bold text-slate-900 mb-2">Explorar áreas</h3>
+<div class="grid grid-cols-4 gap-2 text-center text-[10px]">
+<div class="p-2 bg-slate-50 rounded-xl border border-slate-150"><svg aria-hidden="true" class="lucide lucide-megaphone w-4 h-4 text-emerald-600 mx-auto" data-lucide="megaphone" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M11 6a13 13 0 0 0 8.4-2.8A1 1 0 0 1 21 4v12a1 1 0 0 1-1.6.8A13 13 0 0 0 11 14H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2z"></path><path d="M6 14a12 12 0 0 0 2.4 7.2 2 2 0 0 0 3.2-2.4A8 8 0 0 1 10 14"></path><path d="M8 6v8"></path></svg><span class="font-bold text-slate-700 mt-1 block">Marketing</span></div>
+<div class="p-2 bg-slate-50 rounded-xl border border-slate-150"><svg aria-hidden="true" class="lucide lucide-trending-up w-4 h-4 text-blue-600 mx-auto" data-lucide="trending-up" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M16 7h6v6"></path><path d="m22 7-8.5 8.5-5-5L2 17"></path></svg><span class="font-bold text-slate-700 mt-1 block">Ventas</span></div>
+<div class="p-2 bg-slate-50 rounded-xl border border-slate-150"><svg aria-hidden="true" class="lucide lucide-pie-chart w-4 h-4 text-amber-600 mx-auto" data-lucide="pie-chart" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M21 12c.552 0 1.005-.449.95-.998a10 10 0 0 0-8.953-8.951c-.55-.055-.998.398-.998.95v8a1 1 0 0 0 1 1z"></path><path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path></svg><span class="font-bold text-slate-700 mt-1 block">Inversión</span></div>
+<div class="p-2 bg-slate-50 rounded-xl border border-slate-150"><svg aria-hidden="true" class="lucide lucide-scale w-4 h-4 text-purple-600 mx-auto" data-lucide="scale" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M12 3v18"></path><path d="m19 8 3 8a5 5 0 0 1-6 0zV7"></path><path d="M3 7h1a17 17 0 0 0 8-2 17 17 0 0 0 8 2h1"></path><path d="m5 8 3 8a5 5 0 0 1-6 0zV7"></path><path d="M7 21h10"></path></svg><span class="font-bold text-slate-700 mt-1 block">Leyes</span></div>
+</div>
+</div>
+</div>
+</div>
+<!-- 4. VISTA: NETWORKING GLOBAL -->
+<div class="agent-view absolute inset-0 flex flex-col overflow-hidden bg-white hidden" id="agent-screen-networking">
+<div class="bg-white px-4 py-3 border-b border-slate-100 flex items-center justify-between shrink-0">
+<button class="p-1 text-slate-600" onclick="showAgentView('panel')"><svg aria-hidden="true" class="lucide lucide-arrow-left w-5 h-5" data-lucide="arrow-left" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="m12 19-7-7 7-7"></path><path d="M19 12H5"></path></svg></button>
+<div class="flex items-center gap-1.5"><svg aria-hidden="true" class="lucide lucide-globe w-4 h-4 text-slate-900" data-lucide="globe" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path><path d="M2 12h20"></path></svg><h2 class="text-base font-extrabold text-slate-900">Networking Global</h2></div>
+<button class="p-1 text-slate-600" onclick="switchNetworkSegment('chats')"><svg aria-hidden="true" class="lucide lucide-message-circle w-5 h-5" data-lucide="message-circle" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M2.992 16.342a2 2 0 0 1 .094 1.167l-1.065 3.29a1 1 0 0 0 1.236 1.168l3.413-.998a2 2 0 0 1 1.099.092 10 10 0 1 0-4.777-4.719"></path></svg></button>
+</div>
+<div class="px-4 py-2 border-b border-slate-100 shrink-0">
+<div class="bg-slate-100 p-1 rounded-xl flex text-xs font-bold">
+<button class="net-seg flex-1 py-1.5 rounded-lg bg-white shadow-xs text-slate-900 transition" onclick="switchNetworkSegment('mapa', this)">Mapa</button>
+<button class="net-seg flex-1 py-1.5 rounded-lg text-slate-500 hover:text-slate-800 transition" onclick="switchNetworkSegment('lista', this)">Lista</button>
+<button class="net-seg flex-1 py-1.5 rounded-lg text-slate-500 hover:text-slate-800 transition" onclick="switchNetworkSegment('chats', this)">Chats</button>
+</div>
+</div>
+<div class="flex-1 relative bg-slate-100 overflow-hidden flex flex-col">
+<!-- Mapa -->
+<div class="net-view absolute inset-0" id="net-seg-mapa">
+<div class="absolute inset-0 opacity-40 bg-[radial-gradient(#94a3b8_1px,transparent_1px)] [background-size:16px_16px]"></div>
+<div class="absolute top-24 left-14 cursor-pointer" onclick="showAgentDetail('María López', 'Lima, Perú', 'Remax Prime')">
+<div class="w-10 h-10 rounded-full border-2 border-emerald-500 bg-white shadow-md overflow-hidden"><img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCVrsiGEWCRBnJfnVNIA-brSHVZC6PQcPfHCinNHpdTFa6CCX5bmphYS39YiTscdcDCqRtBBVWBYbozO4hA8-kW4E3lwAvQ7LWy3CPBBqiXLxU1K5K6cUlXvA00u6JlANsUv3pKav8JXSd5gn1I77VRCfUxPHBu85TYt4bXegaHiBtwl9wPkzVY9vU-sH961CoZfvDsChc0iMlRWs4lDyQofKoRtBj6O86WKU_P4EL7YRU33F__nytwjA"/></div>
+</div>
+<div class="absolute top-40 right-14 cursor-pointer" onclick="showAgentDetail('Lucas Rossi', 'Madrid, España', 'Keller Williams')">
+<div class="w-10 h-10 rounded-full border-2 border-blue-500 bg-white shadow-md overflow-hidden"><img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDz_m0SkSuvqHSKMPueXjYlVejpOvakBZ3i2_iGdeZcbDs13-rtyjxScR1SAxiRLSCmJmoTpV7nqOAxrzspz3WLAWckBe9TM0oa504VyRcenjMoH2OFLqXXvl_Gn7ylHMb4D8BuyGVqhFp3iYhsJzCUUUwJ9MxOmqiRu6d_olFqaGEh9D_oTOj-_lLyIBLJrNEk7b7FGwuvIyhQ1GVnVgeOtTWP895EPl_1JP_iWk7GoEVnNhTz9ogQBg"/></div>
+</div>
+<div class="absolute bottom-28 left-28 cursor-pointer" onclick="showAgentDetail('Sofía Martínez', 'Buenos Aires', 'Century 21 BA')">
+<div class="w-11 h-11 rounded-full border-2 border-slate-900 bg-white shadow-md overflow-hidden ring-4 ring-emerald-500/20"><img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBZEauUE7smHIF-VMRjUn60pVDt3l7cpzDn4cQYN_6EmtuH2BdBmoXw5Yciew3IEv_gJ0D9W_d65-I8q8D0Q7_F2K9cwmv-F3W-SbJpL5oJ2bZ_qI2-SVs2D_uJgjvmU-Y7qkRey3Npl51IvVMiV8yhleOOOlHpzBWqX_dWvDt4SpjptKLgV8vOcRNydsYQZyoWwUij37BjbJAzRrEjVXhdRZtHD0GKBW6qC2QctUKKEIDDOhpW5kslGQ"/></div>
+</div>
+<div class="absolute bottom-4 left-4 right-4 bg-white/95 ios-blur p-3 rounded-2xl shadow-xl border border-slate-200 flex items-center justify-between" id="netAgentCard">
+<div>
+<h4 class="text-xs font-bold text-slate-900" id="netAgentName">María López</h4>
+<p class="text-[10px] text-slate-500" id="netAgentRole">Remax Prime • Lima, Perú</p>
+</div>
+<div class="flex gap-1.5">
+<button class="bg-brand-navy text-white text-[11px] font-bold px-3 py-1.5 rounded-xl" onclick="alert('Solicitud de co-corretaje enviada a colega.')">Conectar</button>
+<button class="bg-slate-100 text-slate-700 text-[11px] font-bold px-2 py-1.5 rounded-xl" onclick="openPublicProfileModal()"><svg aria-hidden="true" class="lucide lucide-eye w-3.5 h-3.5" data-lucide="eye" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"></path><circle cx="12" cy="12" r="3"></circle></svg></button>
+</div>
+</div>
+</div>
+<!-- Lista -->
+<div class="net-view hidden absolute inset-0 bg-white overflow-y-auto p-3 space-y-2 no-scrollbar" id="net-seg-lista">
+<div class="flex items-center justify-between pb-1"><h4 class="text-xs font-bold text-slate-900">Directorio de Colegas</h4><span class="text-[10px] text-slate-400">128 activos</span></div>
+<div class="p-2.5 bg-slate-50 border border-slate-200 rounded-xl flex items-center justify-between">
+<div><h5 class="text-xs font-bold text-slate-900">María López</h5><p class="text-[10px] text-slate-500">Lima, Perú • Remax Prime</p></div>
+<button class="bg-brand-navy text-white text-[10px] font-bold px-2.5 py-1.5 rounded-lg" onclick="alert('Iniciando chat')">Contactar</button>
+</div>
+<div class="p-2.5 bg-slate-50 border border-slate-200 rounded-xl flex items-center justify-between">
+<div><h5 class="text-xs font-bold text-slate-900">Lucas Rossi</h5><p class="text-[10px] text-slate-500">Madrid, España • KW</p></div>
+<button class="bg-brand-navy text-white text-[10px] font-bold px-2.5 py-1.5 rounded-lg" onclick="alert('Iniciando chat')">Contactar</button>
+</div>
+</div>
+<!-- Chats -->
+<div class="net-view hidden absolute inset-0 bg-white overflow-y-auto p-3 space-y-2 no-scrollbar" id="net-seg-chats">
+<div class="flex items-center justify-between pb-1"><h4 class="text-xs font-bold text-slate-900">Conversaciones de Alianzas</h4><span class="text-[10px] text-brand-teal font-bold">2 no leídos</span></div>
+<div class="p-3 bg-teal-50/50 border border-teal-200 rounded-xl cursor-pointer" onclick="alert('Abriendo chat con María López...')">
+<div class="flex justify-between items-center"><h5 class="text-xs font-bold text-slate-900">María López (Lima)</h5><span class="text-[9px] text-slate-400">10:14</span></div>
+<p class="text-[11px] text-slate-700 line-clamp-1 mt-0.5">Tengo un comprador para el piso en Jacarandá 2. ¿Hacemos 50/50?</p>
+</div>
+</div>
+</div>
+</div>
+<!-- MODAL: PERFIL PÚBLICO DEL AGENTE -->
+<div class="hidden absolute inset-0 z-50 bg-black/60 backdrop-blur-xs flex flex-col justify-end" id="publicProfileModal">
+<div class="bg-white rounded-t-3xl max-h-[90%] overflow-y-auto no-scrollbar flex flex-col shadow-2xl">
+<div class="sticky top-0 bg-white/95 ios-blur p-3.5 border-b border-slate-100 flex items-center justify-between shrink-0">
+<span class="text-xs font-bold text-slate-400 uppercase">Perfil público de cara al cliente</span>
+<button class="w-7 h-7 rounded-full bg-slate-100 text-slate-700 flex items-center justify-center" onclick="closePublicProfileModal()"><svg aria-hidden="true" class="lucide lucide-x w-4 h-4" data-lucide="x" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg></button>
+</div>
+<div class="p-4 space-y-3"><div class="flex items-center gap-3"><img class="w-14 h-14 rounded-full object-cover border-2 border-emerald-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDz_m0SkSuvqHSKMPueXjYlVejpOvakBZ3i2_iGdeZcbDs13-rtyjxScR1SAxiRLSCmJmoTpV7nqOAxrzspz3WLAWckBe9TM0oa504VyRcenjMoH2OFLqXXvl_Gn7ylHMb4D8BuyGVqhFp3iYhsJzCUUUwJ9MxOmqiRu6d_olFqaGEh9D_oTOj-_lLyIBLJrNEk7b7FGwuvIyhQ1GVnVgeOtTWP895EPl_1JP_iWk7GoEVnNhTz9ogQBg"/><div><h3 class="text-base font-extrabold text-slate-900">Juan Pérez</h3><p class="text-xs text-slate-600 font-medium">Century 21 Tucumán • Experto ACM</p><span class="text-[10px] text-amber-500 font-bold">★ 4.9 (42 reseñas verificadas)</span></div></div><div class="grid grid-cols-3 gap-2 bg-slate-50 p-2.5 rounded-xl text-center text-xs"><div><strong class="block text-slate-900">68</strong><span class="text-[9px] text-slate-500">Cierres</span></div><div><strong class="block text-slate-900 public-profile-cartera-count">12</strong><span class="text-[9px] text-slate-500">En venta</span></div><div><strong class="block text-slate-900">100%</strong><span class="text-[9px] text-slate-500">Respuesta</span></div></div><div class="space-y-2 pt-1"><div class="flex items-center justify-between"><h4 class="text-xs font-bold text-slate-900">Inmuebles destacados en cartera</h4><span class="text-[10px] text-slate-400 public-profile-cartera-count">12 en total</span></div><div class="space-y-2" id="publicProfilePropertiesList"><div class="p-2 border border-slate-200 rounded-xl flex items-center gap-2.5 bg-white"><img alt="Torres Jacarandá 2" class="w-12 h-12 rounded-lg object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC73y_ii-QdAZHrMbAidcnlgHVIcFGXVclGp57gBhQqmTUlMkrnLGEybNPpNSjLYzDiR5GiZnH_qoW_EKKKOPOfYVt0jFAGp2krkPUfifIgnfE3yeKKeWbKA7U0g5UjzdawMmXWFlDxqiigSe57C6Al21PkATIKQSmckODOB-HJ3MgFruMWoZ8By8XKV1KE8Hqh_l-PMLd0s5886qTWZzfwpERp5rE3iR7tAHFXIAVyAPdmKzgxj591"/><div class="flex-1 min-w-0"><h5 class="text-xs font-bold text-slate-900 truncate">Torres Jacarandá 2 (Piso 5)</h5><p class="text-[10px] text-slate-500">Yerba Buena • 50 m² • 1 Dorm.</p><span class="text-xs font-black text-brand-navy">USD 73.000</span></div></div><div class="p-2 border border-slate-200 rounded-xl flex items-center gap-2.5 bg-white"><img alt="Casa Las Cañas" class="w-12 h-12 rounded-lg object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuADKTJtX4lubjDWkb5n0H6kCvWKcnEtAGu3U2iCee4nAElHX0REBdOdjsFi1dDSaNAm_7X4CrVBJ8AL9zI6j6wnRq3LSMhHWeWUFEGPlwsFu-z7s14G-K_8l3SuKHvtu8FIda8jBmXU-LnuOLEYTj7zS17Hyl2DXEHAVuiNNEiIY1OUH2HiS7XiJJhbvkqN4BVgldwQ6MUA6iePQs0_BiSs8yaLvpqW_M-s14-p-td4Mw8nCj49RwO9"/><div class="flex-1 min-w-0"><h5 class="text-xs font-bold text-slate-900 truncate">Casa en Las Cañas Country</h5><p class="text-[10px] text-slate-500">Yerba Buena • 280 m² • 4 Dorm.</p><span class="text-xs font-black text-brand-navy">USD 380.000</span></div></div></div></div><button class="w-full bg-brand-navy hover:bg-brand-navyHover text-white py-2.5 rounded-xl text-xs font-bold shadow-sm flex items-center justify-center gap-1.5 transition" onclick="alert('Abriendo WhatsApp directo de Juan Pérez')" type="button"><svg class="w-4 h-4 text-emerald-400" fill="currentColor" viewbox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.974.532 1.944.824 3.149.824 3.182 0 5.768-2.586 5.768-5.766.001-3.182-2.585-5.666-5.768-5.666zm3.376 8.204c-.14.394-.712.723-1.002.766-.282.042-.647.068-2.083-.497-1.706-.671-2.825-2.39-2.91-2.504-.085-.114-.689-.917-.689-1.749 0-.832.435-1.242.59-1.411.155-.169.339-.212.452-.212.113 0 .226 0 .324.005.106.006.248-.04.388.297.142.338.48 1.171.522 1.256.042.085.07.184.014.297-.056.113-.085.184-.17.283-.085.099-.178.22-.254.296-.085.085-.174.177-.075.347.099.17.439.723.942 1.171.648.577 1.194.756 1.364.841.17.085.269.071.368-.043.099-.113.424-.494.537-.664.113-.17.226-.141.381-.085.155.057.989.466 1.159.551.17.085.283.127.325.198.042.07.042.41-.098.804z"></path></svg><span>Contactar por WhatsApp</span></button></div>
+</div>
+</div>
+</main>
+<!-- Botón Flotante FAB: Copiloto Homia IA (Ubicado encima de la barra inferior) -->
+<div class="absolute bottom-[5.5rem] right-4 z-40">
+<button aria-label="Abrir Copiloto IA" class="relative w-12 h-12 rounded-full bg-gradient-to-br from-brand-teal to-brand-navy text-white shadow-xl hover:shadow-2xl active:scale-95 flex items-center justify-center border-2 border-white/20 transition-transform cursor-pointer" id="globalAiFab" onclick="toggleGlobalAIChat()">
+<svg class="w-6 h-6" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+<path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"></path>
+<path d="M20 2v4"></path>
+<path d="M22 4h-4"></path>
+<circle cx="4" cy="20" r="2"></circle>
+</svg>
+<span class="absolute -top-0.5 -right-0.5 flex h-3 w-3">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+<span class="relative inline-flex rounded-full h-3 w-3 bg-emerald-500 border-2 border-white"></span>
+</span>
+</button>
+</div>
+<!-- Modal / Drawer Copiloto IA (Contenido correctamente dentro de la pantalla móvil) -->
+<div class="hidden absolute inset-0 z-50 bg-black/60 backdrop-blur-xs flex flex-col justify-end" id="globalAiDrawer" onclick="handleDrawerBackdropClick(event)">
+<div class="bg-white rounded-t-3xl max-h-[82%] flex flex-col shadow-2xl overflow-hidden animate-in slide-in-from-bottom duration-200" onclick="event.stopPropagation()">
+<!-- Drawer Header -->
+<div class="bg-slate-900 text-white p-3.5 flex items-center justify-between shrink-0">
+<div class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-xl bg-gradient-to-br from-brand-teal to-emerald-500 flex items-center justify-center text-white shadow-sm">
+<svg class="w-4 h-4" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"></path><path d="M20 2v4"></path><path d="M22 4h-4"></path><circle cx="4" cy="20" r="2"></circle></svg>
+</div>
+<div>
+<div class="flex items-center gap-1.5">
+<h4 class="text-xs font-bold leading-tight">Copiloto Homia IA</h4>
+<span class="text-[8.5px] font-semibold text-emerald-400 bg-emerald-500/20 px-1.5 py-0.5 rounded">En línea</span>
+</div>
+<p class="text-[9.5px] text-slate-300">Asistente activo en todas las pantallas</p>
+</div>
+</div>
+<div class="flex items-center gap-1">
+<button class="p-1 text-slate-400 hover:text-white transition" onclick="resetGlobalAIChat()" title="Reiniciar conversación" type="button">
+<svg class="w-3.5 h-3.5" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg>
+</button>
+<button class="w-7 h-7 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition" onclick="closeGlobalAIChat()" type="button">
+<svg class="w-4 h-4" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
+</button>
+</div>
+</div>
+<!-- Messages Body -->
+<div class="flex-1 p-3.5 overflow-y-auto space-y-2.5 text-xs no-scrollbar bg-slate-50 min-h-[190px] max-h-[260px]" id="globalAIChatBox">
+<div class="flex items-start gap-2">
+<div class="w-6 h-6 rounded-full bg-brand-teal text-white flex items-center justify-center shrink-0 text-[10px] font-bold shadow-2xs">H</div>
+<div class="bg-white p-2.5 rounded-2xl rounded-tl-sm border border-slate-200 shadow-2xs max-w-[85%] text-slate-800 leading-relaxed">
+          ¡Hola Juan! Soy tu copiloto inmobiliario. ¿En qué te ayudo hoy con tus propiedades o mercado?
+        </div>
+</div>
+</div>
+<!-- Quick Prompts Chips -->
+<div class="px-3 py-2 bg-white border-t border-slate-100 flex gap-1.5 overflow-x-auto no-scrollbar shrink-0">
+<button class="px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-full text-[10px] font-semibold whitespace-nowrap transition" onclick="sendGlobalPrompt('Explicar ajuste de ACM')" type="button">Explicar ajuste de ACM</button>
+<button class="px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-full text-[10px] font-semibold whitespace-nowrap transition" onclick="sendGlobalPrompt('Resumen de visitas hoy')" type="button">Resumen de visitas hoy</button>
+<button class="px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-full text-[10px] font-semibold whitespace-nowrap transition" onclick="sendGlobalPrompt('Redactar mensaje a cliente')" type="button">Redactar mensaje a cliente</button>
+<button class="px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-full text-[10px] font-semibold whitespace-nowrap transition" onclick="sendGlobalPrompt('Calcular comisión neta')" type="button">Calcular comisión neta</button>
+</div>
+<!-- Message Input Bar -->
+<form class="p-2.5 bg-white border-t border-slate-200 flex gap-1.5 shrink-0" onsubmit="handleGlobalAISend(event)">
+<input class="flex-1 bg-slate-100 border-0 rounded-xl px-3 py-2 text-xs focus:ring-1 focus:ring-brand-teal text-slate-800 placeholder-slate-400" id="globalAiInput" placeholder="Escribe tu consulta o pide un análisis..." type="text"/>
+<button class="w-8 h-8 rounded-xl bg-brand-navy hover:bg-brand-navyHover text-white flex items-center justify-center shrink-0 transition shadow-xs" type="submit">
+<svg class="w-4 h-4" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z"></path><path d="m21.854 2.147-10.94 10.939"></path></svg>
+</button>
+</form>
+</div>
+</div><div class="hidden absolute inset-0 z-50 bg-black/60 backdrop-blur-xs flex flex-col justify-end" id="publishPropertyModal"><div class="bg-white rounded-t-3xl max-h-[92%] h-[92%] flex flex-col shadow-2xl overflow-hidden animate-in slide-in-from-bottom duration-200"><div class="bg-white px-4 py-3 border-b border-slate-150 flex items-center justify-between shrink-0 sticky top-0 z-20"><div class="flex items-center gap-2"><button class="w-7 h-7 rounded-full bg-slate-100 text-slate-700 flex items-center justify-center hover:bg-slate-200 transition" onclick="closePublishPropertyFlow()" type="button"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewbox="0 0 24 24"><path d="M15 19l-7-7 7-7"></path></svg></button><div><h3 class="text-sm font-extrabold text-slate-900 leading-tight">Publicar una propiedad</h3><p class="text-[9.5px] text-emerald-600 font-semibold">Publicación directa · No requiere tasación previa</p></div></div><button class="w-7 h-7 rounded-full bg-slate-100 text-slate-500 hover:text-slate-800 flex items-center justify-center transition" onclick="closePublishPropertyFlow()" type="button"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg></button></div><div class="flex-1 overflow-y-auto p-4 space-y-4 no-scrollbar bg-slate-50/50"><div class="bg-emerald-50 border border-emerald-200 rounded-xl p-2.5 flex items-center gap-2.5 text-emerald-900 shadow-2xs"><div class="w-7 h-7 rounded-lg bg-emerald-500 text-white flex items-center justify-center font-bold text-xs shrink-0"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewbox="0 0 24 24"><path d="M20 6L9 17l-5-5"></path></svg></div><div class="text-[11px] leading-snug"><span class="font-bold block text-emerald-800">Carga libre · No requiere tasación ni ACM</span><span class="text-emerald-700 text-[10px]">Tu inmueble se publicará de inmediato y estará activo para tus clientes.</span></div></div><div class="bg-white border border-slate-200 rounded-2xl p-3.5 shadow-2xs space-y-3"><div class="flex items-center justify-between border-b border-slate-100 pb-2"><span class="text-[11px] font-extrabold uppercase tracking-wider text-slate-900 flex items-center gap-1.5"><span class="w-5 h-5 rounded-full bg-brand-navy text-white text-[10px] flex items-center justify-center font-bold">1</span>Información básica</span><span class="text-[9px] text-slate-400 font-medium">Paso 1 de 4</span></div><div><label class="block text-[11px] font-bold text-slate-700 mb-1.5">Tipo de propiedad</label><div class="grid grid-cols-5 gap-1.5" id="pubPropTypeGrid"><button class="pub-type-btn p-1.5 border-2 border-brand-teal bg-teal-50 text-brand-teal rounded-xl text-center transition flex flex-col items-center gap-1" onclick="selectPropertyType(this, 'Departamento')" type="button"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M3 21h18M5 21V5a2 2 0 012-2h10a2 2 0 012 2v16M9 7h1m4 0h1m-6 4h1m4 0h1m-6 4h1m4 0h1"></path></svg><span class="text-[9px] font-bold">Depto</span></button><button class="pub-type-btn p-1.5 border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 rounded-xl text-center transition flex flex-col items-center gap-1" onclick="selectPropertyType(this, 'Casa')" type="button"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg><span class="text-[9px] font-semibold">Casa</span></button><button class="pub-type-btn p-1.5 border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 rounded-xl text-center transition flex flex-col items-center gap-1" onclick="selectPropertyType(this, 'Terreno')" type="button"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M4 15l4-4 4 4 4-4 4 4M4 19h16"></path></svg><span class="text-[9px] font-semibold">Terreno</span></button><button class="pub-type-btn p-1.5 border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 rounded-xl text-center transition flex flex-col items-center gap-1" onclick="selectPropertyType(this, 'Local')" type="button"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M3 9l1 10a2 2 0 002 2h12a2 2 0 002-2l1-10M3 9a2 2 0 012-2h14a2 2 0 012 2"></path></svg><span class="text-[9px] font-semibold">Local</span></button><button class="pub-type-btn p-1.5 border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 rounded-xl text-center transition flex flex-col items-center gap-1" onclick="selectPropertyType(this, 'Oficina')" type="button"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><rect height="16" rx="2" width="16" x="4" y="4"></rect><path d="M9 9h6M9 13h6M9 17h4"></path></svg><span class="text-[9px] font-semibold">Oficina</span></button></div></div><div><label class="block text-[11px] font-bold text-slate-700 mb-1">Título de la publicación</label><input class="w-full bg-slate-50 border border-slate-200 rounded-xl py-2 px-3 text-xs text-slate-800 placeholder-slate-400 focus:ring-1 focus:ring-brand-teal" id="pubInputTitle" oninput="updatePreviewCard()" placeholder="Semipiso moderno con balcón terraza" type="text" value="Semipiso con balcón terraza en Jacarandá"/></div><div><label class="block text-[11px] font-bold text-slate-700 mb-1">Dirección / Ubicación</label><div class="relative"><svg class="w-3.5 h-3.5 text-slate-400 absolute left-3 top-2.5" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg><input class="w-full bg-slate-50 border border-slate-200 rounded-xl py-2 pl-9 pr-3 text-xs text-slate-800 placeholder-slate-400 focus:ring-1 focus:ring-brand-teal" id="pubInputAddress" oninput="updatePreviewCard()" placeholder="Av. Aconquija 1850, Yerba Buena" type="text" value="Av. Aconquija 1850, Yerba Buena"/></div></div><div class="grid grid-cols-2 gap-2"><div><label class="block text-[11px] font-bold text-slate-700 mb-1">Operación</label><div class="flex bg-slate-100 p-0.5 rounded-xl text-[11px] font-bold"><button class="pub-op-btn flex-1 py-1.5 rounded-lg bg-brand-navy text-white text-center shadow-2xs transition" onclick="selectOperation(this, 'En venta')" type="button">Venta</button><button class="pub-op-btn flex-1 py-1.5 rounded-lg text-slate-600 hover:text-slate-900 text-center transition" onclick="selectOperation(this, 'En alquiler')" type="button">Alquiler</button></div></div><div><label class="block text-[11px] font-bold text-slate-700 mb-1">Precio</label><div class="flex rounded-xl overflow-hidden border border-slate-200"><select class="bg-slate-100 border-0 text-[11px] font-bold text-slate-700 py-1.5 pl-2 pr-3 focus:ring-0" id="pubInputCurrency" onchange="updatePreviewCard()"><option value="USD">USD</option><option value="ARS">ARS</option></select><input class="w-full bg-slate-50 border-0 border-l border-slate-200 py-1.5 px-2.5 text-xs font-black text-slate-900 focus:ring-1 focus:ring-brand-teal" id="pubInputPrice" oninput="updatePreviewCard()" placeholder="75.000" type="text" value="75.000"/></div></div></div></div><div class="bg-white border border-slate-200 rounded-2xl p-3.5 shadow-2xs space-y-3"><div class="flex items-center justify-between border-b border-slate-100 pb-2"><span class="text-[11px] font-extrabold uppercase tracking-wider text-slate-900 flex items-center gap-1.5"><span class="w-5 h-5 rounded-full bg-brand-navy text-white text-[10px] flex items-center justify-center font-bold">2</span>Características del inmueble</span><span class="text-[9px] text-slate-400 font-medium">Paso 2 de 4</span></div><div class="grid grid-cols-3 gap-2"><div><label class="block text-[10px] font-semibold text-slate-600 mb-1">Ambientes</label><input class="w-full bg-slate-50 border border-slate-200 rounded-xl py-1.5 px-2.5 text-xs font-bold text-slate-800 text-center" id="pubInputAmb" oninput="updatePreviewCard()" value="2 amb"/></div><div><label class="block text-[10px] font-semibold text-slate-600 mb-1">Dormitorios</label><input class="w-full bg-slate-50 border border-slate-200 rounded-xl py-1.5 px-2.5 text-xs font-bold text-slate-800 text-center" id="pubInputDorm" oninput="updatePreviewCard()" value="1 dorm"/></div><div><label class="block text-[10px] font-semibold text-slate-600 mb-1">Baños</label><input class="w-full bg-slate-50 border border-slate-200 rounded-xl py-1.5 px-2.5 text-xs font-bold text-slate-800 text-center" id="pubInputBath" oninput="updatePreviewCard()" value="1 baño"/></div></div><div class="grid grid-cols-3 gap-2"><div><label class="block text-[10px] font-semibold text-slate-600 mb-1">Sup. Cubierta</label><input class="w-full bg-slate-50 border border-slate-200 rounded-xl py-1.5 px-2 text-xs font-bold text-slate-800 text-center" id="pubInputSupCub" oninput="updatePreviewCard()" value="50 m²"/></div><div><label class="block text-[10px] font-semibold text-slate-600 mb-1">Sup. Total</label><input class="w-full bg-slate-50 border border-slate-200 rounded-xl py-1.5 px-2 text-xs font-bold text-slate-800 text-center" id="pubInputSupTot" oninput="updatePreviewCard()" value="56 m²"/></div><div><label class="block text-[10px] font-semibold text-slate-600 mb-1">Antigüedad</label><input class="w-full bg-slate-50 border border-slate-200 rounded-xl py-1.5 px-2 text-xs font-bold text-slate-800 text-center" id="pubInputAge" value="1 año"/></div></div><div><label class="block text-[11px] font-bold text-slate-700 mb-1.5">Amenities y prestaciones</label><div class="flex flex-wrap gap-1.5"><button class="amenity-chip px-2.5 py-1 rounded-lg text-[10px] font-bold border transition bg-teal-50 border-brand-teal text-brand-teal" onclick="toggleAmenity(this)" type="button">✓ Cochera</button><button class="amenity-chip px-2.5 py-1 rounded-lg text-[10px] font-bold border transition bg-teal-50 border-brand-teal text-brand-teal" onclick="toggleAmenity(this)" type="button">✓ Balcón terraza</button><button class="amenity-chip px-2.5 py-1 rounded-lg text-[10px] font-medium border border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-100 transition" onclick="toggleAmenity(this)" type="button">+ Parrilla</button><button class="amenity-chip px-2.5 py-1 rounded-lg text-[10px] font-bold border transition bg-teal-50 border-brand-teal text-brand-teal" onclick="toggleAmenity(this)" type="button">✓ Seguridad 24hs</button><button class="amenity-chip px-2.5 py-1 rounded-lg text-[10px] font-bold border transition bg-teal-50 border-brand-teal text-brand-teal" onclick="toggleAmenity(this)" type="button">✓ Piscina</button></div></div><div><label class="block text-[11px] font-bold text-slate-700 mb-1">Descripción</label><textarea class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs text-slate-800 placeholder-slate-400 focus:ring-1 focus:ring-brand-teal leading-relaxed resize-none" id="pubInputDesc" placeholder="Detalles de luminosidad, estado, terminaciones..." rows="3">Excelente departamento con gran iluminación natural, piso alto con vista despejada y balcón terraza con asador individual. Edificio de categoría con amenities completos.</textarea></div></div><div class="bg-white border border-slate-200 rounded-2xl p-3.5 shadow-2xs space-y-3"><div class="flex items-center justify-between border-b border-slate-100 pb-2"><span class="text-[11px] font-extrabold uppercase tracking-wider text-slate-900 flex items-center gap-1.5"><span class="w-5 h-5 rounded-full bg-brand-navy text-white text-[10px] flex items-center justify-center font-bold">3</span>Imágenes del inmueble</span><span class="text-[9px] text-slate-400 font-medium">Paso 3 de 4</span></div><div class="border-2 border-dashed border-brand-teal/40 rounded-xl p-3 bg-teal-50/30 text-center flex flex-col items-center justify-center gap-1.5 cursor-pointer hover:bg-teal-50/60 transition" onclick="simulateImageUpload()"><div class="w-8 h-8 rounded-full bg-brand-teal/10 text-brand-teal flex items-center justify-center"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><rect height="18" rx="2" width="18" x="3" y="3"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><path d="M21 15l-5-5L5 21"></path></svg></div><p class="text-[11px] font-bold text-slate-800">Subir fotos de la propiedad</p><span class="text-[9px] text-slate-500">Formatos JPG o PNG (hasta 15 fotos)</span></div><div class="space-y-1.5"><span class="text-[10px] font-bold text-slate-600 block">Fotos cargadas (3) · Foto principal destacada</span><div class="grid grid-cols-3 gap-2"><div class="relative rounded-xl overflow-hidden border-2 border-brand-teal aspect-square shadow-2xs"><img alt="Living principal" class="w-full h-full object-cover" id="pubMainThumb" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCnXOD4CT4PPYGz02wstWXI2dFMSnmo5NttbhwcaFT__Kl61j4n3P2Lx1cM3GY6GVmBAFXBYNxR1wmV3jsWpqYSvPL-QrVNIc2Ygvx01Wz-yTODBl28q4Pbc7njQj2LffHbcxyGCmiyhEfva1YCBoUclc1ZBrJfOIsqeZ3Gkg2LdIuSNPYANMjU9h-8nE9OkxT0-5GVDy9Gi93x26cgsTbVFuGKVeT_1BRBp8AM2IMA6cWHgOPpHvyL"/><span class="absolute bottom-1 left-1 bg-brand-navy/90 text-white text-[8px] font-bold px-1.5 py-0.5 rounded">Principal</span></div><div class="relative rounded-xl overflow-hidden border border-slate-200 aspect-square"><img alt="Dormitorio" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBtTa_PuGugA-VIDwpS0XvieBosAbrbuOlmWKhr0CTByAhfZZ5U4O0sMqNS9a84KtIZ8qpXYku4b6y_UwvvFoxzK7Ej-NGnXBfXDYPJ-u9R43UQRBy0OXwKL-vjCwT32eKWDhQNdsCOI93BQi1YsM-emg-UwZX4IOmQTfP38AmTm9NN8a_SHIHvqX5Vys_C_o0Q3nP2usFS2UL5IXIEk7pr-Q9yVHGdfYjPW_F2s9WKk5-aSbLAxz0r"/></div><div class="relative rounded-xl overflow-hidden border border-slate-200 aspect-square"><img alt="Balcón" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCE7IFIZ2h__RxBLQjmO5ulvB9eD4MjOVuOkdOpKAg9yp8FzH40xaQsssd3aCmrO_tLdrpz_8EeOxw7IxJkVnnVMF4zpiig0AmzpiyRaACaiRx3xgUSbiHDjwSYwWWLraoS9yPxbZmz6f8E2_3MM92LMx_krlvweO7JIdlj8Kw3lJjJMZJjnlP6A0piHKve8YujWp0cy-7JrZtbHg6qyYDILEEnX7Sq2jMXtNmQq595ojfG4HIuoCEN"/></div></div></div></div><div class="bg-white border border-slate-200 rounded-2xl p-3.5 shadow-2xs space-y-3"><div class="flex items-center justify-between border-b border-slate-100 pb-2"><span class="text-[11px] font-extrabold uppercase tracking-wider text-slate-900 flex items-center gap-1.5"><span class="w-5 h-5 rounded-full bg-brand-navy text-white text-[10px] flex items-center justify-center font-bold">4</span>Datos del agente responsable</span><span class="text-[9px] text-slate-400 font-medium">Paso 4 de 4</span></div><div class="flex items-center gap-3 p-2.5 bg-slate-50 rounded-xl border border-slate-200"><img class="w-10 h-10 rounded-full object-cover border-2 border-emerald-400 shrink-0" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDz_m0SkSuvqHSKMPueXjYlVejpOvakBZ3i2_iGdeZcbDs13-rtyjxScR1SAxiRLSCmJmoTpV7nqOAxrzspz3WLAWckBe9TM0oa504VyRcenjMoH2OFLqXXvl_Gn7ylHMb4D8BuyGVqhFp3iYhsJzCUUUwJ9MxOmqiRu6d_olFqaGEh9D_oTOj-_lLyIBLJrNEk7b7FGwuvIyhQ1GVnVgeOtTWP895EPl_1JP_iWk7GoEVnNhTz9ogQBg"/><div><h4 class="text-xs font-bold text-slate-900">Juan Pérez</h4><p class="text-[10px] text-slate-500">Century 21 Tucumán • +54 9 381 556-9120</p><span class="text-[9px] text-emerald-600 font-semibold">Asignado automáticamente</span></div></div></div><div class="bg-white border-2 border-brand-teal/40 rounded-2xl p-3.5 shadow-xs space-y-2.5"><div class="flex items-center justify-between"><span class="text-[10px] font-extrabold uppercase tracking-wider text-brand-teal">Vista previa de la ficha</span><span class="text-[9px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200" id="previewOpBadge">En venta</span></div><div class="flex gap-3"><div class="w-20 h-20 rounded-xl bg-slate-100 overflow-hidden relative shrink-0 border border-slate-200"><img alt="Vista previa" class="w-full h-full object-cover" id="previewCardImg" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDmNq_L4VuwJstlOxC8H2gW0RWT1t-QphT6N0vaxPxeiWJ7f36xEYsLG8sQf2celGfWpSmelARe6gK0diQ776VwQQbLSgMkJ3IrGOv-Xa5tDJUTcTRSFP_bhdl8HrE00aO1GluwcEarW0c0cCF-A_he19ia6P0lYX7cjVKIeZjGwUR9d0La4O7MPYMqYhQC6G2EhSOFRupoyaayRnqctPhW2hbO8xQMTD_RQSn0SRvzokMVJvv5hF17"/></div><div class="flex-1 min-w-0 flex flex-col justify-between"><div><h4 class="text-xs font-extrabold text-slate-900 leading-tight truncate" id="previewCardTitle">Semipiso con balcón terraza en Jacarandá</h4><p class="text-[10px] text-slate-500 truncate mt-0.5" id="previewCardAddress">Av. Aconquija 1850, Yerba Buena</p><span class="text-[9.5px] text-slate-400 block mt-0.5" id="previewCardSpecs">50 m² • 1 dorm • 1 baño</span></div><div class="flex items-center justify-between pt-1"><span class="text-xs font-black text-brand-navy" id="previewCardPrice">USD 75.000</span><span class="text-[9px] text-slate-400 font-medium">Agente: Juan Pérez</span></div></div></div></div></div><div class="bg-white p-3 border-t border-slate-200 shrink-0 sticky bottom-0 z-20 flex gap-2"><button class="px-3 py-2.5 rounded-xl border border-slate-200 text-xs font-bold text-slate-700 hover:bg-slate-50 transition" onclick="closePublishPropertyFlow()" type="button">Cancelar</button><button class="flex-1 bg-emerald-500 hover:bg-emerald-600 active:scale-[0.98] text-slate-950 py-2.5 px-4 rounded-xl text-xs font-black transition shadow-md flex items-center justify-center gap-2" onclick="confirmPublishProperty()" type="button"><svg class="w-4 h-4 text-slate-950" fill="none" stroke="currentColor" stroke-width="2.5" viewbox="0 0 24 24"><path d="M20 6L9 17l-5-5"></path></svg><span>Publicar propiedad ahora</span></button></div></div></div><div class="hidden absolute inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4" id="publishSuccessModal"><div class="bg-white rounded-3xl max-w-sm w-full p-5 shadow-2xl flex flex-col items-center text-center space-y-3 animate-in fade-in duration-200 border border-slate-100"><div class="w-14 h-14 rounded-2xl bg-emerald-100 text-emerald-600 flex items-center justify-center shadow-inner"><svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2.5" viewbox="0 0 24 24"><path d="M20 6L9 17l-5-5"></path></svg></div><div class="space-y-1"><span class="text-[10px] font-bold text-emerald-600 uppercase tracking-wider bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">Publicación exitosa</span><h3 class="text-base font-extrabold text-slate-900 leading-snug">¡Propiedad publicada correctamente!</h3><p class="text-xs text-slate-500 leading-relaxed">Tu inmueble ya se encuentra en tu cartera activa y disponible para consultas de clientes y colegas de red. No requirió tasación previa obligatoria.</p></div><div class="w-full bg-slate-50 border border-slate-200 rounded-2xl p-3 text-left flex items-center gap-2.5"><div class="w-10 h-10 rounded-xl bg-brand-navy text-white flex items-center justify-center font-bold text-xs shrink-0" id="successModalBadge">SJ</div><div class="flex-1 min-w-0"><h4 class="text-xs font-bold text-slate-900 truncate" id="successModalTitle">Semipiso en Jacarandá</h4><span class="text-[10px] text-slate-400 block truncate" id="successModalAddress">Av. Aconquija 1850</span><span class="text-xs font-black text-brand-navy" id="successModalPrice">USD 75.000</span></div></div><div class="w-full space-y-2 pt-1"><button class="w-full bg-brand-teal hover:bg-brand-tealLight text-white py-2.5 px-4 rounded-xl text-xs font-bold transition shadow-xs flex items-center justify-center gap-1.5" onclick="goToPropertiesFromSuccess()" type="button"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><rect height="9" rx="1" width="7" x="3" y="3"></rect><rect height="5" rx="1" width="7" x="14" y="3"></rect><rect height="9" rx="1" width="7" x="14" y="12"></rect><rect height="5" rx="1" width="7" x="3" y="16"></rect></svg><span>Ver en mis propiedades</span></button><button class="w-full bg-slate-100 hover:bg-slate-200 text-slate-800 py-2.5 px-4 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5" onclick="goToACMFromSuccess()" type="button"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><rect height="20" rx="2" width="16" x="4" y="2"></rect><line x1="8" x2="16" y1="6" y2="6"></line><line x1="16" x2="16" y1="14" y2="18"></line></svg><span>Analizar con ACM (Opcional)</span></button></div></div></div>
+<!-- NAVEGACIÓN INFERIOR FIJA (4 ACCESOS PRINCIPALES) -->
+<nav aria-label="Navegación inferior fija del agente" class="w-full bg-white/95 ios-blur border-t border-slate-200/80 px-2 pt-2 pb-1.5 flex justify-around items-center z-40 shrink-0 shadow-[0_-4px_20px_rgba(0,0,0,0.04)]" id="agent-navigation">
+<button class="agent-nav-item flex flex-1 flex-col items-center gap-1 py-1 px-1 transition-colors text-brand-teal" data-agent-view="acm" onclick="showAgentView('acm')" type="button">
+<svg aria-hidden="true" class="lucide lucide-calculator w-5 h-5" data-lucide="calculator" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><rect height="20" rx="2" width="16" x="4" y="2"></rect><line x1="8" x2="16" y1="6" y2="6"></line><line x1="16" x2="16" y1="14" y2="18"></line><path d="M16 10h.01"></path><path d="M12 10h.01"></path><path d="M8 10h.01"></path><path d="M12 14h.01"></path><path d="M8 14h.01"></path><path d="M12 18h.01"></path><path d="M8 18h.01"></path></svg>
+<span class="text-[10px] tracking-tight font-bold">ACM</span>
+</button>
+<button class="agent-nav-item flex flex-1 flex-col items-center gap-1 py-1 px-1 hover:text-slate-600 transition-colors text-slate-400" data-agent-view="panel" onclick="showAgentView('panel')" type="button">
+<svg aria-hidden="true" class="lucide lucide-layout-dashboard w-5 h-5" data-lucide="layout-dashboard" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><rect height="9" rx="1" width="7" x="3" y="3"></rect><rect height="5" rx="1" width="7" x="14" y="3"></rect><rect height="9" rx="1" width="7" x="14" y="12"></rect><rect height="5" rx="1" width="7" x="3" y="16"></rect></svg>
+<span class="text-[10px] tracking-tight font-medium">Panel</span>
+</button>
+<button class="agent-nav-item flex flex-1 flex-col items-center gap-1 py-1 px-1 hover:text-slate-600 transition-colors text-slate-400" data-agent-view="academia" onclick="showAgentView('academia')" type="button">
+<svg aria-hidden="true" class="lucide lucide-graduation-cap w-5 h-5" data-lucide="graduation-cap" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 1 1.66 0z"></path><path d="M22 10v6"></path><path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"></path></svg>
+<span class="text-[10px] tracking-tight font-medium">Academia</span>
+</button>
+<button class="agent-nav-item flex flex-1 flex-col items-center gap-1 py-1 px-1 hover:text-slate-600 transition-colors text-slate-400" data-agent-view="networking" onclick="showAgentView('networking')" type="button">
+<svg aria-hidden="true" class="lucide lucide-network w-5 h-5" data-lucide="network" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><rect height="6" rx="1" width="6" x="16" y="16"></rect><rect height="6" rx="1" width="6" x="2" y="16"></rect><rect height="6" rx="1" width="6" x="9" y="2"></rect><path d="M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3"></path><path d="M12 12V8"></path></svg>
+<span class="text-[10px] tracking-tight font-medium">Networking</span>
+</button>
+</nav>
+<!-- iOS Home Indicator -->
+<footer class="w-full h-4 bg-white flex justify-center items-center pb-1 shrink-0 select-none">
+<div class="w-32 h-1 bg-slate-300 rounded-full"></div>
+</footer>
+</div>
+<script>
+  // 1. Navegación Principal
+  function showAgentView(view) {
+    document.querySelectorAll('.agent-view').forEach(s => s.classList.add('hidden'));
+    const target = document.getElementById(`agent-screen-${view}`);
+    if (target) {
+      target.classList.remove('hidden');
+      target.scrollTop = 0;
+    }
+    document.querySelectorAll('.agent-nav-item').forEach(btn => {
+      const active = btn.dataset.agentView === view;
+      btn.classList.toggle('text-brand-teal', active);
+      btn.classList.toggle('text-slate-400', !active);
+      const span = btn.querySelector('span');
+      if (span) {
+        span.classList.toggle('font-bold', active);
+        span.classList.toggle('font-medium', !active);
+      }
+    });
+    if (window.lucide) lucide.createIcons();
+  }
+
+  // 2. Sub-pestañas del Panel
+  function switchPanelTab(tab, el) {
+    document.querySelectorAll('.panel-section').forEach(s => s.classList.add('hidden'));
+    const target = document.getElementById(`panel-${tab}`);
+    if (target) target.classList.remove('hidden');
+    document.querySelectorAll('.panel-tab-btn').forEach(btn => {
+      btn.className = 'panel-tab-btn flex-1 py-1.5 text-[11px] font-medium text-slate-600 hover:text-slate-900 rounded-md text-center transition flex items-center justify-center gap-1';
+    });
+    el.className = 'panel-tab-btn flex-1 py-1.5 text-[11px] font-bold rounded-md bg-brand-navy text-white text-center transition flex items-center justify-center gap-1 shadow-sm';
+    if (window.lucide) lucide.createIcons();
+  }
+
+  // 3. Segmentos de Networking
+  function switchNetworkSegment(seg, el) {
+    document.querySelectorAll('.net-view').forEach(v => v.classList.add('hidden'));
+    const target = document.getElementById(`net-seg-${seg}`);
+    if (target) target.classList.remove('hidden');
+    document.querySelectorAll('.net-seg').forEach(btn => {
+      btn.className = 'net-seg flex-1 py-1.5 rounded-lg text-slate-500 hover:text-slate-800 transition';
+    });
+    if (el) el.className = 'net-seg flex-1 py-1.5 rounded-lg bg-white shadow-xs text-slate-900 transition';
+    if (window.lucide) lucide.createIcons();
+  }
+
+  function showAgentDetail(name, location, broker) {
+    document.getElementById('netAgentName').textContent = name;
+    document.getElementById('netAgentRole').textContent = `${broker} • ${location}`;
+  }
+
+  function openPublicProfileModal() {
+    document.getElementById('publicProfileModal').classList.remove('hidden');
+    if (window.lucide) lucide.createIcons();
+  }
+  function closePublicProfileModal() {
+    document.getElementById('publicProfileModal').classList.add('hidden');
+  }
+
+  // 4. Copiloto Homia IA Drawer / Modal
+  function toggleGlobalAIChat() {
+    const drawer = document.getElementById('globalAiDrawer');
+    if (drawer.classList.contains('hidden')) {
+      openGlobalAIChat();
+    } else {
+      closeGlobalAIChat();
+    }
+  }
+
+  function openGlobalAIChat() {
+    const drawer = document.getElementById('globalAiDrawer');
+    drawer.classList.remove('hidden');
+    const input = document.getElementById('globalAiInput');
+    if (input) setTimeout(() => input.focus(), 150);
+    if (window.lucide) lucide.createIcons();
+  }
+
+  function closeGlobalAIChat() {
+    const drawer = document.getElementById('globalAiDrawer');
+    drawer.classList.add('hidden');
+  }
+
+  function handleDrawerBackdropClick(e) {
+    if (e.target.id === 'globalAiDrawer') {
+      closeGlobalAIChat();
+    }
+  }
+
+  function handleGlobalAISend(e) {
+    e.preventDefault();
+    const input = document.getElementById('globalAiInput');
+    const txt = input.value.trim();
+    if (!txt) return;
+    appendGlobalMsg(txt, 'user');
+    input.value = '';
+    setTimeout(() => {
+      let reply = "He evaluado la base de datos de Homia. ";
+      const lower = txt.toLowerCase();
+      if (lower.includes('ajuste') || lower.includes('acm') || lower.includes('precio')) {
+        reply += "Los ajustes consideran antigüedad (+1% por nuevo) y amenities (+3% piscina/cochera). El precio sugerido óptimo es <strong>USD 72.000</strong>.";
+      } else if (lower.includes('visita') || lower.includes('hoy')) {
+        reply += "Tienes 3 citas hoy: 10:30 hs Jacarandá 2, 15:00 hs Las Cañas y 18:30 hs Firma de reserva.";
+      } else if (lower.includes('comisi') || lower.includes('neta')) {
+        reply += "Tu comisión neta proyectada para este mes es de <strong>USD 14.850</strong> con USD 4.200 a liquidar en las próximas semanas.";
+      } else {
+        reply += "He registrado tu indicación. Analizaré los datos del mercado en Yerba Buena y actualizaré tus métricas.";
+      }
+      appendGlobalMsg(reply, 'bot');
+    }, 350);
+  }
+
+  function sendGlobalPrompt(prompt) {
+    appendGlobalMsg(prompt, 'user');
+    setTimeout(() => {
+      let reply = `Analizando solicitud: "${prompt}". `;
+      if (prompt.includes('ajuste')) {
+        reply += "En Jacarandá 2 la dispersión es baja (&lt; 4%). Los ajustes por piso y vista oscilan entre el -2% y +1%.";
+      } else if (prompt.includes('visitas')) {
+        reply += "Próxima visita: 10:30 hs con Mariana Ramos en Jacarandá 2 (Piso 5). Ficha ya enviada.";
+      } else if (prompt.includes('mensaje')) {
+        reply += "Borrador: <em>'Hola Mariana, te comparto los comparables del edificio Jacarandá 2. El valor de USD 73.000 está perfectamente homologado con el mercado actual.'</em>";
+      } else {
+        reply += "Cálculo: Sobre USD 72.000 al 4%, la comisión bruta es USD 2.880 (neta USD 2.016 luego de canon).";
+      }
+      appendGlobalMsg(reply, 'bot');
+    }, 300);
+  }
+
+  function appendGlobalMsg(text, type) {
+    const box = document.getElementById('globalAIChatBox');
+    const div = document.createElement('div');
+    if (type === 'user') {
+      div.className = 'flex items-start justify-end';
+      div.innerHTML = `<div class="bg-brand-navy text-white p-2.5 rounded-2xl rounded-tr-xs shadow-2xs max-w-[85%] leading-relaxed">${text}</div>`;
+    } else {
+      div.className = 'flex items-start gap-2';
+      div.innerHTML = `<div class="w-6 h-6 rounded-full bg-brand-teal text-white flex items-center justify-center shrink-0 text-[10px] font-bold shadow-2xs">H</div><div class="bg-white p-2.5 rounded-2xl rounded-tl-xs border border-slate-200 shadow-2xs max-w-[85%] text-slate-800 leading-relaxed">${text}</div>`;
+    }
+    box.appendChild(div);
+    box.scrollTop = box.scrollHeight;
+  }
+
+  function resetGlobalAIChat() {
+    const box = document.getElementById('globalAIChatBox');
+    box.innerHTML = `<div class="flex items-start gap-2"><div class="w-6 h-6 rounded-full bg-brand-teal text-white flex items-center justify-center shrink-0 text-[10px] font-bold shadow-2xs">H</div><div class="bg-white p-2.5 rounded-2xl rounded-tl-sm border border-slate-200 shadow-2xs max-w-[85%] text-slate-800 leading-relaxed">¡Hola Juan! Chat reiniciado. ¿En qué tasación o consulta de mercado te asisto ahora?</div></div>`;
+  }
+
+  // Inicialización
+  document.addEventListener('DOMContentLoaded', () => {
+    showAgentView('acm');
+    if (window.lucide) lucide.createIcons();
+  });
+</script>
+</body></html>
