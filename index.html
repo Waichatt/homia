@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0b1727" />
+    <title>Homia · Prototipo móvil</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        background: #0b1727;
+      }
+
+      * { box-sizing: border-box; }
+
+      html, body { min-height: 100%; margin: 0; }
+
+      body {
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        background:
+          radial-gradient(circle at 50% -10%, rgba(16, 185, 129, .18), transparent 35rem),
+          #0b1727;
+      }
+
+      .contenedor {
+        width: min(100%, 900px);
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        padding: 22px 18px;
+      }
+
+      .encabezado {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        margin-bottom: 16px;
+      }
+
+      .marca { display: flex; align-items: center; gap: 10px; }
+
+      .logo {
+        width: 34px;
+        height: 34px;
+        display: grid;
+        place-items: center;
+        border-radius: 10px;
+        background: #10b981;
+        color: #06251a;
+        font-weight: 900;
+      }
+
+      h1 { margin: 0; font-size: 17px; letter-spacing: -.02em; }
+      .subtitulo { margin: 3px 0 0; color: #9aa8b8; font-size: 12px; }
+
+      .selector {
+        display: flex;
+        gap: 4px;
+        padding: 4px;
+        border: 1px solid rgba(255,255,255,.12);
+        border-radius: 14px;
+        background: rgba(255,255,255,.06);
+      }
+
+      .selector button {
+        border: 0;
+        border-radius: 10px;
+        padding: 9px 12px;
+        color: #aab6c5;
+        background: transparent;
+        font: inherit;
+        font-size: 12px;
+        font-weight: 700;
+        cursor: pointer;
+      }
+
+      .selector button.activo { color: #06251a; background: #10b981; }
+
+      .marco {
+        position: relative;
+        width: min(420px, 100%);
+        height: calc(100vh - 132px);
+        min-height: 650px;
+        margin: 0 auto;
+        overflow: hidden;
+        border: 0;
+        border-radius: 28px;
+        background: transparent;
+      }
+
+      iframe { display: block; width: 100%; height: 100%; min-height: 650px; border: 0; background: transparent; }
+
+      .pie { margin: 12px 0 0; color: #718197; text-align: center; font-size: 11px; }
+
+      @media (max-width: 640px) {
+        .contenedor { padding: 0; }
+        .encabezado { margin: 0; padding: 12px 14px; background: #0b1727; }
+        .subtitulo { display: none; }
+        .selector button { padding: 8px 9px; font-size: 11px; }
+        .marco { width: 100%; height: calc(100vh - 62px); min-height: 0; border-radius: 0; }
+        iframe { min-height: 0; }
+        .pie { display: none; }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="contenedor">
+      <header class="encabezado">
+        <div class="marca">
+          <div class="logo">H</div>
+          <div>
+            <h1>Homia · Prototipo móvil</h1>
+            <p class="subtitulo">Elegí qué experiencia querés revisar</p>
+          </div>
+        </div>
+
+        <div class="selector" aria-label="Seleccionar experiencia">
+          <button type="button" data-vista="usuario">Usuario final</button>
+          <button type="button" data-vista="agente">Agente</button>
+        </div>
+      </header>
+
+      <section class="marco" aria-label="Prototipo Homia">
+        <iframe id="prototipo" title="Prototipo de Homia"></iframe>
+      </section>
+
+      <p class="pie">Este es un prototipo para revisar recorridos y recibir comentarios.</p>
+    </main>
+
+    <script>
+      const iframe = document.querySelector('#prototipo');
+      const botones = [...document.querySelectorAll('[data-vista]')];
+
+      function seleccionarVista(vista, actualizarUrl = true) {
+        const vistaValida = vista === 'agente' ? 'agente' : 'usuario';
+        iframe.src = `${vistaValida}.html`;
+        botones.forEach((boton) => {
+          boton.classList.toggle('activo', boton.dataset.vista === vistaValida);
+          boton.setAttribute('aria-pressed', boton.dataset.vista === vistaValida);
+        });
+
+        if (actualizarUrl) {
+          const url = new URL(window.location.href);
+          url.searchParams.set('vista', vistaValida);
+          window.history.replaceState({}, '', url);
+        }
+      }
+
+      botones.forEach((boton) => {
+        boton.addEventListener('click', () => seleccionarVista(boton.dataset.vista));
+      });
+
+      seleccionarVista(new URLSearchParams(window.location.search).get('vista'), false);
+    </script>
+  </body>
+</html>
