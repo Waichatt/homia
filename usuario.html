@@ -1399,6 +1399,11 @@
     function openAiChat() {
       const panel = document.getElementById('ai-search-panel');
       if (panel) {
+        const screensContainer = document.getElementById('screens-container');
+        if (screensContainer && panel.parentElement !== screensContainer) {
+          screensContainer.appendChild(panel);
+        }
+        document.getElementById('screen-busqueda')?.style.setProperty('overflow', 'hidden');
         panel.classList.remove('hidden');
         document.getElementById('ai-search-input')?.focus();
       }
@@ -1406,7 +1411,10 @@
 
     function closeAiChat() {
       const panel = document.getElementById('ai-search-panel');
-      if (panel) panel.classList.add('hidden');
+      if (panel) {
+        panel.classList.add('hidden');
+        document.getElementById('screen-busqueda')?.style.removeProperty('overflow');
+      }
     }
 
     function useAiSuggestion(text) {
