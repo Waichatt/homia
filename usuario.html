@@ -1577,6 +1577,7 @@
     }
 
     function navigateTo(screenId) {
+      closeAiChat();
       if (screenId === currentScreen) return;
 
       // Hide all screens
