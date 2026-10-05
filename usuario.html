@@ -125,26 +125,40 @@
 <p class="text-[9px] uppercase tracking-wider font-bold text-emerald-600">Descubrí</p>
 <h3 class="text-sm font-extrabold text-slate-900">Oportunidades para vos</h3>
 </div>
-<button class="text-[10px] font-bold text-slate-500">Ver todos</button>
+<button class="text-[10px] font-bold text-slate-500" onclick="navigateTo('busqueda')">Ir a búsqueda</button>
+</div>
+<div id="opportunity-filter-group" class="flex flex-nowrap gap-2 overflow-x-auto no-scrollbar mb-3" role="group" aria-label="Filtrar oportunidades">
+<button type="button" class="interest-filter shrink-0 rounded-full bg-slate-900 px-3 py-1.5 text-[10px] font-bold text-white" data-interest="mudanza" aria-pressed="true" onclick="setOpportunityInterest('mudanza', this)">Mudanza</button>
+<button type="button" class="interest-filter shrink-0 rounded-full bg-slate-100 px-3 py-1.5 text-[10px] font-bold text-slate-600" data-interest="inversion" aria-pressed="false" onclick="setOpportunityInterest('inversion', this)">Inversión</button>
+<button type="button" class="interest-filter shrink-0 rounded-full bg-slate-100 px-3 py-1.5 text-[10px] font-bold text-slate-600" data-interest="renovacion" aria-pressed="false" onclick="setOpportunityInterest('renovacion', this)">Renovación</button>
+<button type="button" class="interest-filter shrink-0 rounded-full bg-slate-100 px-3 py-1.5 text-[10px] font-bold text-slate-600" data-interest="flipping" aria-pressed="false" onclick="setOpportunityInterest('flipping', this)">Flipping</button>
+<button type="button" class="interest-filter shrink-0 rounded-full bg-slate-100 px-3 py-1.5 text-[10px] font-bold text-slate-600" data-interest="mas-ofertadas" aria-pressed="false" onclick="setOpportunityInterest('mas-ofertadas', this)">Más ofertadas</button>
+<button type="button" class="interest-filter shrink-0 rounded-full bg-slate-100 px-3 py-1.5 text-[10px] font-bold text-slate-600" data-interest="mas-vistas" aria-pressed="false" onclick="setOpportunityInterest('mas-vistas', this)">Más vistas</button>
 </div>
 <div class="flex gap-2.5 overflow-x-auto no-scrollbar">
-<button class="relative w-24 h-28 shrink-0 overflow-hidden rounded-2xl text-left shadow-sm" onclick="navigateTo('marketplace-detalle')">
+<button data-opportunity-interest="mudanza inversion mas-ofertadas mas-vistas" class="opportunity-card relative w-24 h-28 shrink-0 overflow-hidden rounded-2xl text-left shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-emerald-600" onclick="openProperty('palermo')">
 <img alt="Propiedades en Buenos Aires" class="absolute inset-0 w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD7n-vYuC11rI_84QeLyI3E5DVUH9rLt6MlKBkwqseSCjlugdOHXWSvaUwJak43oco3FugKsvxtvWbPEgkpXZOvOm4lT2ZGy3vyRl7nu6VUmOhwdtzbMzx8jby3kcYWiHZ9fXdh4LwQhtkmbxfw14qECXPa0nbYa3Oy5eWqi0wqHp5u0XSjSkkuC9NHhYvuq8wjvnTvw4XSU_tc2cT8porzKJwOGQv0YLUKE_XtkO4CjZLqX8O5d6bciQ"/>
 <div class="absolute inset-0 bg-gradient-to-b from-slate-950/10 to-slate-950/80"></div>
 <span class="absolute top-2 left-2 w-6 h-6 rounded-lg bg-white/90 text-emerald-700 flex items-center justify-center"><i class="w-3 h-3" data-lucide="home"></i></span>
 <span class="absolute bottom-2 left-2 right-2 text-[11px] font-extrabold text-white">Bajaron de precio</span>
 </button>
-<button class="relative w-24 h-28 shrink-0 overflow-hidden rounded-2xl text-left shadow-sm" onclick="navigateTo('marketplace-detalle')">
+<button data-opportunity-interest="mudanza renovacion mas-vistas" class="opportunity-card relative w-24 h-28 shrink-0 overflow-hidden rounded-2xl text-left shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-emerald-600" onclick="openProperty('pilar')">
 <img alt="Propiedades en Madrid" class="absolute inset-0 w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBx-e_BQze7UUVJLneGsyaA95WvUhfbLePtAjiZRpB3lsOZeJr5uT_P-mZylvGyoeP87-BvceSN-yMrCv9SWJ4gO5xLX7DejV1447HXbNTG96atmcucYARN2zFcWDmexanneVRGvObjKIdEH6DsMoiL87PmQ8j-f-sF3A4dRTFvAg8MTou4ZjAPYnKGBN92T-2tcebsXfM_xeCc-HArD1yIcy-ivUjYkIPtu2z_zb5KhBKugFsL_EO0ew"/>
 <div class="absolute inset-0 bg-gradient-to-b from-slate-950/10 to-slate-950/80"></div>
 <span class="absolute top-2 left-2 w-6 h-6 rounded-lg bg-white/90 text-emerald-700 flex items-center justify-center"><i class="w-3 h-3" data-lucide="home"></i></span>
 <span class="absolute bottom-2 left-2 right-2 text-[11px] font-extrabold text-white">Cerca tuyo</span>
 </button>
-<button class="relative w-24 h-28 shrink-0 overflow-hidden rounded-2xl text-left shadow-sm" onclick="navigateTo('marketplace-detalle')">
+<button data-opportunity-interest="inversion mas-ofertadas" class="opportunity-card relative w-24 h-28 shrink-0 overflow-hidden rounded-2xl text-left shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-emerald-600" onclick="openProperty('tigre')">
 <img alt="Propiedades en Miami" class="absolute inset-0 w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDRf1kNsTRn5oIHXku0JxqoEEkfC2qwZwaqOi9_J_5C63IRHm9HG5u7zHL14Crbkl3-CdMEpEo06XDZZGaxsgC-wT2GEVjw3oMAM3v6FYMQ4WQwY0tVoRN50bMgLstqgHdPMAKiq8SiyaToIX8Jba-fsAieEjbIqEB-OSUhAAgzerAKQZCTGP7eqe5YnTkzNBT7GdOn36CUoFLCrA0KSBuYwnSyA7xANtDpqDjkNA8rfmyM65_7gNhFqw"/>
 <div class="absolute inset-0 bg-gradient-to-b from-slate-950/10 to-slate-950/80"></div>
 <span class="absolute top-2 left-2 w-6 h-6 rounded-lg bg-white/90 text-emerald-700 flex items-center justify-center"><i class="w-3 h-3" data-lucide="home"></i></span>
 <span class="absolute bottom-2 left-2 right-2 text-[11px] font-extrabold text-white">Nuevas</span>
+</button>
+<button data-opportunity-interest="renovacion flipping" class="opportunity-card relative w-24 h-28 shrink-0 overflow-hidden rounded-2xl text-left shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-emerald-600" onclick="openProperty('renovar')">
+<img alt="Casa para renovar en Buenos Aires" class="absolute inset-0 w-full h-full object-cover" src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=500&auto=format&fit=crop&q=80"/>
+<div class="absolute inset-0 bg-slate-950/55"></div>
+<span class="absolute top-2 left-2 w-6 h-6 rounded-lg bg-white/90 text-emerald-700 flex items-center justify-center"><i class="w-3 h-3" data-lucide="hammer"></i></span>
+<span class="absolute bottom-2 left-2 right-2 text-[11px] font-extrabold text-white">Para renovar</span>
 </button>
 </div>
 </div>
@@ -186,7 +200,7 @@
 <button class="text-slate-400 hover:text-slate-600"><i class="w-4 h-4" data-lucide="more-horizontal"></i></button>
 </div>
 <!-- Post Media with badge -->
-<div class="relative cursor-pointer" onclick="navigateTo('marketplace-detalle')">
+<div class="relative cursor-pointer" role="button" tabindex="0" aria-label="Ver Departamento exclusivo en Palermo Soho" onclick="openProperty('palermo')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openProperty('palermo')}">
 <img alt="Departamento Palermo" class="w-full aspect-[4/3] object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCFfHVsJF08Gafz3P9MEHKiPa_IzKHI9jZI0l6A8a9zxsunye8vffOa40ldIs65gQiA0EvVfw2elk0VyJ5cU2jmcLVZEwxyqmyRct5FcGEzvIQBcAFZRjeZgawRnNBchp_ZWb806a8qtOKAZGnWh6-TWH31tcgFNc31D2E5XAobJegiysf38-l-u-9cs1JlXccnsOtjWG8r-OLUJNuFSZHm1rsjd0RNJvlrYX0qiKBLNCsfCFDYTan58w"/>
 <div class="absolute top-3 left-3 bg-emerald-500 text-slate-950 text-[10px] font-extrabold px-2.5 py-1 rounded-full shadow-sm">
               Muy buscada
@@ -199,28 +213,23 @@
 <span class="text-sm font-extrabold tracking-tight">245.000</span>
 </div>
 </div>
-<!-- Property Actions -->
+<!-- Acciones inmobiliarias -->
 <div class="px-3 pt-3 flex items-center justify-between">
-<div class="flex items-center gap-2.5 text-slate-600">
-<button id="property-like-button" class="flex items-center gap-1 text-[10px] font-bold hover:text-rose-500" onclick="togglePropertyLike()" aria-label="Me gusta esta propiedad" aria-pressed="false">
-<i class="w-4 h-4" data-lucide="heart"></i><span>Me gusta</span><strong id="property-like-count">1,2k</strong>
+<button class="flex items-center gap-1 rounded-lg bg-slate-50 px-2.5 py-2 text-[10px] font-bold text-slate-700 hover:bg-slate-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-emerald-600" onclick="openProperty('palermo')">
+<i class="w-4 h-4" data-lucide="eye"></i><span>Ver propiedad</span>
 </button>
-<button class="flex items-center gap-1 text-[10px] font-bold hover:text-emerald-600" onclick="navigateTo('networking')" aria-label="Ver preguntas sobre esta propiedad">
-<i class="w-4 h-4" data-lucide="message-circle"></i><span>Preguntas</span><strong>48</strong>
-</button>
-</div>
-<div class="flex items-center gap-1.5">
-<button class="flex items-center gap-1 rounded-lg bg-slate-50 px-2 py-1.5 text-[10px] font-bold text-slate-700 hover:bg-slate-100" aria-label="Guardar propiedad">
+<div class="flex items-center gap-2">
+<button class="flex items-center gap-1 rounded-lg bg-slate-50 px-2.5 py-2 text-[10px] font-bold text-slate-700 hover:bg-slate-100" onclick="saveProperty(this)" aria-pressed="false">
 <i class="w-4 h-4" data-lucide="bookmark"></i><span>Guardar</span>
 </button>
-<button class="p-1.5 text-slate-600 hover:text-slate-900" aria-label="Compartir propiedad">
+<button class="p-2 text-slate-600 hover:text-slate-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-emerald-600" onclick="openPublicListing('palermo')" aria-label="Compartir ficha pública de la propiedad">
 <i class="w-5 h-5" data-lucide="share-2"></i>
 </button>
 </div>
 </div>
 <!-- Property Details Description -->
 <div class="px-3 pt-2">
-<h5 class="text-xs font-bold text-slate-900 cursor-pointer" onclick="navigateTo('marketplace-detalle')">Departamento exclusivo en Palermo Soho</h5>
+<h5 class="text-xs font-bold text-slate-900 cursor-pointer" onclick="openProperty('palermo')">Departamento exclusivo en Palermo Soho</h5>
 <p class="text-[11px] text-slate-600 mt-0.5">3 ambientes, balcón terraza aterrazado con parrilla propia y amenities premium...</p>
 <!-- Property Specs Preview -->
 <div class="mt-2.5 flex items-center gap-2 text-[10px] font-bold text-slate-500">
@@ -231,78 +240,101 @@
 <span class="text-[9px] uppercase tracking-wider text-slate-400 font-semibold block mt-1.5">Hace 3 días</span>
 </div>
 </article>
-<!-- Second post preview -->
 <article class="bg-white mt-2 border-y border-slate-100 pb-3">
-<div class="p-3 flex items-center justify-between cursor-pointer" onclick="navigateTo('agente-perfil')">
-<div class="flex items-center gap-2">
-<div class="w-8 h-8 rounded-full bg-amber-500 text-white font-bold flex items-center justify-center text-xs">C21</div>
-<div>
-<p class="text-xs font-bold text-slate-900">Century 21 Premium</p>
-<p class="text-[10px] text-slate-500">Córdoba, Argentina</p>
+<div class="p-3 flex items-center justify-between">
+<div class="flex items-center gap-2.5 cursor-pointer" onclick="navigateTo('agente-perfil')">
+<img alt="Lucía Fernández" class="w-9 h-9 rounded-full object-cover ring-1 ring-slate-200" src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=120&auto=format&fit=crop&q=80"/>
+<div><div class="flex items-center gap-1"><h4 class="text-xs font-bold text-slate-900 leading-tight">Lucía Fernández</h4><span class="bg-blue-500 text-white rounded-full p-0.5"><i class="w-2 h-2 stroke-[3]" data-lucide="check"></i></span></div><p class="text-[10px] text-slate-500">RE/MAX Premium · Pilar, Argentina</p></div>
 </div>
+<button class="text-slate-400 hover:text-slate-600" aria-label="Más opciones"><i class="w-4 h-4" data-lucide="more-horizontal"></i></button>
 </div>
-<i class="w-4 h-4 text-slate-400" data-lucide="more-horizontal"></i>
+<div class="relative cursor-pointer" role="button" tabindex="0" aria-label="Ver Casa familiar con jardín en Pilar" onclick="openProperty('pilar')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openProperty('pilar')}">
+<img alt="Casa familiar con jardín en Pilar" class="w-full aspect-[4/3] object-cover" src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&auto=format&fit=crop&q=80"/>
+<div class="absolute top-3 left-3 bg-emerald-500 text-slate-950 text-[10px] font-extrabold px-2.5 py-1 rounded-full shadow-sm">Ideal para mudanza</div>
+<div class="absolute top-3 right-3 bg-slate-900/80 ios-blur text-white text-[10px] font-semibold px-2 py-0.5 rounded-full">1/8</div>
+<div class="absolute bottom-3 left-3 bg-slate-900/90 ios-blur text-white px-3 py-1.5 rounded-xl shadow-lg flex items-center gap-2"><span class="text-xs text-slate-300">USD</span><span class="text-sm font-extrabold tracking-tight">310.000</span></div>
 </div>
+<div class="px-3 pt-3 flex items-center justify-between">
+<button class="flex items-center gap-1 rounded-lg bg-slate-50 px-2.5 py-2 text-[10px] font-bold text-slate-700 hover:bg-slate-100" onclick="openProperty('pilar')"><i class="w-4 h-4" data-lucide="eye"></i><span>Ver propiedad</span></button>
+<div class="flex items-center gap-2"><button class="flex items-center gap-1 rounded-lg bg-slate-50 px-2.5 py-2 text-[10px] font-bold text-slate-700 hover:bg-slate-100" onclick="saveProperty(this)" aria-pressed="false"><i class="w-4 h-4" data-lucide="bookmark"></i><span>Guardar</span></button><button class="p-2 text-slate-600 hover:text-slate-900" onclick="openPublicListing('pilar')" aria-label="Compartir ficha pública"><i class="w-5 h-5" data-lucide="share-2"></i></button></div>
+</div>
+<div class="px-3 pt-2"><h5 class="text-xs font-bold text-slate-900 cursor-pointer" onclick="openProperty('pilar')">Casa familiar con jardín en Pilar</h5><p class="text-[11px] text-slate-600 mt-0.5">Ambientes amplios, jardín arbolado y luz natural para disfrutar en familia.</p><div class="mt-2.5 flex items-center gap-2 text-[10px] font-bold text-slate-500"><span class="rounded-lg bg-slate-50 border border-slate-100 px-2 py-1">4 dormitorios</span><span class="rounded-lg bg-slate-50 border border-slate-100 px-2 py-1">3 baños</span><span class="rounded-lg bg-slate-50 border border-slate-100 px-2 py-1">220 m²</span></div><span class="text-[9px] uppercase tracking-wider text-slate-400 font-semibold block mt-1.5">Publicada ayer</span></div>
+</article>
+<article class="bg-white mt-2 border-y border-slate-100 pb-3">
+<div class="p-3 flex items-center justify-between">
+<div class="flex items-center gap-2.5 cursor-pointer" onclick="navigateTo('agente-perfil')">
+<img alt="Diego Álvarez" class="w-9 h-9 rounded-full object-cover ring-1 ring-slate-200" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=120&auto=format&fit=crop&q=80"/>
+<div><div class="flex items-center gap-1"><h4 class="text-xs font-bold text-slate-900 leading-tight">Diego Álvarez</h4><span class="bg-blue-500 text-white rounded-full p-0.5"><i class="w-2 h-2 stroke-[3]" data-lucide="check"></i></span></div><p class="text-[10px] text-slate-500">Century 21 · Palermo, Argentina</p></div>
+</div>
+<button class="text-slate-400 hover:text-slate-600" aria-label="Más opciones"><i class="w-4 h-4" data-lucide="more-horizontal"></i></button>
+</div>
+<div class="relative cursor-pointer" role="button" tabindex="0" aria-label="Ver Departamento con potencial en Palermo" onclick="openProperty('renovar')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openProperty('renovar')}"><img alt="Departamento luminoso para renovar en Palermo" class="w-full aspect-[4/3] object-cover" src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=800&auto=format&fit=crop&q=80"/><div class="absolute top-3 left-3 bg-emerald-500 text-slate-950 text-[10px] font-extrabold px-2.5 py-1 rounded-full shadow-sm">Oportunidad para renovar</div><div class="absolute top-3 right-3 bg-slate-900/80 ios-blur text-white text-[10px] font-semibold px-2 py-0.5 rounded-full">1/6</div><div class="absolute bottom-3 left-3 bg-slate-900/90 ios-blur text-white px-3 py-1.5 rounded-xl shadow-lg flex items-center gap-2"><span class="text-xs text-slate-300">USD</span><span class="text-sm font-extrabold tracking-tight">198.000</span></div></div>
+<div class="px-3 pt-3 flex items-center justify-between"><button class="flex items-center gap-1 rounded-lg bg-slate-50 px-2.5 py-2 text-[10px] font-bold text-slate-700 hover:bg-slate-100" onclick="openProperty('renovar')"><i class="w-4 h-4" data-lucide="eye"></i><span>Ver propiedad</span></button><div class="flex items-center gap-2"><button class="flex items-center gap-1 rounded-lg bg-slate-50 px-2.5 py-2 text-[10px] font-bold text-slate-700 hover:bg-slate-100" onclick="saveProperty(this)" aria-pressed="false"><i class="w-4 h-4" data-lucide="bookmark"></i><span>Guardar</span></button><button class="p-2 text-slate-600 hover:text-slate-900" onclick="openPublicListing('renovar')" aria-label="Compartir ficha pública"><i class="w-5 h-5" data-lucide="share-2"></i></button></div></div>
+<div class="px-3 pt-2"><h5 class="text-xs font-bold text-slate-900 cursor-pointer" onclick="openProperty('renovar')">Departamento con potencial en Palermo</h5><p class="text-[11px] text-slate-600 mt-0.5">Planta flexible y ambientes luminosos, ideal para renovar a tu gusto.</p><div class="mt-2.5 flex items-center gap-2 text-[10px] font-bold text-slate-500"><span class="rounded-lg bg-slate-50 border border-slate-100 px-2 py-1">3 ambientes</span><span class="rounded-lg bg-slate-50 border border-slate-100 px-2 py-1">2 baños</span><span class="rounded-lg bg-slate-50 border border-slate-100 px-2 py-1">82 m²</span></div><span class="text-[9px] uppercase tracking-wider text-slate-400 font-semibold block mt-1.5">Publicada hace 2 días</span></div>
+</article>
+<article class="bg-white mt-2 border-y border-slate-100 pb-3">
+<div class="p-3 flex items-center justify-between"><div class="flex items-center gap-2.5 cursor-pointer" onclick="navigateTo('agente-perfil')"><img alt="Mariana López" class="w-9 h-9 rounded-full object-cover ring-1 ring-slate-200" src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=120&auto=format&fit=crop&q=80"/><div><div class="flex items-center gap-1"><h4 class="text-xs font-bold text-slate-900 leading-tight">Mariana López</h4><span class="bg-blue-500 text-white rounded-full p-0.5"><i class="w-2 h-2 stroke-[3]" data-lucide="check"></i></span></div><p class="text-[10px] text-slate-500">RE/MAX · Chacarita, CABA</p></div></div><button class="text-slate-400 hover:text-slate-600" aria-label="Más opciones"><i class="w-4 h-4" data-lucide="more-horizontal"></i></button></div>
+<div class="relative cursor-pointer" role="button" tabindex="0" aria-label="Ver PH reciclado en Chacarita" onclick="openProperty('chacarita')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openProperty('chacarita')}"><img alt="PH reciclado en Chacarita" class="w-full aspect-[4/3] object-cover" src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=800&auto=format&fit=crop&q=80"/><div class="absolute top-3 left-3 bg-emerald-500 text-slate-950 text-[10px] font-extrabold px-2.5 py-1 rounded-full">Patio y luz natural</div><div class="absolute top-3 right-3 bg-slate-900/80 ios-blur text-white text-[10px] font-semibold px-2 py-0.5 rounded-full">1/7</div><div class="absolute bottom-3 left-3 bg-slate-900/90 ios-blur text-white px-3 py-1.5 rounded-xl flex items-center gap-2"><span class="text-xs text-slate-300">USD</span><span class="text-sm font-extrabold">176.000</span></div></div>
+<div class="px-3 pt-3 flex items-center justify-between"><button class="flex items-center gap-1 rounded-lg bg-slate-50 px-2.5 py-2 text-[10px] font-bold text-slate-700" onclick="openProperty('chacarita')"><i class="w-4 h-4" data-lucide="eye"></i><span>Ver propiedad</span></button><div class="flex items-center gap-2"><button class="flex items-center gap-1 rounded-lg bg-slate-50 px-2.5 py-2 text-[10px] font-bold text-slate-700" onclick="saveProperty(this)" aria-pressed="false"><i class="w-4 h-4" data-lucide="bookmark"></i><span>Guardar</span></button><button class="p-2 text-slate-600" onclick="openPublicListing('chacarita')" aria-label="Compartir ficha pública"><i class="w-5 h-5" data-lucide="share-2"></i></button></div></div>
+<div class="px-3 pt-2"><h5 class="text-xs font-bold text-slate-900 cursor-pointer" onclick="openProperty('chacarita')">PH reciclado con patio en Chacarita</h5><p class="text-[11px] text-slate-600 mt-0.5">Diseño contemporáneo, patio privado y espacios flexibles cerca del subte.</p><div class="mt-2.5 flex items-center gap-2 text-[10px] font-bold text-slate-500"><span class="rounded-lg bg-slate-50 border border-slate-100 px-2 py-1">3 ambientes</span><span class="rounded-lg bg-slate-50 border border-slate-100 px-2 py-1">1 baño</span><span class="rounded-lg bg-slate-50 border border-slate-100 px-2 py-1">94 m²</span></div><span class="text-[9px] uppercase tracking-wider text-slate-400 font-semibold block mt-1.5">Publicada hoy</span></div>
+</article>
+<article class="bg-white mt-2 border-y border-slate-100 pb-3">
+<div class="p-3 flex items-center justify-between"><div class="flex items-center gap-2.5 cursor-pointer" onclick="navigateTo('agente-perfil')"><img alt="Tomás Rivas" class="w-9 h-9 rounded-full object-cover ring-1 ring-slate-200" src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=120&auto=format&fit=crop&q=80"/><div><div class="flex items-center gap-1"><h4 class="text-xs font-bold text-slate-900 leading-tight">Tomás Rivas</h4><span class="bg-blue-500 text-white rounded-full p-0.5"><i class="w-2 h-2 stroke-[3]" data-lucide="check"></i></span></div><p class="text-[10px] text-slate-500">Century 21 · Villa Crespo, CABA</p></div></div><button class="text-slate-400 hover:text-slate-600" aria-label="Más opciones"><i class="w-4 h-4" data-lucide="more-horizontal"></i></button></div>
+<div class="relative cursor-pointer" role="button" tabindex="0" aria-label="Ver departamento con balcón en Villa Crespo" onclick="openProperty('villacrespo')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openProperty('villacrespo')}"><img alt="Departamento con balcón en Villa Crespo" class="w-full aspect-[4/3] object-cover" src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&auto=format&fit=crop&q=80"/><div class="absolute top-3 left-3 bg-emerald-500 text-slate-950 text-[10px] font-extrabold px-2.5 py-1 rounded-full">Balcón al frente</div><div class="absolute top-3 right-3 bg-slate-900/80 ios-blur text-white text-[10px] font-semibold px-2 py-0.5 rounded-full">1/9</div><div class="absolute bottom-3 left-3 bg-slate-900/90 ios-blur text-white px-3 py-1.5 rounded-xl flex items-center gap-2"><span class="text-xs text-slate-300">USD</span><span class="text-sm font-extrabold">225.000</span></div></div>
+<div class="px-3 pt-3 flex items-center justify-between"><button class="flex items-center gap-1 rounded-lg bg-slate-50 px-2.5 py-2 text-[10px] font-bold text-slate-700" onclick="openProperty('villacrespo')"><i class="w-4 h-4" data-lucide="eye"></i><span>Ver propiedad</span></button><div class="flex items-center gap-2"><button class="flex items-center gap-1 rounded-lg bg-slate-50 px-2.5 py-2 text-[10px] font-bold text-slate-700" onclick="saveProperty(this)" aria-pressed="false"><i class="w-4 h-4" data-lucide="bookmark"></i><span>Guardar</span></button><button class="p-2 text-slate-600" onclick="openPublicListing('villacrespo')" aria-label="Compartir ficha pública"><i class="w-5 h-5" data-lucide="share-2"></i></button></div></div>
+<div class="px-3 pt-2"><h5 class="text-xs font-bold text-slate-900 cursor-pointer" onclick="openProperty('villacrespo')">Departamento con balcón en Villa Crespo</h5><p class="text-[11px] text-slate-600 mt-0.5">Muy luminoso, con cocina integrada y acceso rápido a transporte y comercios.</p><div class="mt-2.5 flex items-center gap-2 text-[10px] font-bold text-slate-500"><span class="rounded-lg bg-slate-50 border border-slate-100 px-2 py-1">3 ambientes</span><span class="rounded-lg bg-slate-50 border border-slate-100 px-2 py-1">2 baños</span><span class="rounded-lg bg-slate-50 border border-slate-100 px-2 py-1">86 m²</span></div><span class="text-[9px] uppercase tracking-wider text-slate-400 font-semibold block mt-1.5">Publicada hace 2 días</span></div>
+</article>
+<article class="bg-white mt-2 border-y border-slate-100 pb-3">
+<div class="p-3 flex items-center justify-between"><div class="flex items-center gap-2.5 cursor-pointer" onclick="navigateTo('agente-perfil')"><img alt="Valentina Costa" class="w-9 h-9 rounded-full object-cover ring-1 ring-slate-200" src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=120&auto=format&fit=crop&q=80"/><div><div class="flex items-center gap-1"><h4 class="text-xs font-bold text-slate-900 leading-tight">Valentina Costa</h4><span class="bg-blue-500 text-white rounded-full p-0.5"><i class="w-2 h-2 stroke-[3]" data-lucide="check"></i></span></div><p class="text-[10px] text-slate-500">RE/MAX · Tigre, Buenos Aires</p></div></div><button class="text-slate-400 hover:text-slate-600" aria-label="Más opciones"><i class="w-4 h-4" data-lucide="more-horizontal"></i></button></div>
+<div class="relative cursor-pointer" role="button" tabindex="0" aria-label="Ver casa con jardín en Tigre" onclick="openProperty('tigre')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openProperty('tigre')}"><img alt="Casa con jardín en Tigre" class="w-full aspect-[4/3] object-cover" src="https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?w=800&auto=format&fit=crop&q=80"/><div class="absolute top-3 left-3 bg-emerald-500 text-slate-950 text-[10px] font-extrabold px-2.5 py-1 rounded-full">Jardín y parrilla</div><div class="absolute top-3 right-3 bg-slate-900/80 ios-blur text-white text-[10px] font-semibold px-2 py-0.5 rounded-full">1/10</div><div class="absolute bottom-3 left-3 bg-slate-900/90 ios-blur text-white px-3 py-1.5 rounded-xl flex items-center gap-2"><span class="text-xs text-slate-300">USD</span><span class="text-sm font-extrabold">385.000</span></div></div>
+<div class="px-3 pt-3 flex items-center justify-between"><button class="flex items-center gap-1 rounded-lg bg-slate-50 px-2.5 py-2 text-[10px] font-bold text-slate-700" onclick="openProperty('tigre')"><i class="w-4 h-4" data-lucide="eye"></i><span>Ver propiedad</span></button><div class="flex items-center gap-2"><button class="flex items-center gap-1 rounded-lg bg-slate-50 px-2.5 py-2 text-[10px] font-bold text-slate-700" onclick="saveProperty(this)" aria-pressed="false"><i class="w-4 h-4" data-lucide="bookmark"></i><span>Guardar</span></button><button class="p-2 text-slate-600" onclick="openPublicListing('tigre')" aria-label="Compartir ficha pública"><i class="w-5 h-5" data-lucide="share-2"></i></button></div></div>
+<div class="px-3 pt-2"><h5 class="text-xs font-bold text-slate-900 cursor-pointer" onclick="openProperty('tigre')">Casa con jardín y parrilla en Tigre</h5><p class="text-[11px] text-slate-600 mt-0.5">Casa familiar con galería, pileta y espacios verdes a minutos del centro.</p><div class="mt-2.5 flex items-center gap-2 text-[10px] font-bold text-slate-500"><span class="rounded-lg bg-slate-50 border border-slate-100 px-2 py-1">4 dormitorios</span><span class="rounded-lg bg-slate-50 border border-slate-100 px-2 py-1">3 baños</span><span class="rounded-lg bg-slate-50 border border-slate-100 px-2 py-1">265 m²</span></div><span class="text-[9px] uppercase tracking-wider text-slate-400 font-semibold block mt-1.5">Publicada hace 4 días</span></div>
 </article>
 </section>
 <!-- END: SCREEN 01 -->
 <!-- ============================================== -->
 <!-- SCREEN 02: REELS DE PROPIEDADES                 -->
 <!-- ============================================== -->
-<section class="screen-view hidden absolute inset-0 bg-slate-950 text-white overflow-hidden pb-20" id="screen-reels">
-<!-- Reel Background Video/Photo -->
+<section class="screen-view hidden absolute inset-0 bg-slate-950 text-white overflow-hidden pb-20 touch-pan-x" id="screen-reels">
+<!-- Reel clips: Pexels, "Summer House with Pool and View" and "Infinity Pool on Sunny Day" by Peggy Anke; "House Interior Design" by Charlotte May. Pexels License: https://www.pexels.com/license/ -->
 <div class="relative w-full h-full">
-<img alt="Casa Reel" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAk1nyuLlLTFXFCnEjHeH94HJChwDmNZiVzBOCi9Yr-Ua0eu1fVr2W6TqO5u0PX7vEJB2Mszwn7HM1WnFkdOc73Q4LwzmAPYUQ9kFSCL8olcEovSxYcvcZuFhGA-27YCJSiU4y6m3uytg6a7WiDpe1B6t62UoXh4tuyOkVLzXljTwRW51w8rnH2Z3AOV8V4pfwNRnYLbEFd1wMY3Qa400yYsq8PLA-Iomdm3BivjAqg-R55KGKrzmTT-Q"/>
+<video id="reel-property-video" class="absolute inset-0 w-full h-full object-cover" muted loop playsinline preload="none" poster="https://lh3.googleusercontent.com/aida-public/AB6AXuAk1nyuLlLTFXFCnEjHeH94HJChwDmNZiVzBOCi9Yr-Ua0eu1fVr2W6TqO5u0PX7vEJB2Mszwn7HM1WnFkdOc73Q4LwzmAPYUQ9kFSCL8olcEovSxYcvcZuFhGA-27YCJSiU4y6m3uytg6a7WiDpe1B6t62UoXh4tuyOkVLzXljTwRW51w8rnH2Z3AOV8V4pfwNRnYLbEFd1wMY3Qa400yYsq8PLA-Iomdm3BivjAqg-R55KGKrzmTT-Q" aria-hidden="true">
+<source data-src="assets/recorrido-villa.mp4" type="video/mp4"/>
+<img alt="Vista previa de una villa con piscina frente al mar" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAk1nyuLlLTFXFCnEjHeH94HJChwDmNZiVzBOCi9Yr-Ua0eu1fVr2W6TqO5u0PX7vEJB2Mszwn7HM1WnFkdOc73Q4LwzmAPYUQ9kFSCL8olcEovSxYcvcZuFhGA-27YCJSiU4y6m3uytg6a7WiDpe1B6t62UoXh4tuyOkVLzXljTwRW51w8rnH2Z3AOV8V4pfwNRnYLbEFd1wMY3Qa400yYsq8PLA-Iomdm3BivjAqg-R55KGKrzmTT-Q"/>
+</video>
 <div class="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/90"></div>
+<div class="absolute right-3 top-1/2 z-20 flex -translate-y-1/2 flex-col gap-2">
+<button type="button" class="rounded-full bg-black/40 p-2 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-white" onclick="changeReel(-1)" aria-label="Ver reel anterior"><i class="w-5 h-5" data-lucide="chevron-up"></i></button>
+<button type="button" class="rounded-full bg-black/40 p-2 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-white" onclick="changeReel(1)" aria-label="Ver reel siguiente"><i class="w-5 h-5" data-lucide="chevron-down"></i></button>
+</div>
+<span id="tour-type-badge" class="absolute top-14 left-4 rounded-full bg-white/95 px-3 py-1.5 text-[10px] font-extrabold text-slate-900">Recorrido en video</span>
 <!-- Top Header Recorridos -->
 <div class="absolute top-2 left-0 right-0 px-4 flex justify-between items-center z-10">
 <div class="flex items-center gap-2">
 <span class="text-sm font-extrabold tracking-wide">Recorridos</span>
-<span class="bg-emerald-500/80 text-[10px] px-2 py-0.5 rounded-full font-semibold">Propiedades destacadas</span>
+<span class="bg-white/15 text-[10px] px-2 py-0.5 rounded-full font-semibold">Vista previa</span>
+<span id="reel-count" class="bg-white/15 text-[10px] px-2 py-0.5 rounded-full font-semibold" aria-live="polite">1 / 3</span>
 </div>
-<button class="p-1 rounded-full bg-black/40 text-white"><i class="w-5 h-5" data-lucide="camera"></i></button>
-</div>
-<!-- Right Action Floating Bar -->
-<div class="absolute right-3 bottom-24 flex flex-col items-center gap-5 z-20">
-<button class="flex flex-col items-center gap-1 group">
-<div class="w-10 h-10 rounded-full bg-black/40 ios-blur flex items-center justify-center group-hover:scale-110 transition-transform">
-<i class="w-5 h-5 text-white" data-lucide="heart"></i>
-</div>
-<span class="text-[11px] font-semibold text-white">2.4k</span>
+<div class="flex items-center gap-2">
+<button id="reel-playback-toggle" type="button" class="p-1.5 rounded-full bg-black/40 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-white" onclick="toggleReelPlayback()" aria-label="Pausar video" aria-pressed="true">
+<span data-playback-icon="pause"><i class="w-5 h-5" data-lucide="pause"></i></span>
+<span class="hidden" data-playback-icon="play"><i class="w-5 h-5" data-lucide="play"></i></span>
 </button>
-<button class="flex flex-col items-center gap-1 group" onclick="navigateTo('marketplace-detalle')">
-<div class="w-10 h-10 rounded-full bg-black/40 ios-blur flex items-center justify-center">
-<i class="w-5 h-5 text-white" data-lucide="message-circle"></i>
-</div>
-<span class="text-[11px] font-semibold text-white">128</span>
-</button>
-<button class="flex flex-col items-center gap-1 group">
-<div class="w-10 h-10 rounded-full bg-black/40 ios-blur flex items-center justify-center">
-<i class="w-5 h-5 text-white" data-lucide="send"></i>
-</div>
-<span class="text-[11px] font-semibold text-white">362</span>
-</button>
-<div class="w-10 h-10 rounded-full border-2 border-white overflow-hidden mt-1 cursor-pointer" onclick="navigateTo('agente-perfil')">
-<img alt="Agent avatar" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAV5CLmaAERQwQ4qYH1qBs-RHN2bMR_AmOqky-Zt_GpAlBMJwVUECKHcFw4-zQsFiYwSViqL_nr2GUfqoUTwtqEAXbjWe4an092NT5bV4JWtdGLau2UfcACTEtLsdC7mGvGSmtGzTzysmpvBlxmLrF59gfcWJNBp6hAH1RqRWfVvIAGJvj7FV2XMv5rhltuBFX5ULYu0d3cuiJ2n55aGt39vwyzEPiCLDl53p5X30MzTrPxh9rBN6RUaA"/>
+<button class="p-1 rounded-full bg-black/40 text-white" onclick="openCurrentReelListing()" aria-label="Ver ficha de la propiedad"><i class="w-5 h-5" data-lucide="info"></i></button>
 </div>
 </div>
 <!-- Bottom Meta Info -->
-<div class="absolute bottom-6 left-4 right-16 z-20 space-y-2">
-<div class="flex items-center gap-2 cursor-pointer" onclick="navigateTo('agente-perfil')">
-<span class="text-xs font-bold text-white">Homia Propiedades</span>
-<button class="text-[10px] font-bold border border-white/80 px-2.5 py-0.5 rounded-full hover:bg-white hover:text-slate-900 transition-colors">Ver perfil</button>
-</div>
+<div class="absolute bottom-2 left-4 right-4 z-20 space-y-2" id="reel-tour-actions">
+<div class="flex items-center gap-2"><span class="text-xs font-bold text-white">Recorridos de propiedades</span></div>
 <div>
-<h3 class="text-base font-bold text-white drop-shadow">Casa premium en Nordelta</h3>
-<p class="text-xs text-white/90 flex items-center gap-1 mt-0.5"><i class="w-3 h-3 text-emerald-400" data-lucide="map-pin"></i> Nordelta, Bs. As. • USD 520.000</p>
+<h3 class="text-base font-bold text-white" id="tour-property-title">Casa premium en Nordelta</h3>
+<p class="text-xs text-white/90 flex items-center gap-1 mt-0.5"><i class="w-3 h-3 text-emerald-400" data-lucide="map-pin"></i><span id="tour-property-meta">Nordelta, Bs. As. • USD 520.000</span></p>
 </div>
-<p class="text-xs text-white/80 line-clamp-2 leading-relaxed">
-              Vivir como soñás es posible ✨ Vista al lago, piscina infinita y domótica integral. <span class="text-white font-medium">#Nordelta #Premium #Homia</span>
-</p>
+<p class="text-xs text-white/85 leading-relaxed" id="tour-description">Clip de referencia para mostrar la experiencia de recorridos en video.</p>
 <div class="flex items-center gap-2 pt-1">
-<button class="bg-emerald-500 hover:bg-emerald-400 text-slate-950 text-xs font-extrabold px-4 py-2 rounded-xl flex items-center gap-1.5 shadow-lg" onclick="navigateTo('marketplace-detalle')">
-<i class="w-3.5 h-3.5" data-lucide="sparkles"></i> Ver Propiedad Completa
-              </button>
+<button class="bg-white text-slate-900 text-xs font-extrabold px-3 py-2 rounded-xl flex items-center gap-1.5" onclick="openTour('3d')"><i class="w-3.5 h-3.5" data-lucide="box"></i>Ver tour 3D</button>
+<button class="border border-white/70 bg-slate-950/30 text-white text-xs font-extrabold px-3 py-2 rounded-xl flex items-center gap-1.5" onclick="openTour('real')"><i class="w-3.5 h-3.5" data-lucide="play"></i>Ver recorrido real</button>
+<button class="ml-auto bg-emerald-500 text-slate-950 text-xs font-extrabold px-3 py-2 rounded-xl" onclick="openCurrentReelListing()">Ver ficha</button>
 </div>
 </div>
 </div>
@@ -579,14 +611,14 @@
 <section class="screen-view hidden absolute inset-0 bg-white overflow-y-auto no-scrollbar pb-24" id="screen-marketplace-detalle">
 <!-- Hero Gallery Header -->
 <div class="relative w-full h-72">
-<img alt="Casa en Nordelta" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB4rYvSxQu-Ppz4FKZeIzWNKa-hRQfmbiz0NJ2NM81rkEFOGpPJZCJSJ0vgGfCbFyy91cjJpbDNfwSSAlbkNiAK4ZLFQR8af9bS92WdQpZc_Rusmw0qoxrqWMcw2s_zhBv1HVDmmZcdK24O4N3SXTOZST7Ilsyb_iqU60fZTu-0CQNp1bgoCZNRsP08OJrZN6ICbPf4W_eW0YuZk00Z4IncyXsRPIr5ymLYY_HZgagd9DD4BmC6btscqg"/>
+<img id="detail-hero-image" alt="Casa en Nordelta" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB4rYvSxQu-Ppz4FKZeIzWNKa-hRQfmbiz0NJ2NM81rkEFOGpPJZCJSJ0vgGfCbFyy91cjJpbDNfwSSAlbkNiAK4ZLFQR8af9bS92WdQpZc_Rusmw0qoxrqWMcw2s_zhBv1HVDmmZcdK24O4N3SXTOZST7Ilsyb_iqU60fZTu-0CQNp1bgoCZNRsP08OJrZN6ICbPf4W_eW0YuZk00Z4IncyXsRPIr5ymLYY_HZgagd9DD4BmC6btscqg"/>
 <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/30"></div>
 <div class="absolute top-4 left-4 right-4 flex justify-between items-center z-10">
 <button class="w-9 h-9 rounded-full bg-white/80 ios-blur text-slate-800 flex items-center justify-center shadow" onclick="navigateBack()">
 <i class="w-5 h-5" data-lucide="arrow-left"></i>
 </button>
 <div class="flex items-center gap-2">
-<button class="w-9 h-9 rounded-full bg-white/80 ios-blur text-slate-800 flex items-center justify-center shadow">
+<button class="w-9 h-9 rounded-full bg-white/80 ios-blur text-slate-800 flex items-center justify-center shadow" onclick="openPublicListing()" aria-label="Compartir ficha pública">
 <i class="w-4 h-4" data-lucide="share-2"></i>
 </button>
 <button class="w-9 h-9 rounded-full bg-white/80 ios-blur text-slate-800 flex items-center justify-center shadow">
@@ -603,34 +635,34 @@
 <div class="border-b border-slate-100 pb-4">
 <div class="flex items-center justify-between">
 <span class="text-xs font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-md">Venta Exclusiva</span>
-<span class="text-xs text-slate-400">ID: HM-99214</span>
+<span id="detail-listing-id" class="text-xs text-slate-400">ID: HM-99214</span>
 </div>
-<h1 class="text-xl font-extrabold text-slate-900 mt-1">Casa de Diseño en Nordelta</h1>
+<h1 id="detail-title" class="text-xl font-extrabold text-slate-900 mt-1">Casa de Diseño en Nordelta</h1>
 <p class="text-xs text-slate-500 flex items-center gap-1 mt-1">
-<i class="w-3.5 h-3.5 text-slate-400" data-lucide="map-pin"></i> Nordelta, Buenos Aires
-            </p>
+<i class="w-3.5 h-3.5 text-slate-400" data-lucide="map-pin"></i> <span id="detail-location">Nordelta, Buenos Aires</span>
+</p>
 <div class="mt-3 flex items-baseline gap-2">
-<span class="text-2xl font-black text-slate-900 tracking-tight">USD 520.000</span>
-<span class="text-xs text-slate-400">($2.080 / m²)</span>
+<span id="detail-price" class="text-2xl font-black text-slate-900 tracking-tight">USD 520.000</span>
+<span id="detail-price-per-area" class="text-xs text-slate-400">($2.080 / m²)</span>
 </div>
 </div>
 <!-- Fast Specs -->
 <div class="grid grid-cols-4 gap-2 text-center py-2 bg-slate-50 rounded-2xl border border-slate-100">
 <div>
 <span class="text-xs text-slate-400 block font-medium">Dormitorios</span>
-<strong class="text-sm font-bold text-slate-800">4 dorm</strong>
+<strong id="detail-beds" class="text-sm font-bold text-slate-800">4 dorm</strong>
 </div>
 <div>
 <span class="text-xs text-slate-400 block font-medium">Baños</span>
-<strong class="text-sm font-bold text-slate-800">3 baños</strong>
+<strong id="detail-baths" class="text-sm font-bold text-slate-800">3 baños</strong>
 </div>
 <div>
 <span class="text-xs text-slate-400 block font-medium">Superficie</span>
-<strong class="text-sm font-bold text-slate-800">250 m²</strong>
+<strong id="detail-area" class="text-sm font-bold text-slate-800">250 m²</strong>
 </div>
 <div>
 <span class="text-xs text-slate-400 block font-medium">Cochera</span>
-<strong class="text-sm font-bold text-slate-800">2 autos</strong>
+<strong id="detail-parking" class="text-sm font-bold text-slate-800">2 autos</strong>
 </div>
 </div>
 <!-- Descripción de la propiedad -->
@@ -638,12 +670,22 @@
 <h4 class="text-xs font-extrabold text-slate-900 flex items-center gap-1.5">
 <i class="w-4 h-4 text-emerald-500" data-lucide="file-text"></i> Descripción
 </h4>
-<p class="text-xs leading-relaxed text-slate-600">
-              Casa de diseño en Nordelta, ubicada en un entorno tranquilo y rodeado de naturaleza. Cuenta con 4 dormitorios, 3 baños, 2 cocheras y 250 m² cubiertos.
-            </p>
-<p class="text-xs leading-relaxed text-slate-600">
-              Se destaca por sus ambientes amplios y luminosos, vista al lago, piscina y espacios pensados para disfrutar en familia.
-            </p>
+<p id="detail-description" class="text-xs leading-relaxed text-slate-600">Casa de diseño en Nordelta, ubicada en un entorno tranquilo y rodeado de naturaleza. Cuenta con 4 dormitorios, 3 baños, 2 cocheras y 250 m² cubiertos.</p>
+<p id="detail-highlights" class="text-xs leading-relaxed text-slate-600">Se destaca por sus ambientes amplios y luminosos, vista al lago, piscina y espacios pensados para disfrutar en familia.</p>
+</div>
+<div class="rounded-2xl border border-slate-200 bg-slate-50 p-4 space-y-3">
+<div>
+<h2 class="text-xs font-extrabold text-slate-900">Recorridos disponibles</h2>
+<p class="mt-1 text-[10px] text-slate-600">Elegí cómo querés conocer la propiedad.</p>
+</div>
+<button type="button" class="w-full rounded-xl border border-slate-200 bg-white px-3 py-3 flex items-center gap-3 text-left hover:bg-slate-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-emerald-600" onclick="openTour('3d')">
+<span class="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center"><i class="w-4 h-4" data-lucide="box"></i></span>
+<span class="flex-1"><strong class="block text-[11px] text-slate-900">Tour virtual 3D disponible</strong><span class="block mt-0.5 text-[9px] text-slate-500">Explorá los ambientes a tu ritmo</span></span><i class="w-4 h-4 text-slate-400" data-lucide="chevron-right"></i>
+</button>
+<button type="button" class="w-full rounded-xl border border-slate-200 bg-white px-3 py-3 flex items-center gap-3 text-left hover:bg-slate-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-emerald-600" onclick="openTour('real')">
+<span class="w-9 h-9 rounded-xl bg-slate-100 text-slate-700 flex items-center justify-center"><i class="w-4 h-4" data-lucide="play"></i></span>
+<span class="flex-1"><strong class="block text-[11px] text-slate-900">Recorrido real en video disponible</strong><span class="block mt-0.5 text-[9px] text-slate-500">Mirá el recorrido filmado de la propiedad</span></span><i class="w-4 h-4 text-slate-400" data-lucide="chevron-right"></i>
+</button>
 </div>
 <!-- Rendimiento en Homia (Proprietary Performance Metrics) -->
 <div class="border border-slate-200 rounded-2xl p-4 bg-white shadow-card space-y-3">
@@ -705,6 +747,21 @@
 </div>
 </section>
 <!-- END: SCREEN 05 -->
+<!-- LANDING PÚBLICA SIMULADA DE PROPIEDAD -->
+<section class="screen-view hidden absolute inset-0 bg-slate-50 overflow-y-auto no-scrollbar pb-24" id="screen-publicacion-compartida">
+<header class="sticky top-0 z-10 bg-white border-b border-slate-200 px-4 py-3 flex items-center justify-between">
+<button class="flex items-center gap-2 text-slate-700" onclick="navigateBack()" aria-label="Volver"><i class="w-5 h-5" data-lucide="arrow-left"></i><span class="text-xs font-bold">Ficha compartida</span></button>
+<span class="rounded-full bg-slate-100 px-2 py-1 text-[9px] font-bold text-slate-600">Vista previa pública</span>
+</header>
+<img id="public-listing-image" alt="Casa de diseño en Nordelta" class="w-full h-56 object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB4rYvSxQu-Ppz4FKZeIzWNKa-hRQfmbiz0NJ2NM81rkEFOGpPJZCJSJ0vgGfCbFyy91cjJpbDNfwSSAlbkNiAK4ZLFQR8af9bS92WdQpZc_Rusmw0qoxrqWMcw2s_zhBv1HVDmmZcdK24O4N3SXTOZST7Ilsyb_iqU60fZTu-0CQNp1bgoCZNRsP08OJrZN6ICbPf4W_eW0YuZk00Z4IncyXsRPIr5ymLYY_HZgagd9DD4BmC6btscqg"/>
+<div class="p-5 space-y-4">
+<div><p id="public-listing-location" class="text-[9px] uppercase tracking-wide font-bold text-emerald-700">Nordelta · Buenos Aires</p><h1 id="public-listing-title" class="mt-1 text-xl font-extrabold text-slate-900">Casa de Diseño en Nordelta</h1><p id="public-listing-price" class="mt-1 text-base font-black text-slate-900">USD 520.000</p></div>
+<div class="grid grid-cols-3 rounded-2xl bg-white border border-slate-200 p-3 text-center"><span><strong id="public-listing-beds" class="block text-sm text-slate-900">4</strong><small class="text-[9px] text-slate-500">dormitorios</small></span><span><strong id="public-listing-baths" class="block text-sm text-slate-900">3</strong><small class="text-[9px] text-slate-500">baños</small></span><span><strong id="public-listing-area" class="block text-sm text-slate-900">250 m²</strong><small class="text-[9px] text-slate-500">superficie</small></span></div>
+<div class="rounded-2xl bg-white border border-slate-200 p-4"><h2 class="text-xs font-extrabold text-slate-900">Conocé más en Homia</h2><p class="mt-1 text-[10px] leading-relaxed text-slate-600">Explorá fotos, recorridos y detalles de esta propiedad desde la app.</p><button type="button" class="mt-3 w-full rounded-xl bg-slate-900 py-3 text-xs font-extrabold text-white hover:bg-slate-800" onclick="simulateAppDownload()">Descargar Homia</button></div>
+<button type="button" class="w-full rounded-xl border border-slate-200 bg-white py-3 text-xs font-bold text-slate-700" onclick="copyPublicListingLink()"><i class="w-4 h-4 inline-block align-middle mr-1" data-lucide="copy"></i>Copiar enlace de esta ficha</button>
+<p class="text-center text-[9px] text-slate-400" id="share-feedback" aria-live="polite">Vista de demostración · enlace simulado</p>
+</div>
+</section>
 <!-- ============================================== -->
 <!-- SCREEN 05B: CONSULTA SOBRE PROPIEDAD           -->
 <!-- ============================================== -->
@@ -860,7 +917,11 @@
 </label>
 <label class="flex items-center gap-3 p-3 rounded-xl border border-slate-200 cursor-pointer hover:bg-slate-50">
 <input class="text-slate-900" name="financing" type="radio" value="directa" onchange="updateFinancingDetails()"/>
-<span class="text-xs font-semibold text-slate-700">Financiación propia del desarrollador</span>
+<span class="text-xs font-semibold text-slate-700">Financiación directa del desarrollador</span>
+</label>
+<label class="flex items-center gap-3 p-3 rounded-xl border border-slate-200 cursor-pointer hover:bg-slate-50">
+<input class="text-slate-900" name="financing" type="radio" value="propietario" onchange="updateFinancingDetails()"/>
+<span class="text-xs font-semibold text-slate-700">Financiación directa del propietario</span>
 </label>
 <label class="flex items-center gap-3 p-3 rounded-xl border border-slate-200 cursor-pointer hover:bg-slate-50">
 <input class="text-slate-900" name="financing" type="radio" value="permuta" onchange="updateFinancingDetails()"/>
@@ -893,7 +954,7 @@
 
 <div data-financing-detail="directa" class="space-y-2 hidden">
 <div>
-<p class="text-xs font-extrabold text-slate-900">Financiación propia del desarrollador</p>
+<p class="text-xs font-extrabold text-slate-900">Financiación directa del desarrollador</p>
 <p class="text-[10px] text-slate-500 mt-0.5">Definí el anticipo y la cuota que podrías asumir.</p>
 </div>
 <div class="grid grid-cols-2 gap-2">
@@ -901,6 +962,17 @@
 <label class="block text-[10px] font-bold text-slate-600">Cantidad de cuotas<input class="w-full mt-1 bg-white border border-slate-200 rounded-xl py-2 px-3 text-xs" placeholder="24" type="text"/></label>
 </div>
 <label class="block text-[10px] font-bold text-slate-600">Cuota máxima mensual<input class="w-full mt-1 bg-white border border-slate-200 rounded-xl py-2 px-3 text-xs" placeholder="USD 1.500" type="text"/></label>
+</div>
+
+<div data-financing-detail="propietario" class="space-y-2 hidden">
+<div>
+<p class="text-xs font-extrabold text-slate-900">Financiación directa del propietario</p>
+<p class="text-[10px] text-slate-500 mt-0.5">Buscamos propiedades donde el dueño acepta acordar el pago directamente.</p>
+</div>
+<div class="grid grid-cols-2 gap-2">
+<label class="block text-[10px] font-bold text-slate-600">Anticipo disponible<input class="w-full mt-1 bg-white border border-slate-200 rounded-xl py-2 px-3 text-xs" placeholder="USD 100.000" type="text"/></label>
+<label class="block text-[10px] font-bold text-slate-600">Cuota mensual posible<input class="w-full mt-1 bg-white border border-slate-200 rounded-xl py-2 px-3 text-xs" placeholder="USD 1.500" type="text"/></label>
+</div>
 </div>
 
 <div data-financing-detail="permuta" class="space-y-2 hidden">
@@ -924,30 +996,31 @@
 </section>
 <!-- END: SCREEN 07 -->
 <!-- ============================================== -->
-<!-- SCREEN 08: MATCH INTELIGENTE (TIPO TINDER)     -->
+<!-- SCREEN 08: MATCH USUARIO-PROPIEDADES           -->
 <!-- ============================================== -->
 <section class="screen-view hidden absolute inset-0 bg-slate-100 flex flex-col pb-20 overflow-y-auto no-scrollbar" id="screen-match">
 <!-- Match Header -->
 <div class="bg-white px-5 py-3 border-b border-slate-200 flex items-center justify-between shrink-0">
 <button class="p-1 text-slate-600" onclick="navigateBack()"><i class="w-6 h-6" data-lucide="chevron-left"></i></button>
-<div class="flex items-center gap-1.5">
+<div class="flex min-w-0 items-center gap-2">
 <i class="w-4 h-4 text-emerald-500 fill-emerald-500" data-lucide="sparkles"></i>
-<h2 class="text-base font-extrabold text-slate-900">Match</h2>
+<div class="min-w-0"><h2 class="text-sm font-extrabold text-slate-900">Resultados de tu búsqueda</h2><p class="text-[10px] text-slate-500" id="match-summary">3 propiedades compatibles</p></div>
 </div>
-<button class="p-1 text-slate-600"><i class="w-5 h-5" data-lucide="sliders"></i></button>
+<button class="shrink-0 rounded-lg bg-slate-100 px-2.5 py-2 text-[10px] font-bold text-slate-700 hover:bg-slate-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-emerald-600" onclick="navigateTo('busqueda')">Editar búsqueda</button>
 </div>
-<!-- Swipe Card Area -->
+<!-- Carrusel de propiedades compatibles -->
 <div class="w-full flex-none p-3 flex flex-col justify-start items-center relative">
+<div class="w-full max-w-sm flex items-center justify-between px-1 pb-2"><span class="text-[10px] font-semibold text-slate-500">Propiedad</span><span id="match-card-count" class="text-[10px] font-bold text-slate-600" aria-live="polite" aria-atomic="true">1 de 3</span></div>
 <!-- Card Container -->
-<div class="w-full max-w-sm shrink-0 bg-white rounded-3xl shadow-xl overflow-hidden border border-slate-200 flex flex-col relative transition-transform duration-300" id="match-card">
+<div class="w-full max-w-sm shrink-0 bg-white rounded-3xl border border-slate-200 flex flex-col relative overflow-hidden" id="match-card">
 <!-- Property Image with Match Tag -->
 <div class="relative w-full h-48 bg-slate-200">
 <img class="w-full h-full object-cover" id="match-card-img" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBigBlyBCSCYK_tX7O0cf89znQI1eaNjfoRPNdfrUsAeSW6WI5_BMAAqm_0SQTnQD31XPgECIIX005vT5LjbiofKCcvqWvb3P6zsDKG4W_r-sNBIUXRDarY_t-3ovpRKEwu3SePcCy-8wcoOQ2Bna8iz0tRHxwwtmCtd5wWdCPPcFcxNpsYkY6Cn9xRTXZSzWqsQjAPp4U4UBiiqyYMOVfbcBPbAfU1TM41MxWUYNA093kLCoq4fl1wMg"/>
 <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-black/20"></div>
 <!-- Match Percentage Pill -->
-<div class="absolute top-3 right-3 bg-emerald-500 text-slate-950 px-3 py-1 rounded-full text-xs font-black flex items-center gap-1 shadow-lg">
+<div class="absolute top-3 right-3 bg-emerald-500 text-slate-950 px-3 py-1 rounded-full text-xs font-extrabold flex items-center gap-1 shadow-sm">
 <i class="w-3.5 h-3.5" data-lucide="sparkles"></i>
-<span id="match-card-pct">95% Match</span>
+<span id="match-card-pct">95% compatible</span>
 </div>
 <!-- Badges over photo -->
 <div class="absolute bottom-3 left-4 text-white">
@@ -960,52 +1033,43 @@
 <div class="p-3.5 space-y-3 bg-white">
 <!-- Specs -->
 <div class="grid grid-cols-3 gap-2 text-[11px] font-semibold text-slate-600 pb-3 border-b border-slate-100">
-<span class="flex items-center gap-1.5"><i class="w-4 h-4 text-slate-400 shrink-0" data-lucide="bed"></i> 3 dorm.</span>
-<span class="flex items-center gap-1.5"><i class="w-4 h-4 text-slate-400 shrink-0" data-lucide="bath"></i> 2 baños</span>
-<span class="flex items-center gap-1.5"><i class="w-4 h-4 text-slate-400 shrink-0" data-lucide="maximize"></i> 250 m²</span>
+<span class="flex items-center gap-1.5"><i class="w-4 h-4 text-slate-400 shrink-0" data-lucide="bed"></i> <span id="match-card-beds">3 dorm.</span></span>
+<span class="flex items-center gap-1.5"><i class="w-4 h-4 text-slate-400 shrink-0" data-lucide="bath"></i> <span id="match-card-baths">2 baños</span></span>
+<span class="flex items-center gap-1.5"><i class="w-4 h-4 text-slate-400 shrink-0" data-lucide="maximize"></i> <span id="match-card-area">250 m²</span></span>
 </div>
 <!-- Match Reasons / Algorithmic compatibility -->
-<div class="rounded-2xl bg-emerald-50/70 border border-emerald-100 p-3">
-<p class="text-[11px] font-extrabold text-slate-900">Coincide porque:</p>
+<div class="border-t border-slate-100 pt-3" id="match-reasons" aria-labelledby="match-reasons-title">
+<h4 class="text-xs font-extrabold text-slate-900" id="match-reasons-title">Por qué coincide</h4>
+<p class="text-[10px] text-slate-500 mt-0.5">Criterios de tu búsqueda que esta propiedad cumple</p>
 <div class="grid grid-cols-2 gap-2 mt-2">
-<div class="flex items-start gap-1.5 text-[10px] text-emerald-800 font-semibold">
+<div class="flex items-start gap-1.5 text-[10px] text-slate-700 font-medium">
 <i class="w-3.5 h-3.5 text-emerald-500 shrink-0 mt-0.5" data-lucide="check-circle-2"></i>
-<span><strong class="block text-[9px] uppercase tracking-wide text-emerald-600">Ubicación</strong>Pilar, Buenos Aires</span>
+<span><strong class="block text-[9px] uppercase tracking-wide text-slate-500">Ubicación</strong><span id="match-reason-location">Pilar, Buenos Aires</span></span>
 </div>
-<div class="flex items-start gap-1.5 text-[10px] text-emerald-800 font-semibold">
+<div class="flex items-start gap-1.5 text-[10px] text-slate-700 font-medium">
 <i class="w-3.5 h-3.5 text-emerald-500 shrink-0 mt-0.5" data-lucide="check-circle-2"></i>
-<span><strong class="block text-[9px] uppercase tracking-wide text-emerald-600">Precio</strong>USD 250.000–350.000</span>
+<span><strong class="block text-[9px] uppercase tracking-wide text-slate-500">Precio</strong><span id="match-reason-price">USD 250.000–350.000</span></span>
 </div>
-<div class="flex items-start gap-1.5 text-[10px] text-emerald-800 font-semibold">
+<div class="flex items-start gap-1.5 text-[10px] text-slate-700 font-medium">
 <i class="w-3.5 h-3.5 text-emerald-500 shrink-0 mt-0.5" data-lucide="check-circle-2"></i>
-<span><strong class="block text-[9px] uppercase tracking-wide text-emerald-600">Características</strong>3 dorm. · 2 baños</span>
+<span><strong class="block text-[9px] uppercase tracking-wide text-slate-500">Características</strong><span id="match-reason-features">3 dorm. · 2 baños</span></span>
 </div>
-<div class="flex items-start gap-1.5 text-[10px] text-emerald-800 font-semibold">
+<div class="flex items-start gap-1.5 text-[10px] text-slate-700 font-medium">
 <i class="w-3.5 h-3.5 text-emerald-500 shrink-0 mt-0.5" data-lucide="check-circle-2"></i>
-<span><strong class="block text-[9px] uppercase tracking-wide text-emerald-600">Forma de pago</strong>Permuta aceptada</span>
+<span><strong class="block text-[9px] uppercase tracking-wide text-slate-500">Forma de pago</strong><span id="match-reason-payment">Permuta aceptada</span></span>
 </div>
-<div class="flex items-start gap-1.5 text-[10px] text-emerald-800 font-semibold col-span-2">
+<div class="flex items-start gap-1.5 text-[10px] text-slate-700 font-medium col-span-2">
 <i class="w-3.5 h-3.5 text-emerald-500 shrink-0 mt-0.5" data-lucide="check-circle-2"></i>
-<span><strong class="block text-[9px] uppercase tracking-wide text-emerald-600">Financiación</strong>Opción compatible con tu búsqueda</span>
+<span><strong class="block text-[9px] uppercase tracking-wide text-slate-500">Financiación</strong><span id="match-reason-financing">Compatible con tu búsqueda</span></span>
 </div>
 </div>
 </div>
 </div>
 </div>
-<!-- Tinder-style Action Bar -->
-<div class="flex shrink-0 items-center justify-center gap-6 mt-3 mb-2">
-<!-- Dislike (X) -->
-<button class="w-13 h-13 rounded-full bg-white text-rose-500 shadow-float border border-rose-100 flex items-center justify-center hover:scale-110 active:scale-95 transition-all" onclick="handleSwipe('left')">
-<i class="w-7 h-7 stroke-[2.5]" data-lucide="x"></i>
-</button>
-<!-- Info -->
-<button class="w-10 h-10 rounded-full bg-white text-blue-500 shadow-card border border-blue-100 flex items-center justify-center hover:scale-105 active:scale-95 transition-all" onclick="navigateTo('marketplace-detalle')">
-<i class="w-5 h-5 stroke-[2.5]" data-lucide="info"></i>
-</button>
-<!-- Super Like / Match (Heart) -->
-<button class="w-13 h-13 rounded-full bg-emerald-500 text-white shadow-float flex items-center justify-center hover:scale-110 active:scale-95 transition-all" onclick="handleSwipe('right')">
-<i class="w-7 h-7 stroke-[2.5] fill-white" data-lucide="heart"></i>
-</button>
+<div class="w-full max-w-sm flex shrink-0 items-center justify-between gap-3 mt-3 mb-2">
+<button type="button" class="h-11 w-11 shrink-0 rounded-full border border-slate-200 bg-white text-slate-700 hover:bg-slate-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-emerald-600 disabled:cursor-not-allowed disabled:opacity-40" onclick="stepMatch(-1)" aria-label="Propiedad compatible anterior"><i class="w-5 h-5 mx-auto" data-lucide="chevron-left" aria-hidden="true"></i></button>
+<button type="button" class="flex-1 rounded-xl bg-slate-900 px-3 py-3 text-xs font-bold text-white hover:bg-slate-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-emerald-600" onclick="openMatchedProperty()"><i class="w-4 h-4 inline-block align-middle mr-1" data-lucide="eye"></i><span class="align-middle">Ver ficha</span></button>
+<button type="button" class="h-11 w-11 shrink-0 rounded-full border border-slate-200 bg-white text-slate-700 hover:bg-slate-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-emerald-600 disabled:cursor-not-allowed disabled:opacity-40" onclick="stepMatch(1)" aria-label="Siguiente propiedad compatible"><i class="w-5 h-5 mx-auto" data-lucide="chevron-right" aria-hidden="true"></i></button>
 </div>
 </div>
 </section>
@@ -1346,6 +1410,19 @@
 <!-- END: SCREEN 11 -->
 </main>
 <!-- END: ScreensViewport -->
+<div class="hidden absolute inset-x-0 top-12 bottom-0 z-[60] isolate pointer-events-none" id="buyer-tour-overlay" aria-label="Recorrido guiado de Homia">
+<div id="tour-scrim-top" class="absolute bg-slate-950/65 pointer-events-auto"></div>
+<div id="tour-scrim-left" class="absolute bg-slate-950/65 pointer-events-auto"></div>
+<div id="tour-scrim-right" class="absolute bg-slate-950/65 pointer-events-auto"></div>
+<div id="tour-scrim-bottom" class="absolute bg-slate-950/65 pointer-events-auto"></div>
+<div id="buyer-tour-focus" class="absolute rounded-2xl border-2 border-emerald-400 pointer-events-none"></div>
+<section id="buyer-tour-popover" class="absolute z-10 rounded-2xl border border-slate-200 bg-white p-4 shadow-xl pointer-events-auto" role="dialog" aria-modal="true" aria-labelledby="buyer-tour-title" aria-describedby="buyer-tour-copy">
+<div class="flex items-center justify-between gap-3"><span class="text-[10px] font-extrabold uppercase tracking-wide text-emerald-700" id="buyer-tour-step" aria-live="polite">Paso 1 de 5</span><button type="button" class="rounded-full p-2 text-slate-500 hover:bg-slate-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-emerald-600" onclick="closeBuyerTour()" aria-label="Cerrar recorrido"><i class="w-4 h-4" data-lucide="x"></i></button></div>
+<h2 class="mt-2 text-sm font-extrabold text-slate-900" id="buyer-tour-title">Elegí qué oportunidades querés ver</h2>
+<p class="mt-1 text-xs leading-relaxed text-slate-600" id="buyer-tour-copy">Elegí un interés para filtrar las oportunidades del inicio. También podés descubrir las publicaciones más ofertadas o vistas.</p>
+<div class="mt-3 flex justify-end"><button type="button" class="rounded-xl bg-slate-900 px-4 py-2.5 text-[11px] font-bold text-white hover:bg-slate-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-emerald-600" id="buyer-tour-next" onclick="advanceBuyerTour()">Siguiente</button></div>
+</section>
+</div>
 <!-- BEGIN: BottomNavigation -->
 <nav class="w-full bg-white/95 ios-blur border-t border-slate-200 px-2 py-1.5 flex justify-around items-center z-50 shrink-0 shadow-nav">
 <!-- Tab 1: Inicio -->
@@ -1385,32 +1462,127 @@
     // Navigation History Stack
     const historyStack = ['inicio'];
     let currentScreen = 'inicio';
+    let currentPropertyId = 'nordelta';
 
-    // Match Deck mock data
+    const homeProperties = {
+      nordelta: {
+        id: 'HM-52014', title: 'Casa premium en Nordelta', location: 'Nordelta, Bs. As.', price: 'USD 520.000', pricePerArea: '($2.080 / m²)', beds: '4 dorm.', baths: '3 baños', area: '250 m²', parking: '2 autos',
+        img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAk1nyuLlLTFXFCnEjHeH94HJChwDmNZiVzBOCi9Yr-Ua0eu1fVr2W6TqO5u0PX7vEJB2Mszwn7HM1WnFkdOc73Q4LwzmAPYUQ9kFSCL8olcEovSxYcvcZuFhGA-27YCJSiU4y6m3uytg6a7WiDpe1B6t62UoXh4tuyOkVLzXljTwRW51w8rnH2Z3AOV8V4pfwNRnYLbEFd1wMY3Qa400yYsq8PLA-Iomdm3BivjAqg-R55KGKrzmTT-Q',
+        description: 'Casa de diseño en Nordelta con ambientes amplios y piscina.', highlights: 'Espacios luminosos, galería y vista abierta al jardín.'
+      },
+      palermo: {
+        id: 'HM-24508', title: 'Departamento exclusivo en Palermo Soho', location: 'Palermo Soho, CABA', price: 'USD 245.000', pricePerArea: '($2.500 / m²)', beds: '3 dorm.', baths: '2 baños', area: '98 m²', parking: '1 auto',
+        img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCFfHVsJF08Gafz3P9MEHKiPa_IzKHI9jZI0l6A8a9zxsunye8vffOa40ldIs65gQiA0EvVfw2elk0VyJ5cU2jmcLVZEwxyqmyRct5FcGEzvIQBcAFZRjeZgawRnNBchp_ZWb806a8qtOKAZGnWh6-TWH31tcgFNc31D2E5XAobJegiysf38-l-u-9cs1JlXccnsOtjWG8r-OLUJNuFSZHm1rsjd0RNJvlrYX0qiKBLNCsfCFDYTan58w',
+        description: 'Departamento de 3 ambientes en Palermo Soho con balcón terraza y parrilla propia. Cuenta con 98 m², 2 baños y cochera.', highlights: 'Ambientes amplios y luminosos, cocina integrada y amenities premium a pasos de cafés, plazas y transporte.'
+      },
+      pilar: {
+        id: 'HM-31042', title: 'Casa familiar con jardín en Pilar', location: 'Pilar, Buenos Aires', price: 'USD 310.000', pricePerArea: '($1.409 / m²)', beds: '4 dorm.', baths: '3 baños', area: '220 m²', parking: '2 autos',
+        img: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&auto=format&fit=crop&q=80',
+        description: 'Casa familiar en Pilar con 4 dormitorios, 3 baños, 2 cocheras y 220 m² cubiertos.', highlights: 'Jardín arbolado, galería y ambientes amplios con luz natural para disfrutar en familia.'
+      },
+      renovar: {
+        id: 'HM-19816', title: 'Departamento con potencial en Palermo', location: 'Palermo, CABA', price: 'USD 198.000', pricePerArea: '($2.415 / m²)', beds: '3 dorm.', baths: '2 baños', area: '82 m²', parking: 'Sin cochera',
+        img: 'https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=800&auto=format&fit=crop&q=80',
+        description: 'Departamento de 3 ambientes con planta flexible, 2 baños y 82 m² en Palermo.', highlights: 'Ambientes luminosos y distribución adaptable: una buena oportunidad para renovar a tu gusto.'
+      },
+      chacarita: {
+        id: 'HM-17633', title: 'PH reciclado con patio en Chacarita', location: 'Chacarita, CABA', price: 'USD 176.000', pricePerArea: '($1.872 / m²)', beds: '3 dorm.', baths: '1 baño', area: '94 m²', parking: 'Sin cochera',
+        img: 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=800&auto=format&fit=crop&q=80',
+        description: 'PH reciclado de 3 ambientes, con 1 baño y 94 m² en Chacarita.', highlights: 'Diseño contemporáneo, patio privado y espacios flexibles cerca del subte.'
+      },
+      villacrespo: {
+        id: 'HM-22519', title: 'Departamento con balcón en Villa Crespo', location: 'Villa Crespo, CABA', price: 'USD 225.000', pricePerArea: '($2.616 / m²)', beds: '3 dorm.', baths: '2 baños', area: '86 m²', parking: '1 auto',
+        img: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&auto=format&fit=crop&q=80',
+        description: 'Departamento de 3 ambientes, 2 baños y 86 m² con balcón al frente en Villa Crespo.', highlights: 'Muy luminoso, con cocina integrada y acceso rápido a transporte y comercios.'
+      },
+      tigre: {
+        id: 'HM-38574', title: 'Casa con jardín y parrilla en Tigre', location: 'Tigre, Buenos Aires', price: 'USD 385.000', pricePerArea: '($1.453 / m²)', beds: '4 dorm.', baths: '3 baños', area: '265 m²', parking: '2 autos',
+        img: 'https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?w=800&auto=format&fit=crop&q=80',
+        description: 'Casa familiar de 4 dormitorios, 3 baños, 2 cocheras y 265 m² en Tigre.', highlights: 'Galería, pileta y espacios verdes a minutos del centro y de los principales accesos.'
+      }
+    };
+
+    const propertyReels = [
+      { propertyId: 'nordelta', video: 'assets/recorrido-villa.mp4' },
+      { propertyId: 'tigre', video: 'assets/recorrido-piscina-atardecer.mp4' },
+      { propertyId: 'palermo', video: 'assets/recorrido-interior.mp4' }
+    ];
+    let currentReelIndex = 0;
+    let reelTouchStart = null;
+
+    function setPropertyDetails(property) {
+      if (!property) return;
+      const image = document.getElementById('detail-hero-image');
+      image.src = property.img;
+      image.alt = property.title;
+      document.getElementById('detail-title').textContent = property.title;
+      document.getElementById('detail-listing-id').textContent = `ID: ${property.id || 'HM-99214'}`;
+      document.getElementById('detail-location').textContent = property.location || property.sub;
+      document.getElementById('detail-price').textContent = property.price;
+      document.getElementById('detail-price-per-area').textContent = property.pricePerArea || '';
+      document.getElementById('detail-beds').textContent = property.beds;
+      document.getElementById('detail-baths').textContent = property.baths;
+      document.getElementById('detail-area').textContent = property.area;
+      document.getElementById('detail-parking').textContent = property.parking || 'A consultar';
+      document.getElementById('detail-description').textContent = property.description || `${property.title}, ubicada en ${property.location || property.sub}. Cuenta con ${property.beds}, ${property.baths} y ${property.area}.`;
+      document.getElementById('detail-highlights').textContent = property.highlights || 'Consultá para conocer más detalles y coordinar una visita.';
+      document.getElementById('public-listing-image').src = property.img;
+      document.getElementById('public-listing-image').alt = property.title;
+      document.getElementById('public-listing-title').textContent = property.title;
+      document.getElementById('public-listing-location').textContent = property.location || property.sub;
+      document.getElementById('public-listing-price').textContent = property.price;
+      document.getElementById('public-listing-beds').textContent = (property.beds || '').match(/\d+/)?.[0] || '—';
+      document.getElementById('public-listing-baths').textContent = (property.baths || '').match(/\d+/)?.[0] || '—';
+      document.getElementById('public-listing-area').textContent = property.area;
+    }
+
+    function openProperty(propertyId) {
+      const property = homeProperties[propertyId];
+      if (!property) return;
+      currentPropertyId = propertyId;
+      setPropertyDetails(property);
+      navigateTo('marketplace-detalle');
+    }
+
+    // Mock compatibility results for one buyer search and several properties
     const matchCards = [
       {
         title: "Casa moderna en Pilar",
         sub: "Pilar, Buenos Aires",
         price: "USD 310.000",
-        match: "95% Match",
-        img: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=700&auto=format&fit=crop&q=80"
+        match: "95% compatible",
+        img: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=700&auto=format&fit=crop&q=80",
+        beds: "3 dorm.", baths: "2 baños", area: "250 m²",
+        reasons: { location: "Pilar, Buenos Aires", price: "Dentro de USD 250.000–350.000", features: "3 dormitorios · 2 baños", payment: "Acepta permuta", financing: "Crédito hipotecario compatible" }
       },
       {
         title: "Penthouse con Terraza",
         sub: "Palermo Hollywood, CABA",
         price: "USD 440.000",
-        match: "92% Match",
-        img: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=700&auto=format&fit=crop&q=80"
+        match: "92% compatible",
+        img: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=700&auto=format&fit=crop&q=80",
+        beds: "3 dorm.", baths: "3 baños", area: "180 m²",
+        reasons: { location: "Palermo Hollywood, CABA", price: "USD 10.000 bajo tu máximo", features: "3 dormitorios · terraza", payment: "Apto crédito", financing: "Financiación bancaria disponible" }
       },
       {
         title: "Villa al Lago con Muelle",
         sub: "Nordelta, Bs. As.",
-        price: "USD 650.000",
-        match: "89% Match",
-        img: "https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=700&auto=format&fit=crop&q=80"
+        price: "USD 520.000",
+        match: "89% compatible",
+        img: "https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=700&auto=format&fit=crop&q=80",
+        beds: "4 dorm.", baths: "3 baños", area: "280 m²",
+        reasons: { location: "Nordelta, Bs. As.", price: "Dentro de USD 150.000–550.000", features: "4 dormitorios · vista al lago", payment: "Negociable con propietario", financing: "Dueño dispuesto a financiar" }
       }
     ];
     let currentMatchIndex = 0;
+    let buyerTourIndex = 0;
+    const buyerTourSteps = [
+      { screen: "inicio", selector: "#opportunity-filter-group", title: "Encontrá oportunidades según tu objetivo", copy: "Elegí Mudanza, Inversión, Renovación o Flipping para filtrar las tarjetas destacadas. «Más ofertadas» y «Más vistas» te acercan a publicaciones populares." },
+      { screen: "busqueda", selector: "#ai-search-card", title: "Armá una búsqueda a tu medida", copy: "Definí el tipo de inmueble, la ubicación y el presupuesto; sumá las características que te importan. Si preferís, contale a Homia qué estás buscando en el chat." },
+      { screen: "busqueda", selector: "#financing-question", title: "Indicá cómo pensás pagar", copy: "Seleccioná contado, crédito, financiación directa o permuta. Al elegir una opción, vas a ver los datos necesarios para describir esa modalidad." },
+      { screen: "reels", selector: "#reel-tour-actions", title: "Conocé cada propiedad en recorrido", copy: "Elegí entre el tour 3D de demostración y el recorrido en video. Abrí «Ver ficha» para revisar el precio y las características del aviso." },
+      { screen: "match", selector: "#match-reasons", title: "Compará opciones compatibles", copy: "Revisá qué criterios de tu búsqueda cumple cada propiedad. Usá las flechas para pasar de una opción a otra y abrí «Ver ficha» para conocer más detalles." }
+    ];
 
     function updateFinancingDetails() {
       const selected = document.querySelector('input[name="financing"]:checked');
@@ -1419,6 +1591,230 @@
       document.querySelectorAll('[data-financing-detail]').forEach(detail => {
         detail.classList.toggle('hidden', detail.dataset.financingDetail !== selectedValue);
       });
+    }
+
+    function setOpportunityInterest(interest, selectedButton) {
+      document.querySelectorAll('.interest-filter').forEach(button => {
+        const selected = button === selectedButton;
+        button.setAttribute('aria-pressed', String(selected));
+        button.classList.toggle('bg-slate-900', selected);
+        button.classList.toggle('text-white', selected);
+        button.classList.toggle('bg-slate-100', !selected);
+        button.classList.toggle('text-slate-600', !selected);
+      });
+      document.querySelectorAll('.opportunity-card').forEach(card => {
+        const interests = (card.dataset.opportunityInterest || '').split(' ');
+        card.classList.toggle('hidden', !interests.includes(interest));
+      });
+    }
+
+    function startBuyerTour() {
+      buyerTourIndex = 0;
+      renderBuyerTourStep();
+      document.getElementById('buyer-tour-overlay')?.classList.remove('hidden');
+    }
+
+    function hasSeenBuyerTour() {
+      try {
+        return window.localStorage.getItem('homia-buyer-tour-seen') === 'true';
+      } catch (error) {
+        return false;
+      }
+    }
+
+    function rememberBuyerTour() {
+      try {
+        window.localStorage.setItem('homia-buyer-tour-seen', 'true');
+      } catch (error) {
+        // The tour still works when browser storage is unavailable.
+      }
+    }
+
+    function renderBuyerTourStep() {
+      const step = buyerTourSteps[buyerTourIndex];
+      if (!step) return;
+      document.getElementById('buyer-tour-step').textContent = `Paso ${buyerTourIndex + 1} de ${buyerTourSteps.length}`;
+      document.getElementById('buyer-tour-title').textContent = step.title;
+      document.getElementById('buyer-tour-copy').textContent = step.copy;
+      document.getElementById('buyer-tour-next').textContent = buyerTourIndex === buyerTourSteps.length - 1 ? 'Finalizar' : 'Siguiente';
+      if (step.screen !== currentScreen) navigateTo(step.screen);
+      window.setTimeout(() => {
+        const overlay = document.getElementById('buyer-tour-overlay');
+        const target = document.querySelector(step.selector);
+        if (!overlay || !target) return;
+        target.scrollIntoView({ block: 'center', behavior: 'auto' });
+        const overlayRect = overlay.getBoundingClientRect();
+        const targetRect = target.getBoundingClientRect();
+        const pad = 6;
+        const x = Math.max(0, targetRect.left - overlayRect.left - pad);
+        const y = Math.max(0, targetRect.top - overlayRect.top - pad);
+        const width = Math.min(overlayRect.width - x, targetRect.width + pad * 2);
+        const height = Math.min(overlayRect.height - y, targetRect.height + pad * 2);
+        const setRect = (id, left, top, panelWidth, panelHeight) => {
+          const panel = document.getElementById(id);
+          panel.style.left = `${left}px`;
+          panel.style.top = `${top}px`;
+          panel.style.width = `${Math.max(0, panelWidth)}px`;
+          panel.style.height = `${Math.max(0, panelHeight)}px`;
+        };
+        setRect('tour-scrim-top', 0, 0, overlayRect.width, y);
+        setRect('tour-scrim-left', 0, y, x, height);
+        setRect('tour-scrim-right', x + width, y, overlayRect.width - x - width, height);
+        setRect('tour-scrim-bottom', 0, y + height, overlayRect.width, overlayRect.height - y - height);
+        const focus = document.getElementById('buyer-tour-focus');
+        focus.style.left = `${x}px`;
+        focus.style.top = `${y}px`;
+        focus.style.width = `${width}px`;
+        focus.style.height = `${height}px`;
+        const popover = document.getElementById('buyer-tour-popover');
+        const popoverWidth = Math.min(304, overlayRect.width - 32);
+        popover.style.width = `${popoverWidth}px`;
+        const popoverLeft = Math.max(16, Math.min(overlayRect.width - popoverWidth - 16, x + width / 2 - popoverWidth / 2));
+        const below = y + height + 12;
+        const popoverTop = below + popover.offsetHeight <= overlayRect.height - 16
+          ? below
+          : Math.max(16, y - popover.offsetHeight - 12);
+        popover.style.left = `${popoverLeft}px`;
+        popover.style.top = `${popoverTop}px`;
+      }, 120);
+    }
+
+    function advanceBuyerTour() {
+      if (buyerTourIndex < buyerTourSteps.length - 1) {
+        buyerTourIndex += 1;
+        renderBuyerTourStep();
+      } else {
+        closeBuyerTour();
+      }
+    }
+
+    function closeBuyerTour() {
+      document.getElementById('buyer-tour-overlay')?.classList.add('hidden');
+      rememberBuyerTour();
+    }
+
+    function saveProperty(button) {
+      const saved = button.getAttribute('aria-pressed') === 'true';
+      button.setAttribute('aria-pressed', String(!saved));
+      button.querySelector('span').textContent = saved ? 'Guardar' : 'Guardada';
+      button.classList.toggle('text-emerald-700', !saved);
+    }
+
+    function openPublicListing(propertyId = currentPropertyId) {
+      const property = homeProperties[propertyId];
+      if (property) {
+        currentPropertyId = propertyId;
+        setPropertyDetails(property);
+      }
+      document.getElementById('share-feedback').textContent = 'Vista de demostración · enlace simulado';
+      navigateTo('publicacion-compartida');
+    }
+
+    function copyPublicListingLink() {
+      const property = homeProperties[currentPropertyId];
+      const listingId = property ? property.id : 'HM-99214';
+      document.getElementById('share-feedback').textContent = `Enlace de demostración copiado: homia.app/ficha/${listingId}`;
+    }
+
+    function simulateAppDownload() {
+      alert('Esta es una vista previa de Homia. La descarga se habilitará al publicar la app.');
+    }
+
+    function openTour(type) {
+      const is3d = type === '3d';
+      const badge = document.getElementById('tour-type-badge');
+      const description = document.getElementById('tour-description');
+      if (badge) badge.textContent = is3d ? 'Tour virtual 3D · demostración' : 'Recorrido en video';
+      if (description) description.textContent = is3d
+        ? 'Vista de demostración del recorrido 3D. En la app publicada podrías explorar cada ambiente.'
+        : 'Clip de referencia para mostrar la experiencia de recorridos en video.';
+      if (is3d) document.getElementById('reel-property-video')?.pause();
+      const alreadyOnReels = currentScreen === 'reels';
+      navigateTo('reels');
+      if (!is3d && alreadyOnReels) playReelVideo();
+    }
+
+    function renderCurrentReel() {
+      const reel = propertyReels[currentReelIndex];
+      const property = homeProperties[reel.propertyId];
+      document.getElementById('tour-type-badge').textContent = 'Recorrido en video';
+      document.getElementById('tour-property-title').textContent = property.title;
+      document.getElementById('tour-property-meta').textContent = `${property.location} • ${property.price}`;
+      document.getElementById('tour-description').textContent = 'Clip de referencia para mostrar la experiencia de recorridos en video.';
+      document.getElementById('reel-count').textContent = `${currentReelIndex + 1} / ${propertyReels.length}`;
+      const video = document.getElementById('reel-property-video');
+      if (video) {
+        video.poster = property.img;
+        const fallbackImage = video.querySelector('img');
+        if (fallbackImage) {
+          fallbackImage.src = property.img;
+          fallbackImage.alt = property.title;
+        }
+      }
+    }
+
+    function prepareReelVideo() {
+      const video = document.getElementById('reel-property-video');
+      const source = video?.querySelector('source[data-src]');
+      const reel = propertyReels[currentReelIndex];
+      if (source && (source.dataset.src !== reel.video || source.getAttribute('src') !== reel.video)) {
+        source.dataset.src = reel.video;
+        source.setAttribute('src', reel.video);
+        video.poster = homeProperties[reel.propertyId].img;
+        video.load();
+      }
+      return video;
+    }
+
+    function changeReel(direction) {
+      const video = document.getElementById('reel-property-video');
+      video?.pause();
+      currentReelIndex = (currentReelIndex + direction + propertyReels.length) % propertyReels.length;
+      renderCurrentReel();
+      playReelVideo();
+    }
+
+    function openCurrentReelListing() {
+      const reel = propertyReels[currentReelIndex];
+      const property = homeProperties[reel.propertyId];
+      currentPropertyId = reel.propertyId;
+      setPropertyDetails(property);
+      navigateTo('marketplace-detalle');
+    }
+
+    function playReelVideo() {
+      const video = prepareReelVideo();
+      video?.play().catch(syncReelPlaybackButton);
+    }
+
+    function syncReelPlaybackButton() {
+      const video = document.getElementById('reel-property-video');
+      const button = document.getElementById('reel-playback-toggle');
+      if (!video || !button) return;
+      const paused = video.paused;
+      button.setAttribute('aria-label', paused ? 'Reproducir video' : 'Pausar video');
+      button.setAttribute('aria-pressed', String(!paused));
+      button.querySelector('[data-playback-icon="play"]')?.classList.toggle('hidden', !paused);
+      button.querySelector('[data-playback-icon="pause"]')?.classList.toggle('hidden', paused);
+    }
+
+    function toggleReelPlayback() {
+      const video = document.getElementById('reel-property-video');
+      if (!video) return;
+      if (video.paused) {
+        playReelVideo();
+      } else {
+        video.pause();
+      }
+      syncReelPlaybackButton();
+    }
+
+    function openMatchedProperty() {
+      const property = matchCards[currentMatchIndex];
+      if (property) {
+        setPropertyDetails(property);
+      }
+      navigateTo('marketplace-detalle');
     }
 
     function moveFinancingToSearch() {
@@ -1564,21 +1960,10 @@
       }, 450);
     }
 
-    function togglePropertyLike() {
-      const button = document.getElementById('property-like-button');
-      const count = document.getElementById('property-like-count');
-      if (!button || !count) return;
-
-      const liked = button.getAttribute('aria-pressed') === 'true';
-      button.setAttribute('aria-pressed', String(!liked));
-      button.classList.toggle('text-rose-500', !liked);
-      button.classList.toggle('text-slate-600', liked);
-      count.textContent = liked ? '1,2k' : '1,3k';
-    }
-
     function navigateTo(screenId) {
       closeAiChat();
       if (screenId === currentScreen) return;
+      if (currentScreen === 'reels') document.getElementById('reel-property-video')?.pause();
 
       // Hide all screens
       document.querySelectorAll('.screen-view').forEach(screen => {
@@ -1596,6 +1981,10 @@
           historyStack.push(screenId);
         }
         currentScreen = screenId;
+        if (screenId === 'reels') {
+          const reelVideo = prepareReelVideo();
+          if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) reelVideo?.play().catch(syncReelPlaybackButton);
+        }
       }
 
       // Update Nav Bar Tab styling
@@ -1606,6 +1995,7 @@
       if (historyStack.length > 1) {
         historyStack.pop(); // Remove current
         const prevScreen = historyStack[historyStack.length - 1];
+        if (currentScreen === 'reels' && prevScreen !== 'reels') document.getElementById('reel-property-video')?.pause();
         
         document.querySelectorAll('.screen-view').forEach(screen => {
           screen.classList.add('hidden');
@@ -1614,6 +2004,10 @@
         if (target) {
           target.classList.remove('hidden');
           currentScreen = prevScreen;
+          if (prevScreen === 'reels') {
+            const reelVideo = prepareReelVideo();
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) reelVideo?.play().catch(syncReelPlaybackButton);
+          }
           updateNavHighlight(prevScreen);
         }
       } else {
@@ -1630,6 +2024,7 @@
       else if (screenId === 'match') activeTabId = 'nav-match';
       else if (['academia', 'networking'].includes(screenId)) activeTabId = 'nav-academia';
       else if (['panel', 'agente-perfil', 'marketplace-detalle'].includes(screenId)) activeTabId = 'nav-panel';
+      else if (screenId === 'publicacion-compartida') activeTabId = 'nav-inicio';
 
       document.querySelectorAll('.nav-tab').forEach(tab => {
         tab.classList.remove('text-slate-900', 'font-bold');
@@ -1649,36 +2044,34 @@
       }
     }
 
-    // Match Swiping Interaction simulation
-    function handleSwipe(direction) {
-      const card = document.getElementById('match-card');
-      const offset = direction === 'right' ? 300 : -300;
-      card.style.transform = `translateX(${offset}px) rotate(${direction === 'right' ? 15 : -15}deg)`;
-      card.style.opacity = '0';
+    function renderMatchCard() {
+      const property = matchCards[currentMatchIndex];
+      if (!property) return;
+      document.getElementById('match-card-img').src = property.img;
+      document.getElementById('match-card-img').alt = property.title;
+      document.getElementById('match-card-title').textContent = property.title;
+      document.getElementById('match-card-sub').textContent = property.sub;
+      document.getElementById('match-card-price').textContent = property.price;
+      document.getElementById('match-card-pct').textContent = property.match;
+      document.getElementById('match-card-beds').textContent = property.beds;
+      document.getElementById('match-card-baths').textContent = property.baths;
+      document.getElementById('match-card-area').textContent = property.area;
+      document.getElementById('match-reason-location').textContent = property.reasons.location;
+      document.getElementById('match-reason-price').textContent = property.reasons.price;
+      document.getElementById('match-reason-features').textContent = property.reasons.features;
+      document.getElementById('match-reason-payment').textContent = property.reasons.payment;
+      document.getElementById('match-reason-financing').textContent = property.reasons.financing;
+      document.getElementById('match-card-count').textContent = `${currentMatchIndex + 1} de ${matchCards.length}`;
+      document.getElementById('match-summary').textContent = `${matchCards.length} propiedades compatibles`;
+      document.querySelector('[aria-label="Propiedad compatible anterior"]').disabled = currentMatchIndex === 0;
+      document.querySelector('[aria-label="Siguiente propiedad compatible"]').disabled = currentMatchIndex === matchCards.length - 1;
+    }
 
-      setTimeout(() => {
-        currentMatchIndex = (currentMatchIndex + 1) % matchCards.length;
-        const next = matchCards[currentMatchIndex];
-        
-        document.getElementById('match-card-img').src = next.img;
-        document.getElementById('match-card-title').textContent = next.title;
-        document.getElementById('match-card-sub').textContent = next.sub;
-        document.getElementById('match-card-price').textContent = next.price;
-        document.getElementById('match-card-pct').textContent = next.match;
-
-        card.style.transition = 'none';
-        card.style.transform = 'translateX(0px) rotate(0deg)';
-        card.style.opacity = '1';
-
-        setTimeout(() => {
-          card.style.transition = 'transform 0.3s ease, opacity 0.3s ease';
-        }, 50);
-
-        if (direction === 'right') {
-          // Trigger subtle toast notification
-          alert(`¡Es un Match! Propiedad agregada a tus favoritos y comunicada al agente.`);
-        }
-      }, 250);
+    function stepMatch(direction) {
+      const nextIndex = currentMatchIndex + direction;
+      if (nextIndex < 0 || nextIndex >= matchCards.length) return;
+      currentMatchIndex = nextIndex;
+      renderMatchCard();
     }
 
     // Networking Map dynamic popup helper
@@ -1708,6 +2101,29 @@
       lucide.createIcons();
       moveFinancingToSearch();
       updateFinancingDetails();
+      setOpportunityInterest('mudanza', document.querySelector('.interest-filter[data-interest="mudanza"]'));
+      const reelVideo = document.getElementById('reel-property-video');
+      if (reelVideo) {
+        reelVideo.addEventListener('play', syncReelPlaybackButton);
+        reelVideo.addEventListener('pause', syncReelPlaybackButton);
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) reelVideo.pause();
+        syncReelPlaybackButton();
+      }
+      renderCurrentReel();
+      document.getElementById('screen-reels')?.addEventListener('touchstart', event => {
+        const touch = event.touches[0];
+        reelTouchStart = touch ? { x: touch.clientX, y: touch.clientY } : null;
+      }, { passive: true });
+      document.getElementById('screen-reels')?.addEventListener('touchend', event => {
+        if (reelTouchStart === null) return;
+        const touch = event.changedTouches[0];
+        const distance = reelTouchStart.y - touch.clientY;
+        const horizontalDistance = reelTouchStart.x - touch.clientX;
+        reelTouchStart = null;
+        if (Math.abs(distance) > 56 && Math.abs(distance) > Math.abs(horizontalDistance)) changeReel(distance > 0 ? 1 : -1);
+      }, { passive: true });
+      renderMatchCard();
+      if (!hasSeenBuyerTour()) window.setTimeout(startBuyerTour, 250);
     });
   </script>
 <!-- END: InteractiveScript -->
